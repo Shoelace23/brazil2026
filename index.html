@@ -74,8 +74,46 @@
 
     <section class="section">
       <div class="section-header">
+        <span class="eyebrow">Préparatifs</span>
+        <h2>Checklist avant le départ</h2>
+      </div>
+
+      <div class="todo-module">
+        <div class="todo-tabs">
+          <button class="todo-tab active" data-target="todo-3m">3 mois avant</button>
+          <button class="todo-tab" data-target="todo-1m">1 mois avant</button>
+          <button class="todo-tab" data-target="todo-j0">Le jour du départ</button>
+        </div>
+        
+        <div class="todo-content" id="todo-container">
+          <div class="todo-pane active" id="todo-3m">
+            <ul class="todo-list"></ul>
+            <form class="todo-form">
+              <input type="text" placeholder="Ajouter une tâche..." required>
+              <button type="submit">Ajouter</button>
+            </form>
+          </div>
+          <div class="todo-pane" id="todo-1m">
+            <ul class="todo-list"></ul>
+            <form class="todo-form">
+              <input type="text" placeholder="Ajouter une tâche..." required>
+              <button type="submit">Ajouter</button>
+            </form>
+          </div>
+          <div class="todo-pane" id="todo-j0">
+            <ul class="todo-list"></ul>
+            <form class="todo-form">
+              <input type="text" placeholder="Ajouter une tâche..." required>
+              <button type="submit">Ajouter</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
         <span class="eyebrow">Explorer</span>
-        <h2>Tout sur ce voyage, en un endroit</h2>
       </div>
       <div class="feature-grid">
         <div class="feature-item">
@@ -614,6 +652,117 @@
 
       svg.innerHTML = html;
     }
+
+    // ============================================================================
+    // To-Do Module Logic
+    // ============================================================================
+    document.addEventListener("DOMContentLoaded", () => {
+      const defaultTodos = {
+        'todo-3m': [
+          { text: "Réserver les vols", done: false },
+          { text: "Vérifier la validité des passeports (6 mois après le retour)", done: false },
+          { text: "Mettre à jour les vaccins", done: false }
+        ],
+        'todo-1m': [
+          { text: "Souscrire une assurance voyage", done: false },
+          { text: "Préparer une trousse à pharmacie", done: false },
+          { text: "Acheter un adaptateur de prise", done: false }
+        ],
+        'todo-j0': [
+          { text: "S'enregistrer en ligne pour le vol", done: false },
+          { text: "Prendre les passeports et billets", done: false },
+          { text: "Couper l'eau et le gaz", done: false }
+        ]
+      };
+
+      let todos = JSON.parse(localStorage.getItem('brazil2026_todos'));
+      if (!todos) {
+        todos = defaultTodos;
+        localStorage.setItem('brazil2026_todos', JSON.stringify(todos));
+      }
+
+      function renderTodos(paneId) {
+        const pane = document.getElementById(paneId);
+        if (!pane) return;
+        const ul = pane.querySelector('.todo-list');
+        ul.innerHTML = '';
+        
+        const undoneTasks = [];
+        const doneTasks = [];
+        todos[paneId].forEach((task, index) => {
+          if (task.done) doneTasks.push({ task, index });
+          else undoneTasks.push({ task, index });
+        });
+
+        const appendTask = ({ task, index }) => {
+          const li = document.createElement('li');
+          li.className = 'todo-item' + (task.done ? ' done' : '');
+          li.innerHTML = `
+            <label class="todo-label">
+              <input type="checkbox" ${task.done ? 'checked' : ''} data-pane="${paneId}" data-index="${index}">
+              <span class="todo-text">${escapeHtml(task.text)}</span>
+            </label>
+            <button class="todo-delete" data-pane="${paneId}" data-index="${index}" aria-label="Supprimer">×</button>
+          `;
+          ul.appendChild(li);
+        };
+
+        undoneTasks.forEach(appendTask);
+        doneTasks.forEach(appendTask);
+      }
+
+      document.querySelectorAll('.todo-pane').forEach(pane => {
+        renderTodos(pane.id);
+        
+        // Add task
+        const form = pane.querySelector('.todo-form');
+        if(form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = form.querySelector('input');
+            const text = input.value.trim();
+            if (text) {
+              todos[pane.id].push({ text, done: false });
+              localStorage.setItem('brazil2026_todos', JSON.stringify(todos));
+              renderTodos(pane.id);
+              input.value = '';
+            }
+          });
+        }
+      });
+
+      // Toggle & Delete
+      const todoModule = document.querySelector('.todo-module');
+      if (todoModule) {
+        todoModule.addEventListener('click', (e) => {
+          if (e.target.matches('input[type="checkbox"]')) {
+            const paneId = e.target.getAttribute('data-pane');
+            const index = e.target.getAttribute('data-index');
+            todos[paneId][index].done = e.target.checked;
+            localStorage.setItem('brazil2026_todos', JSON.stringify(todos));
+            renderTodos(paneId);
+          } else if (e.target.matches('.todo-delete')) {
+            const paneId = e.target.getAttribute('data-pane');
+            const index = e.target.getAttribute('data-index');
+            todos[paneId].splice(index, 1);
+            localStorage.setItem('brazil2026_todos', JSON.stringify(todos));
+            renderTodos(paneId);
+          }
+        });
+      }
+
+      // Tabs
+      const tabs = document.querySelectorAll('.todo-tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.todo-pane').forEach(p => p.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById(tab.getAttribute('data-target')).classList.add('active');
+        });
+      });
+    });
+
   </script>
 </body>
 
