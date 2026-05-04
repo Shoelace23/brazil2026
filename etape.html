@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Étape — Brésil 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"></span>
+      <span>Brésil 2026</span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu">Menu</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="itineraire.html">Itinéraire</a></li>
+      <li><a href="carte.html">Carte</a></li>
+      <li><a href="hotels.html">Hébergements</a></li>
+      <li><a href="pratique.html">Préparer le voyage</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- Nav prev/next -->
+<nav class="etape-nav" id="etapeNav"></nav>
+
+<!-- Hero étape -->
+<section class="etape-hero">
+  <div class="etape-hero-content">
+    <span class="eyebrow light" id="etapeEyebrow">Étape</span>
+    <h1 id="etapeTitle">—</h1>
+    <p class="subtitle" id="etapeSubtitle">—</p>
+  </div>
+</section>
+
+<!-- Stats clés -->
+<section class="etape-quickstats">
+  <div class="etape-quickstats-inner" id="etapeStats"></div>
+</section>
+
+<!-- Comment y arriver -->
+<section class="etape-section" id="etapeArrivalSection">
+  <h2>Comment y <em>arriver</em></h2>
+  <div id="etapeArrival"></div>
+</section>
+
+<!-- Hébergement -->
+<section class="etape-section" id="etapeHotelSection">
+  <h2>Où on <em>dort</em></h2>
+  <div id="etapeHotel"></div>
+</section>
+
+<!-- Incontournables -->
+<section class="etape-section" id="etapeActivitiesSection">
+  <h2>Les <em>incontournables</em></h2>
+  <div class="etape-activities-grid" id="etapeActivities"></div>
+</section>
+
+<!-- Mini-carte -->
+<section class="etape-section" id="etapeMapSection">
+  <h2>Sur <em>place</em></h2>
+  <div id="etapeLeafletMap"></div>
+  <div class="etape-map-legend">
+    <span><span class="etape-map-legend-dot" style="background:#c95a42;"></span>Hébergement</span>
+    <span><span class="etape-map-legend-dot" style="background:#11726b;"></span>Incontournables</span>
+  </div>
+</section>
+
+<!-- Conseils locaux -->
+<section class="etape-section" id="etapeTipsSection" hidden>
+  <h2>Bon à <em>savoir</em></h2>
+  <div id="etapeTipsContent"></div>
+</section>
+
+<!-- Comment repartir -->
+<section class="etape-section" id="etapeDepartureSection" hidden>
+  <h2>Comment <em>repartir</em></h2>
+  <div id="etapeDeparture"></div>
+</section>
+
+<!-- Footer nav -->
+<nav class="etape-footer-nav" id="etapeFooterNav"></nav>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="brand"><span class="brand-mark"></span> Brésil 2026</span>
+    <span><a href="index.html">Retour à l'accueil</a></span>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+// Petites icônes SVG transport
+const ETAPE_TR_ICONS = {
+  vol: '<svg viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>',
+  van: '<svg viewBox="0 0 24 24"><path d="M14 17H4V5h12v3l4 2v7h-2"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg>',
+  '4x4': '<svg viewBox="0 0 24 24"><path d="M5 17H3v-5l2-5h11l3 5h2v5h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>',
+  bateau: '<svg viewBox="0 0 24 24"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.4 17 22 12H2l3 5"/><path d="M12 12V3l5 5"/></svg>',
+  '4x4-bateau': '<svg viewBox="0 0 24 24"><path d="M5 17H3v-5l2-5h11l3 5h2v5h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>',
+  'voiture-bateau': '<svg viewBox="0 0 24 24"><path d="M14 17H4V5h12v3l4 2v7h-2"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg>'
+};
+
+(async function() {
+  const data = await loadData();
+  if (!data) { document.body.innerHTML = '<div style="padding:4rem;text-align:center;">Données indisponibles.</div>'; return; }
+
+  // Récupère l'id depuis ?id=xxx ; défaut = première étape
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id") || data.etapes[0].id;
+  const idx = data.etapes.findIndex(e => e.id === id);
+  if (idx < 0) { document.body.innerHTML = '<div style="padding:4rem;text-align:center;">Étape introuvable.</div>'; return; }
+  const e = data.etapes[idx];
+  const prev = idx > 0 ? data.etapes[idx - 1] : null;
+  const next = idx < data.etapes.length - 1 ? data.etapes[idx + 1] : null;
+
+  document.title = `${e.ville} — Brésil 2026`;
+
+  // ---------- Nav haut ----------
+  const navHtml = `
+    ${prev
+      ? `<a href="etape.html?id=${prev.id}">‹ ${escapeHtml(prev.ville)}</a>`
+      : `<span class="nav-disabled">‹ Début</span>`}
+    <span class="etape-nav-position">Étape ${String(e.ordre).padStart(2,"0")} / ${data.etapes.length}</span>
+    ${next
+      ? `<a href="etape.html?id=${next.id}">${escapeHtml(next.ville)} ›</a>`
+      : `<span class="nav-disabled">Fin ›</span>`}
+  `;
+  document.getElementById("etapeNav").innerHTML = navHtml;
+
+  // ---------- Hero ----------
+  document.getElementById("etapeEyebrow").textContent = `Étape ${String(e.ordre).padStart(2,"0")} · ${e.region}`;
+  document.getElementById("etapeTitle").textContent = e.ville;
+  const nightsTxt = e.nuits === 0 ? "Escale technique" : `${e.nuits} nuit${e.nuits > 1 ? "s" : ""}`;
+  document.getElementById("etapeSubtitle").textContent = `${formatDateLong(e.dateArrivee)} → ${formatDateLong(e.dateDepart)} · ${nightsTxt}`;
+
+  // ---------- Stats clés ----------
+  const stats = [];
+  stats.push({ label: "Dates", value: `${formatDate(e.dateArrivee)} → ${formatDate(e.dateDepart)}` });
+  stats.push({ label: "Durée", value: nightsTxt });
+  if (e.hebergement && e.hebergement.nom) {
+    stats.push({ label: "Hébergement", value: e.hebergement.nom, meta: e.hebergement.statut });
+  }
+  if (e.hebergement && e.hebergement.prixParNuit) {
+    const total = e.hebergement.prixParNuit * e.nuits;
+    stats.push({
+      label: "Budget hôtel",
+      value: `${total.toLocaleString("fr-FR")} €`,
+      meta: `${e.hebergement.prixParNuit.toLocaleString("fr-FR")} € × ${e.nuits} nuit${e.nuits > 1 ? "s" : ""}`
+    });
+  }
+  document.getElementById("etapeStats").innerHTML = stats.map(s => `
+    <div class="etape-stat">
+      <div class="etape-stat-label">${escapeHtml(s.label)}</div>
+      <div class="etape-stat-value">${escapeHtml(s.value)}</div>
+      ${s.meta ? `<div class="etape-stat-meta">${escapeHtml(s.meta)}</div>` : ""}
+    </div>
+  `).join("");
+
+  // ---------- Arrival (legIn) ----------
+  if (e.legIn) {
+    const l = e.legIn;
+    const icon = ETAPE_TR_ICONS[l.mode] || ETAPE_TR_ICONS.van;
+    const fromLabel = prev ? prev.ville : "Paris (départ)";
+    document.getElementById("etapeArrival").innerHTML = `
+      <div class="etape-leg">
+        <div class="etape-leg-icon">${icon}</div>
+        <div class="etape-leg-info">
+          <div class="mode">${escapeHtml(l.modeLabel)}</div>
+          <div class="route-text">${escapeHtml(fromLabel)} → ${escapeHtml(e.ville)}</div>
+          <div class="meta-row">
+            <strong>${escapeHtml(l.duree)}</strong>
+            ${l.distanceKm ? ` · ${l.distanceKm.toLocaleString("fr-FR")} km` : ""}
+            ${l.prixTotalEUR ? ` · ${l.prixTotalEUR.toLocaleString("fr-FR")} €` : ""}
+          </div>
+          ${l.details ? `<p class="details">${escapeHtml(l.details)}</p>` : ""}
+        </div>
+      </div>
+    `;
+  } else {
+    document.getElementById("etapeArrivalSection").hidden = true;
+  }
+
+  // ---------- Hébergement ----------
+  if (e.hebergement && e.hebergement.nom) {
+    const h = e.hebergement;
+    const total = h.prixParNuit ? h.prixParNuit * e.nuits : null;
+    const stars = h.etoiles ? "★".repeat(h.etoiles) : "";
+    document.getElementById("etapeHotel").innerHTML = `
+      <div class="etape-hotel-card">
+        <div class="etape-hotel-image">
+          ${h.image ? `<img src="${escapeHtml(h.image)}" alt="${escapeHtml(h.nom)}">` : "Photo à venir"}
+        </div>
+        <div>
+          <h3 class="etape-hotel-name">${escapeHtml(h.nom)}</h3>
+          ${stars ? `<div class="etape-hotel-stars">${stars}</div>` : ""}
+          <div class="etape-hotel-meta">
+            <strong>${escapeHtml(h.type || "Hébergement")}</strong>
+            ${h.adresse ? ` · ${escapeHtml(h.adresse)}` : ""}
+          </div>
+          ${h.prixParNuit ? `
+            <div class="etape-hotel-price">
+              <span class="etape-hotel-price-main">${total.toLocaleString("fr-FR")} €</span>
+              <span class="etape-hotel-price-detail">soit ${h.prixParNuit.toLocaleString("fr-FR")} € / nuit · ${e.nuits} nuit${e.nuits > 1 ? "s" : ""}</span>
+            </div>
+          ` : ""}
+          <div class="etape-hotel-meta">
+            ${h.statut ? `<span class="tag">${escapeHtml(h.statut)}</span> ` : ""}
+            ${h.plateforme ? `Réservé via <strong>${escapeHtml(h.plateforme)}</strong>` : ""}
+            ${h.telephone ? ` · ${escapeHtml(h.telephone)}` : ""}
+            ${h.checkIn ? ` · check-in ${escapeHtml(h.checkIn)}` : ""}
+            ${h.checkOut ? ` / check-out ${escapeHtml(h.checkOut)}` : ""}
+          </div>
+          ${h.atouts && h.atouts.length ? `
+            <div class="etape-hotel-atouts">
+              ${h.atouts.map(a => `<span class="tag outline">${escapeHtml(a)}</span>`).join("")}
+            </div>
+          ` : ""}
+          ${h.note ? `<p style="font-size:0.9rem;color:var(--color-text-soft);margin:0.5rem 0;"><em>${escapeHtml(h.note)}</em></p>` : ""}
+          ${h.url ? `<div class="etape-hotel-actions"><a href="${escapeHtml(h.url)}" target="_blank" rel="noopener" class="cta">Voir sur ${escapeHtml(h.plateforme || "Booking")}</a></div>` : ""}
+        </div>
+      </div>
+    `;
+  } else {
+    document.getElementById("etapeHotelSection").hidden = true;
+  }
+
+  // ---------- Incontournables ----------
+  const acts = e.incontournables || (e.activites || []).map(a => ({ nom: a, type: null }));
+  if (acts.length) {
+    document.getElementById("etapeActivities").innerHTML = acts.map(a => {
+      if (typeof a === "string") a = { nom: a };
+      return `
+        <article class="etape-activity">
+          <div class="etape-activity-header">
+            <h3>${escapeHtml(a.nom)}</h3>
+            ${a.duree ? `<span class="etape-activity-meta">${escapeHtml(a.duree)}</span>` : ""}
+          </div>
+          ${a.quartier || a.type ? `<div class="etape-activity-meta">${[a.type, a.quartier].filter(Boolean).map(escapeHtml).join(" · ")}</div>` : ""}
+          ${a.description ? `<p class="etape-activity-desc">${escapeHtml(a.description)}</p>` : ""}
+          ${a.conseil ? `<div class="etape-activity-tip">${escapeHtml(a.conseil)}</div>` : ""}
+          ${a.site ? `<a href="${escapeHtml(a.site)}" target="_blank" rel="noopener" class="etape-activity-link">Site officiel ›</a>` : ""}
+        </article>
+      `;
+    }).join("");
+  } else {
+    document.getElementById("etapeActivitiesSection").hidden = true;
+  }
+
+  // ---------- Mini-carte ----------
+  const points = [];
+  if (e.hebergement && e.hebergement.coords) points.push({ coords: e.hebergement.coords, type: "hotel", label: e.hebergement.nom });
+  if (e.coords) points.push({ coords: e.coords, type: "city", label: e.ville });
+  (e.incontournables || []).forEach(a => { if (a.coords) points.push({ coords: a.coords, type: "activity", label: a.nom }); });
+  if (typeof L !== "undefined" && points.length) {
+    const map = L.map("etapeLeafletMap", { scrollWheelZoom: false });
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+      subdomains: "abcd", maxZoom: 19,
+      attribution: '© OpenStreetMap, © CartoDB'
+    }).addTo(map);
+    points.forEach(p => {
+      const color = p.type === "hotel" ? "#c95a42" : (p.type === "activity" ? "#11726b" : "#888780");
+      const marker = L.marker(p.coords, {
+        icon: L.divIcon({
+          className: "etape-marker",
+          html: `<div style="width:18px;height:18px;border-radius:50%;background:${color};border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
+          iconSize: [18, 18], iconAnchor: [9, 9]
+        })
+      }).addTo(map);
+      marker.bindPopup(`<strong>${escapeHtml(p.label)}</strong>`);
+    });
+    map.fitBounds(L.latLngBounds(points.map(p => p.coords)), { padding: [40, 40] });
+  } else {
+    document.getElementById("etapeMapSection").hidden = true;
+  }
+
+  // ---------- Conseils locaux ----------
+  if (e.conseilsLocaux && e.conseilsLocaux.length) {
+    document.getElementById("etapeTipsSection").hidden = false;
+    let html = `<ul class="etape-tips">${e.conseilsLocaux.map(c => `<li>${escapeHtml(c)}</li>`).join("")}</ul>`;
+    if (e.meteoLocale) {
+      const m = e.meteoLocale;
+      html += `<div style="margin-top:2rem;padding:1.5rem;background:var(--color-bg-alt);border:1px solid var(--color-line);">
+        <div class="etape-stat-label" style="margin-bottom:0.6rem;">Météo en août</div>
+        ${m.saison ? `<p style="margin:0.2rem 0;"><strong>Saison :</strong> ${escapeHtml(m.saison)}</p>` : ""}
+        ${m.temperatures ? `<p style="margin:0.2rem 0;"><strong>Températures :</strong> ${escapeHtml(m.temperatures)}</p>` : ""}
+        ${m.pluie ? `<p style="margin:0.2rem 0;"><strong>Pluie :</strong> ${escapeHtml(m.pluie)}</p>` : ""}
+        ${m.mer ? `<p style="margin:0.2rem 0;"><strong>Mer :</strong> ${escapeHtml(m.mer)}</p>` : ""}
+      </div>`;
+    }
+    document.getElementById("etapeTipsContent").innerHTML = html;
+  }
+
+  // ---------- Comment repartir (legIn de l'étape suivante) ----------
+  if (next && next.legIn) {
+    document.getElementById("etapeDepartureSection").hidden = false;
+    const l = next.legIn;
+    const icon = ETAPE_TR_ICONS[l.mode] || ETAPE_TR_ICONS.van;
+    document.getElementById("etapeDeparture").innerHTML = `
+      <div class="etape-leg">
+        <div class="etape-leg-icon">${icon}</div>
+        <div class="etape-leg-info">
+          <div class="mode">${escapeHtml(l.modeLabel)}</div>
+          <div class="route-text">${escapeHtml(e.ville)} → ${escapeHtml(next.ville)}</div>
+          <div class="meta-row">
+            <strong>${escapeHtml(l.duree)}</strong>
+            ${l.distanceKm ? ` · ${l.distanceKm.toLocaleString("fr-FR")} km` : ""}
+            ${l.prixTotalEUR ? ` · ${l.prixTotalEUR.toLocaleString("fr-FR")} €` : ""}
+          </div>
+          ${l.details ? `<p class="details">${escapeHtml(l.details)}</p>` : ""}
+        </div>
+      </div>
+    `;
+  }
+
+  // ---------- Footer nav ----------
+  document.getElementById("etapeFooterNav").innerHTML = `
+    ${prev ? `
+      <a href="etape.html?id=${prev.id}">
+        <div class="nav-eyebrow">‹ Étape précédente</div>
+        <div class="nav-title">${escapeHtml(prev.ville)}</div>
+      </a>
+    ` : `<span></span>`}
+    ${next ? `
+      <a href="etape.html?id=${next.id}" class="nav-right">
+        <div class="nav-eyebrow">Étape suivante ›</div>
+        <div class="nav-title">${escapeHtml(next.ville)}</div>
+      </a>
+    ` : `<span></span>`}
+  `;
+})();
+</script>
+</body>
+</html>

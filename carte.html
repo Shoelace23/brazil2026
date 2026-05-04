@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carte — Brésil 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .leaflet-popup-content-wrapper { border-radius: 0; box-shadow: 0 8px 24px rgba(15, 35, 30, 0.10); }
+    .leaflet-popup-content { font-family: var(--font-sans); font-size: 0.9rem; margin: 1rem 1.2rem; }
+    .leaflet-popup-content h4 {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      margin: 0 0 0.4rem;
+      color: var(--color-text);
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+    }
+    .leaflet-popup-content p { margin: 0.2rem 0; color: var(--color-text-soft); }
+    .leaflet-popup-content a {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+    }
+    .leaflet-popup-content .meta { color: var(--color-text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"></span>
+      <span>Brésil 2026</span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu">Menu</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="itineraire.html">Itinéraire</a></li>
+      <li><a href="carte.html">Carte</a></li>
+      <li><a href="hotels.html">Hébergements</a></li>
+      <li><a href="pratique.html">Préparer le voyage</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="container">
+  <section class="section">
+    <div class="section-header">
+      <span class="eyebrow">Cartographie</span>
+      <h2>Le parcours en <em>une vue</em></h2>
+      <p class="lead" id="carte-lead">Toutes les étapes du voyage reliées dans l'ordre chronologique. Sélectionne un point pour ouvrir le détail.</p>
+    </div>
+    <div id="map"></div>
+    <div class="map-legend">
+      <span class="map-legend-item"><span class="map-legend-dot"></span> Étape avec nuit</span>
+      <span class="map-legend-item"><span class="map-legend-dot muted"></span> Escale technique</span>
+      <span class="map-legend-item"><span class="map-legend-dot line"></span> Liaison entre étapes</span>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="brand"><span class="brand-mark"></span> Brésil 2026</span>
+    <span>Cartographie © OpenStreetMap</span>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(async function() {
+  const data = await loadData();
+  if (!data) return;
+
+  const lead = document.getElementById("carte-lead");
+  if (lead) {
+    const n = data.etapes.length;
+    lead.textContent = `Les ${n} étapes du voyage reliées dans l'ordre chronologique. Sélectionne un point pour ouvrir le détail.`;
+  }
+
+  const map = L.map("map").setView([-7.5, -41], 5);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 18,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+
+  const stepIcon = (n, isStop) => L.divIcon({
+    className: "custom-marker",
+    html: `<div style="
+      background: ${isStop ? '#11726b' : '#8a948f'};
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 0.85rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      border: 2px solid white;
+    ">${n}</div>`,
+    iconSize: [32, 32],
+    iconAnchor: [16, 16]
+  });
+
+  const points = [];
+  data.etapes.forEach(e => {
+    if (!e.coords) return;
+    const isStop = e.nuits > 0;
+    const marker = L.marker(e.coords, { icon: stepIcon(e.ordre, isStop) }).addTo(map);
+    marker.bindPopup(`
+      <span class="meta">Étape ${String(e.ordre).padStart(2,"0")}</span>
+      <h4>${escapeHtml(e.ville)}</h4>
+      <p><strong>${formatDate(e.dateArrivee)} → ${formatDate(e.dateDepart)}</strong></p>
+      <p>${e.nuits === 0 ? 'Escale technique' : `${e.nuits} nuit${e.nuits > 1 ? 's' : ''}`}</p>
+      <p style="margin-top:0.6rem;">${escapeHtml(e.description.substring(0, 130))}${e.description.length > 130 ? '…' : ''}</p>
+      <p style="margin-top:0.6rem;"><a href="itineraire.html#${e.id}">Voir le détail →</a></p>
+    `);
+    points.push(e.coords);
+  });
+
+  L.polyline(points, {
+    color: "#11726b",
+    weight: 2.5,
+    opacity: 0.7,
+    dashArray: "6, 8"
+  }).addTo(map);
+
+  if (points.length) {
+    map.fitBounds(L.latLngBounds(points).pad(0.15));
+  }
+})();
+</script>
+</body>
+</html>

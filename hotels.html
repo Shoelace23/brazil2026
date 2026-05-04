@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hébergements — Brésil 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"></span>
+      <span>Brésil 2026</span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu">Menu</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="itineraire.html">Itinéraire</a></li>
+      <li><a href="carte.html">Carte</a></li>
+      <li><a href="hotels.html">Hébergements</a></li>
+      <li><a href="pratique.html">Préparer le voyage</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="container-narrow">
+  <section class="section">
+    <div class="section-header">
+      <span class="eyebrow">Sélection</span>
+      <h2>Hôtels &amp; pousadas <em>par étape</em></h2>
+      <p class="lead">
+        Une présélection est constituée pour chaque étape via le connecteur <strong>Booking.com</strong>.
+        Pour rafraîchir une sélection, demande à Claude : « propose-moi trois hôtels pour [étape] ».
+      </p>
+    </div>
+    <div id="hotels-by-stage"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="eyebrow">Logistique</span>
+      <h2>Agences réceptives <em>présélectionnées</em></h2>
+      <p class="lead">Pour les transferts, excursions et certains hébergements groupés, ces agences locales connaissent particulièrement bien la Rota das Emoções.</p>
+    </div>
+    <div class="card-grid" id="agencies-grid"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="brand"><span class="brand-mark"></span> Brésil 2026</span>
+    <span>Recherches hôtels propulsées par Booking.com</span>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(async function() {
+  const data = await loadData();
+  if (!data) return;
+
+  const container = document.getElementById("hotels-by-stage");
+  const stagesWithNights = data.etapes.filter(e => e.nuits > 0);
+
+  container.innerHTML = stagesWithNights.map(e => {
+    let list = (e.hebergement && e.hebergement.shortlist && e.hebergement.shortlist.length > 0) ? e.hebergement.shortlist : [];
+    if (list.length === 0 && e.hebergement && e.hebergement.nom) {
+      list = [e.hebergement];
+    }
+    
+    const cards = list.length
+      ? list.map(h => {
+        const prix = h.prixParNuit ? h.prixParNuit + (h.devise === 'EUR' ? ' €' : ' ' + (h.devise || '')) : (h.prix || 'Sur demande');
+        const personnes = h.personnes || h.capacite || 8;
+        const pdej = (h.atouts && h.atouts.includes("Petit-déjeuner inclus")) || h.petitDejeuner ? "Oui" : "Non précisé";
+        const note = h.score || h.noteBooking || (h.etoiles ? h.etoiles + ' étoiles' : 'N/A');
+        const loc = h.adresse || h.quartier || h.localisation || 'Non précisée';
+        
+        return `
+        <div class="hotel-card">
+          <img src="${escapeHtml(h.image || 'https://placehold.co/140x140/e8f1ef/11726b?text=H')}" alt="${escapeHtml(h.nom)}">
+          <div class="info">
+            <div class="name">${escapeHtml(h.nom)}</div>
+            <div class="meta">${escapeHtml(h.type || 'Hébergement')}</div>
+            <div style="font-size:0.9rem; margin-top:0.5rem; line-height: 1.5; color: var(--color-text-soft);">
+              <div><strong style="color:var(--color-text);">Prix par nuit :</strong> <span class="price" style="font-size:0.95rem;">${escapeHtml(String(prix))}</span></div>
+              <div><strong style="color:var(--color-text);">Personnes :</strong> ${escapeHtml(String(personnes))}</div>
+              <div><strong style="color:var(--color-text);">Petit-déjeuner inclus :</strong> ${escapeHtml(pdej)}</div>
+              <div><strong style="color:var(--color-text);">Note Booking :</strong> <span class="score" style="margin-left:0.3rem;">${escapeHtml(String(note))}${String(note).match(/^\\d+(\\.\\d+)?$/) ? '/10' : ''}</span></div>
+              <div><strong style="color:var(--color-text);">Localisation :</strong> ${escapeHtml(loc)}</div>
+            </div>
+            ${h.note ? `<div style="font-size:0.9rem;color:var(--color-text-soft); margin-top:0.5rem;"><em>${escapeHtml(h.note)}</em></div>` : ''}
+            
+            <div style="margin-top: 1.2rem;">
+              <button class="cta outline" style="width: 100%; text-align: left; padding: 0.6rem 1rem;" onclick="alert('Le connecteur Booking chercherait d\\'autres options pour ${escapeHtml(h.nom.replace(/'/g, "\\'"))}...\\n\\nCritères :\\n- Prix similaire (max +10%)\\n- Fort discount sur le prix initial ou meilleure note Booking');">
+                Chercher de meilleures options Booking
+                <span style="display:block; font-size:0.75rem; text-transform:none; letter-spacing:0; margin-top:0.3rem; opacity:0.8;">
+                  Meilleur choix : prix similaire (max +10%) avec fort discount et/ou meilleure note
+                </span>
+              </button>
+            </div>
+            
+            ${h.url ? `<div style="margin-top:0.8rem; text-align: right;"><a href="${escapeHtml(h.url)}" target="_blank" rel="noopener" class="arrow-link" style="font-size:0.78rem;">Voir sur Booking</a></div>` : ''}
+          </div>
+        </div>
+      `}).join("")
+      : `<div class="empty">
+          Aucun hôtel ajouté pour cette étape.
+          <em>Demande à Claude : « Propose-moi 3 hôtels pour ${escapeHtml(e.ville)} pour ${e.nuits} nuit${e.nuits > 1 ? 's' : ''}, du ${formatDate(e.dateArrivee)} au ${formatDate(e.dateDepart)}, pour 8 personnes ».</em>
+        </div>`;
+
+    return `
+      <div class="etape-block" id="${e.id}">
+        <div class="etape-header">
+          <h3>${escapeHtml(e.ville)}</h3>
+          <span class="tag">${e.nuits} nuit${e.nuits > 1 ? 's' : ''}</span>
+          <span class="tag outline">${formatDate(e.dateArrivee)} → ${formatDate(e.dateDepart)}</span>
+        </div>
+        ${cards}
+      </div>
+    `;
+  }).join("");
+
+  const ag = document.getElementById("agencies-grid");
+  ag.innerHTML = data.agencesReceptives.map(a => `
+    <div class="card">
+      <h3>${escapeHtml(a.nom)}</h3>
+      <p class="meta" style="font-style:italic;">${escapeHtml(a.specialite)}</p>
+      <div class="tag-row">
+        ${a.services.map(s => `<span class="tag outline">${escapeHtml(s)}</span>`).join("")}
+      </div>
+      ${a.notes ? `<p style="font-size:0.92rem;">${escapeHtml(a.notes)}</p>` : ''}
+      ${a.url ? `<a href="${escapeHtml(a.url)}" target="_blank" rel="noopener" class="arrow-link">Site officiel</a>` : ''}
+    </div>
+  `).join("");
+
+  if (window.location.hash) {
+    const target = document.querySelector(window.location.hash);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+})();
+</script>
+</body>
+</html>

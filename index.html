@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brésil 2026 — Travel Book</title>
+  <meta name="description" content="Travel book du voyage au Brésil — Nordeste & Bahia, août 2026.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="brand-mark"></span>
+        <span>Brésil 2026</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">Menu</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="itineraire.html">Itinéraire</a></li>
+        <li><a href="carte.html">Carte</a></li>
+        <li><a href="hotels.html">Hébergements</a></li>
+        <li><a href="pratique.html">Préparer le voyage</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero option C — carte tilée + inset Nordeste -->
+  <section class="hero-mapc">
+    <div id="heroLeafletMap" aria-hidden="true"></div>
+    <div class="hero-mapc-inset" aria-hidden="true">
+      <div class="hero-mapc-inset-label">Zoom · Nordeste</div>
+      <div id="heroLeafletInset"></div>
+    </div>
+    <div class="hero-mapc-overlay">
+      <div class="hero-mapc-overlay-inner">
+        <span class="eyebrow light" id="hero-eyebrow">Carnet de voyage</span>
+        <h1 id="hero-title">Brésil <em>2026</em></h1>
+        <p class="subtitle" id="hero-subtitle">Le grand circuit</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chemin de fer -->
+  <section class="cdf-section cdf-section-tight">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 1rem;">
+        <span class="eyebrow">L'itinéraire</span>
+      </div>
+
+      <div class="cdf-wrapper" id="cdfWrapper">
+        <div class="cdf-progress" aria-hidden="true">
+          <div class="cdf-progress-fill" id="cdfProgressFill"></div>
+        </div>
+        <button class="cdf-nav cdf-nav-left" id="cdfPrev" aria-label="Étape précédente">‹</button>
+        <button class="cdf-nav cdf-nav-right" id="cdfNext" aria-label="Étape suivante">›</button>
+        <div class="cdf-track" id="cheminDeFer" tabindex="0" role="region"
+          aria-label="Itinéraire du voyage, faites défiler horizontalement"></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <section class="section">
+      <div class="section-header">
+        <span class="eyebrow">Explorer</span>
+        <h2>Tout sur ce voyage, en un endroit</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <span class="feature-num">01</span>
+          <h3>L'itinéraire</h3>
+          <p>Plonge dans le détail de chaque étape, jour par jour, avec activités et transferts.</p>
+          <a href="itineraire.html" class="arrow-link">Itinéraire détaillé</a>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">02</span>
+          <h3>La carte</h3>
+          <p>Visualise toutes les étapes sur une carte interactive du Brésil.</p>
+          <a href="carte.html" class="arrow-link">Ouvrir la carte</a>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">03</span>
+          <h3>Hébergements</h3>
+          <p>Sélection comparée par étape — alimentée par le connecteur Booking.</p>
+          <a href="hotels.html" class="arrow-link">Comparer les hôtels</a>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">04</span>
+          <h3>Préparer le voyage</h3>
+          <p>Visa, santé, monnaie, météo, valise — tout ce qu'il faut savoir avant de partir.</p>
+          <a href="pratique.html" class="arrow-link">Infos pratiques</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="brand"><span class="brand-mark"></span> Brésil 2026</span>
+      <span>Travel book partagé · <a href="hotels.html">Mettre à jour les hôtels</a></span>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    // SVG icons for transport modes (Lucide-style line icons)
+    const TRANSPORT_ICONS = {
+      vol: '<svg viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>',
+      van: '<svg viewBox="0 0 24 24"><path d="M14 17H4V5h12v3l4 2v7h-2"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg>',
+      '4x4': '<svg viewBox="0 0 24 24"><path d="M5 17H3v-5l2-5h11l3 5h2v5h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>',
+      bateau: '<svg viewBox="0 0 24 24"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.4 17 22 12H2l3 5"/><path d="M12 12V3l5 5"/></svg>',
+      '4x4-bateau': '<svg viewBox="0 0 24 24"><path d="M2 12h2L5 9h7l2 3"/><circle cx="6" cy="14" r="1.5"/><circle cx="11" cy="14" r="1.5"/><path d="M14 19c.4.3.8.5 1.6.5 1.5 0 1.5-1.2 3-1.2.7 0 1.1.3 1.4.6"/><path d="M19 17l1-3h-7l1 3"/></svg>',
+      'voiture-bateau': '<svg viewBox="0 0 24 24"><path d="M2 12h2L5 9h7l2 3"/><circle cx="6" cy="14" r="1.5"/><circle cx="11" cy="14" r="1.5"/><path d="M14 19c.4.3.8.5 1.6.5 1.5 0 1.5-1.2 3-1.2.7 0 1.1.3 1.4.6"/><path d="M19 17l1-3h-7l1 3"/></svg>'
+    };
+
+    (async function () {
+      const data = await loadData();
+      if (!data) return;
+
+      // ---------- Hero (dynamique) ----------
+      const v = data.voyage;
+      const eyebrow = document.getElementById("hero-eyebrow");
+      const subtitle = document.getElementById("hero-subtitle");
+      const lead = document.getElementById("cdf-lead");
+      if (eyebrow) eyebrow.textContent = `Carnet de voyage · ${formatDateLong(v.dateDepart)} → ${formatDateLong(v.dateRetour)} 2026`;
+      if (subtitle) subtitle.textContent = `${v.sousTitre} · ${v.dureeNuits} nuits`;
+      const stagesWithNights = data.etapes.filter(e => e.nuits > 0).length;
+      const legsCount = data.etapes.filter(e => e.legIn).length;
+      if (lead) lead.textContent = `${stagesWithNights} étapes, ${legsCount} liaisons. Fais défiler horizontalement pour parcourir le voyage, ou clique sur une étape pour ouvrir son détail.`;
+
+      // ---------- Hero option C : carte tilée Leaflet ----------
+      buildHeroLeafletMap(data);
+
+      // ---------- Chemin de fer ----------
+      const track = document.getElementById("cheminDeFer");
+      const items = [];
+
+      data.etapes.forEach((e, i) => {
+        // Insert leg before this station (if it has one)
+        if (e.legIn) {
+          const icon = TRANSPORT_ICONS[e.legIn.mode] || '';
+          items.push(`
+        <div class="cdf-leg" title="${escapeHtml(e.legIn.details || '')}">
+          <div class="cdf-leg-line"></div>
+          <div class="cdf-leg-info">
+            <div class="cdf-leg-mode">${icon}<span>${escapeHtml(e.legIn.modeLabel)}</span></div>
+            <div class="cdf-leg-meta">
+              <span class="duration">${escapeHtml(e.legIn.duree)}</span>
+              <span class="separator">·</span>
+              <span class="distance">${e.legIn.distanceKm.toLocaleString('fr-FR')} km</span>
+            </div>
+          </div>
+        </div>
+      `);
+        }
+
+        // Station
+        const isStop = e.nuits > 0;
+        items.push(`
+      <a href="etape.html?id=${e.id}" class="cdf-station">
+        <div class="cdf-marker ${isStop ? '' : 'muted'}">${String(e.ordre).padStart(2, "0")}</div>
+        <div class="cdf-station-info">
+          <div class="cdf-city">${escapeHtml(e.ville)}</div>
+          <div class="cdf-dates">${formatDate(e.dateArrivee)}${isStop ? ' → ' + formatDate(e.dateDepart) : ''}</div>
+          <span class="cdf-nights ${isStop ? '' : 'muted'}">${isStop ? `${e.nuits} nuit${e.nuits > 1 ? 's' : ''}` : 'Escale'}</span>
+        </div>
+      </a>
+    `);
+      });
+
+      track.innerHTML = items.join("");
+
+      // ---------- Slider intuitif ----------
+      const wrapper = document.getElementById("cdfWrapper");
+      const progressFill = document.getElementById("cdfProgressFill");
+      const prev = document.getElementById("cdfPrev");
+      const next = document.getElementById("cdfNext");
+      const SCROLL_STEP = 310; // ~ width of one station + leg
+
+      function updateSliderUi() {
+        if (window.innerWidth <= 720) {
+          prev.style.display = "none";
+          next.style.display = "none";
+          return;
+        }
+        prev.style.display = "flex";
+        next.style.display = "flex";
+        const scrollMax = track.scrollWidth - track.clientWidth;
+        const atStart = track.scrollLeft <= 1;
+        const atEnd = track.scrollLeft >= scrollMax - 1;
+        prev.disabled = atStart;
+        next.disabled = atEnd;
+        wrapper.classList.toggle("at-start", atStart);
+        wrapper.classList.toggle("at-end", atEnd);
+        // Progress bar = visible portion sliding along the track
+        const pct = scrollMax > 0 ? (track.scrollLeft / scrollMax) : 0;
+        const visiblePct = scrollMax > 0 ? (track.clientWidth / track.scrollWidth) * 100 : 100;
+        progressFill.style.width = visiblePct + "%";
+        progressFill.style.left = (pct * (100 - visiblePct)) + "%";
+      }
+
+      prev.addEventListener("click", () => track.scrollBy({ left: -SCROLL_STEP, behavior: "smooth" }));
+      next.addEventListener("click", () => track.scrollBy({ left: SCROLL_STEP, behavior: "smooth" }));
+      track.addEventListener("scroll", updateSliderUi, { passive: true });
+      window.addEventListener("resize", updateSliderUi);
+
+      // Wheel-to-horizontal
+      track.addEventListener("wheel", (e) => {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          e.preventDefault();
+          track.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+
+      // Keyboard arrows
+      track.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") { e.preventDefault(); track.scrollBy({ left: -SCROLL_STEP, behavior: "smooth" }); }
+        else if (e.key === "ArrowRight") { e.preventDefault(); track.scrollBy({ left: SCROLL_STEP, behavior: "smooth" }); }
+        else if (e.key === "Home") { e.preventDefault(); track.scrollTo({ left: 0, behavior: "smooth" }); }
+        else if (e.key === "End") { e.preventDefault(); track.scrollTo({ left: track.scrollWidth, behavior: "smooth" }); }
+      });
+
+      // Drag-to-scroll DÉSACTIVÉ — il interceptait les clicks sur les stations.
+      // Navigation possible via : touch swipe (mobile), wheel sur la frise,
+      // flèches clavier (focus sur la track), ou les boutons ‹ ›.
+
+      // Fallback : force la navigation au clic sur une station (au cas où
+      // un autre handler bloquerait le default behavior de l'<a>)
+      track.querySelectorAll(".cdf-station").forEach(a => {
+        a.addEventListener("click", (ev) => {
+          const href = a.getAttribute("href");
+          if (!href || ev.defaultPrevented) return;
+          // Laisse le ctrl/cmd-clic ouvrir un nouvel onglet
+          if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button > 0) return;
+          ev.preventDefault();
+          window.location.assign(href);
+        });
+      });
+
+      updateSliderUi();
+    })();
+
+    // ============================================================================
+    // Hero option C — vraie carte Leaflet stylisée dark
+    // ============================================================================
+    function buildHeroLeafletMap(data) {
+      const el = document.getElementById("heroLeafletMap");
+      if (!el || typeof L === "undefined") return;
+
+      // Toutes les étapes avec coords sauf le retour Paris (qui sortirait du cadre)
+      const cities = data.etapes.filter(e => e.coords && e.id !== "retour-paris");
+      const points = cities.map(c => c.coords);
+
+      // Dédoublonne par coordonnées (Salvador apparaît deux fois) pour ne pas
+      // avoir 2 marqueurs superposés
+      const seenKeys = new Set();
+      const uniqueCities = cities.filter(c => {
+        const k = c.coords[0].toFixed(3) + "," + c.coords[1].toFixed(3);
+        if (seenKeys.has(k)) return false;
+        seenKeys.add(k);
+        return true;
+      });
+
+      // Cluster Nordeste : affiché en petits points (sans label) sur la carte
+      // principale, et complet dans l'inset
+      const NORDESTE_IDS = ["sao-luis", "barreirinhas", "atins", "parnaiba", "jericoacoara", "fortaleza"];
+      const nordesteCities = uniqueCities.filter(c => NORDESTE_IDS.includes(c.id));
+      const nordestePoints = nordesteCities.map(c => c.coords);
+
+      // Position du label par rapport au point pour éviter les collisions
+      // (uniquement pour les villes du sud, le Nordeste est en dot only sur la main map)
+      const LABEL_POS_MAIN = {
+        "rio": "bottom",
+        "trancoso": "left",
+        "caraiva": "right",      // Trancoso à gauche, Caraíva à droite
+        "salvador-1": "right",
+        "salvador-2": "right",
+        "boipeba": "left"        // évite la côte qui est à droite
+      };
+      const LABEL_POS_INSET = {
+        "sao-luis": "right",
+        "barreirinhas": "bottom",
+        "atins": "top",
+        "parnaiba": "top",
+        "jericoacoara": "top",
+        "fortaleza": "left"
+      };
+
+      const TILE_URL = "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png";
+      const TILE_OPTS = { subdomains: "abcd", maxZoom: 18, attribution: '© OpenStreetMap, © CartoDB' };
+      const LOCKED = {
+        zoomControl: false, dragging: false, scrollWheelZoom: false,
+        doubleClickZoom: false, touchZoom: false, boxZoom: false, keyboard: false
+      };
+
+      // ----- Icônes de transport (SVG inline) -----
+      const TR_ICONS = {
+        vol: '<svg viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>',
+        van: '<svg viewBox="0 0 24 24"><path d="M14 17H4V5h12v3l4 2v7h-2"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg>',
+        "4x4": '<svg viewBox="0 0 24 24"><path d="M5 17H3v-5l2-5h11l3 5h2v5h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>',
+        bateau: '<svg viewBox="0 0 24 24"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.4 17 22 12H2l3 5"/><path d="M12 12V3l5 5"/></svg>',
+        "4x4-bateau": '<svg viewBox="0 0 24 24"><path d="M2 12h2L5 9h7l2 3"/><circle cx="6" cy="14" r="1.5"/><circle cx="11" cy="14" r="1.5"/><path d="M14 19c.4.3.8.5 1.6.5 1.5 0 1.5-1.2 3-1.2.7 0 1.1.3 1.4.6"/><path d="M19 17l1-3h-7l1 3"/></svg>',
+        "voiture-bateau": '<svg viewBox="0 0 24 24"><path d="M2 12h2L5 9h7l2 3"/><circle cx="6" cy="14" r="1.5"/><circle cx="11" cy="14" r="1.5"/><path d="M14 19c.4.3.8.5 1.6.5 1.5 0 1.5-1.2 3-1.2.7 0 1.1.3 1.4.6"/><path d="M19 17l1-3h-7l1 3"/></svg>'
+      };
+
+      // ----- Construction du marqueur (label dans diverses positions) -----
+      const buildMarker = (city, posMap) => {
+        const big = city.nuits >= 3;
+        const dot = `<div class="dot ${big ? "big" : ""}"></div>`;
+        const labelBlock = `
+      <div class="text-block">
+        <div class="label ${big ? "big" : ""}">${city.ville}</div>
+        ${city.nuits > 0 ? `<div class="meta">${city.nuits} ${city.nuits > 1 ? "nuits" : "nuit"}</div>` : ""}
+      </div>
+    `;
+        const pos = posMap[city.id] || "bottom";
+
+        let html, iconSize, iconAnchor;
+        if (pos === "left") {
+          html = `${labelBlock}${dot}`;
+          iconSize = [180, 36]; iconAnchor = [172, 18];
+        } else if (pos === "right") {
+          html = `${dot}${labelBlock}`;
+          iconSize = [180, 36]; iconAnchor = [8, 18];
+        } else if (pos === "top") {
+          html = `${labelBlock}${dot}`;
+          iconSize = [140, 60]; iconAnchor = [70, 56];
+        } else { // bottom
+          html = `${dot}${labelBlock}`;
+          iconSize = [140, 60]; iconAnchor = [70, 4];
+        }
+
+        return L.divIcon({
+          className: "hmc-marker pos-" + pos,
+          html, iconSize, iconAnchor
+        });
+      };
+
+      // ----- Marqueur dot-only (sans label) -----
+      const buildDotOnly = () => L.divIcon({
+        className: "hmc-marker",
+        html: '<div class="dot small"></div>',
+        iconSize: [12, 12],
+        iconAnchor: [6, 6]
+      });
+
+      // ----- Marqueur icône transport (entre 2 villes) -----
+      const buildLegIcon = (mode) => {
+        const svg = TR_ICONS[mode] || TR_ICONS.van;
+        return L.divIcon({
+          className: "hmc-leg-icon",
+          html: `<div class="hmc-leg-icon-bubble">${svg}</div>`,
+          iconSize: [22, 22],
+          iconAnchor: [11, 11]
+        });
+      };
+
+      // ----- Ajoute les icônes transport au milieu de chaque liaison -----
+      const addLegIcons = (mapInstance, citiesArr, opts) => {
+        for (let i = 1; i < citiesArr.length; i++) {
+          const a = citiesArr[i - 1].coords;
+          const b = citiesArr[i].coords;
+          // Distance approximative (en degrés) — on évite d'afficher l'icône
+          // sur les liaisons trop courtes pour ne pas surcharger
+          const dist = Math.sqrt(Math.pow(a[0] - b[0], 2) + Math.pow(a[1] - b[1], 2));
+          if (opts.minDist && dist < opts.minDist) continue;
+          const midLat = (a[0] + b[0]) / 2;
+          const midLon = (a[1] + b[1]) / 2;
+          const mode = citiesArr[i].legIn ? citiesArr[i].legIn.mode : "van";
+          L.marker([midLat, midLon], {
+            icon: buildLegIcon(mode),
+            interactive: false, keyboard: false
+          }).addTo(mapInstance);
+        }
+      };
+
+      // ============== MAIN MAP ==============
+      const map = L.map(el, LOCKED);
+      L.tileLayer(TILE_URL, TILE_OPTS).addTo(map);
+
+      L.polyline(points, {
+        color: "#d9b576", weight: 1.8, dashArray: "3 7", opacity: 0.9, lineCap: "round"
+      }).addTo(map);
+
+      // Icônes transport sur la main map (filtrées pour éviter le surplus dans le Nordeste)
+      addLegIcons(map, cities, { minDist: 1.0 });
+
+      // Marqueurs : dot-only pour le Nordeste, label complet pour le sud
+      uniqueCities.forEach(c => {
+        const isNordeste = NORDESTE_IDS.includes(c.id);
+        const icon = isNordeste ? buildDotOnly() : buildMarker(c, LABEL_POS_MAIN);
+        L.marker(c.coords, { icon, interactive: false, keyboard: false }).addTo(map);
+      });
+
+      // Cadrage : fitBounds avec padding pixel pour réserver de la place à
+      // l'inset (haut-droite) et au bandeau de titre (bas)
+      function fitMain() {
+        map.invalidateSize();
+        const w = el.clientWidth;
+        const padInsetRight = w > 720 ? 380 : 30;
+        const padBottom = w > 720 ? 180 : 130;
+        map.fitBounds(L.latLngBounds(points), {
+          paddingTopLeft: [40, 40],
+          paddingBottomRight: [padInsetRight, padBottom]
+        });
+      }
+      fitMain();
+
+      // ============== INSET — Nordeste ==============
+      const insetEl = document.getElementById("heroLeafletInset");
+      let inset = null;
+      if (insetEl && nordesteCities.length) {
+        inset = L.map(insetEl, LOCKED);
+        L.tileLayer(TILE_URL, TILE_OPTS).addTo(inset);
+
+        L.polyline(nordestePoints, {
+          color: "#d9b576", weight: 2, dashArray: "3 6", opacity: 0.95, lineCap: "round"
+        }).addTo(inset);
+
+        addLegIcons(inset, nordesteCities, { minDist: 0 });
+
+        nordesteCities.forEach(c => {
+          L.marker(c.coords, {
+            icon: buildMarker(c, LABEL_POS_INSET),
+            interactive: false, keyboard: false
+          }).addTo(inset);
+        });
+
+        setTimeout(() => {
+          inset.invalidateSize();
+          inset.fitBounds(L.latLngBounds(nordestePoints), { padding: [40, 40] });
+        }, 60);
+      }
+
+      // ============== Resize ==============
+      let resizeTimer;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          fitMain();
+          if (inset) {
+            inset.invalidateSize();
+            inset.fitBounds(L.latLngBounds(nordestePoints), { padding: [40, 40] });
+          }
+        }, 200);
+      });
+    }
+
+    // ============================================================================
+    // Hero MAP (legacy SVG — désactivé)
+    // ============================================================================
+    function buildHeroMap(data) {
+      const svg = document.getElementById("heroSvg");
+      if (!svg) return;
+
+      // Bounding box of the trip area (lat/lon in JSON), with padding
+      const cities = data.etapes.filter(e => e.coords && e.id !== "retour-paris");
+      // Project lat/lon → SVG coords. Use a simple linear projection adapted to a 1200x700 viewBox.
+      // We extend the lat range slightly so the labels don't get clipped at the edges.
+      const lonMin = -45.5, lonMax = -37.5;     // West to East (Brazil east coast)
+      const latMin = -24.5, latMax = -1;        // South (Rio) to North (Atins)
+      const xMin = 90, xMax = 1110;
+      const yMin = 70, yMax = 640;
+
+      const project = (lat, lon) => {
+        const x = xMin + ((lon - lonMin) / (lonMax - lonMin)) * (xMax - xMin);
+        const y = yMin + ((latMax - lat) / (latMax - latMin)) * (yMax - yMin);
+        return { x, y };
+      };
+
+      // Compute positions for all cities
+      const positions = cities.map(c => ({ ...c, ...project(c.coords[0], c.coords[1]) }));
+
+      // SVG icons for transport modes (small, white-ish on dark bg)
+      const ICONS = {
+        vol: '<path d="M11.8 13.2 11 9l1.7-1.7c.7-.7 1-1.6.7-2-.5-.3-1.4 0-2 .7L9.7 7.7 5.7 6.8c-.3 0-.4 0-.5.2l-.1.3c-.1.2 0 .5.1.6L7 10l-1 1.5H4.5l-.5.5 1.5 1L6.5 14l.5-.5v-1.5l1.5-1L10.2 14c.2.2.4.2.6.2l.3-.1c.2-.1.3-.4.2-.6z"/>',
+        van: '<path d="M11 12.5H4.5V5h7v1.5l2 1v4h-1"/><circle cx="6" cy="12.5" r="1.3"/><circle cx="11" cy="12.5" r="1.3"/>',
+        '4x4': '<path d="M5 11H4V8.5L5 6h6l1.5 2.5h1V11h-1"/><circle cx="6" cy="11" r="1.2"/><circle cx="11" cy="11" r="1.2"/>',
+        bateau: '<path d="M2.5 13c.4.3.8.6 1.5.6 1.5 0 1.5-1.2 3-1.2.8 0 1.2.3 1.5.6.4.3.8.6 1.5.6 1.5 0 1.5-1.2 3-1.2.8 0 1.2.3 1.5.6"/><path d="M11.5 11 13 8H3l1.5 3"/><path d="M8 8V3l3 3"/>',
+        '4x4-bateau': '<path d="M2 8h1.5L4.5 6h4l1 1.5"/><circle cx="4" cy="9" r="0.9"/><circle cx="6.5" cy="9" r="0.9"/><path d="M9 11.5c.3.2.5.3 1 .3 1 0 1-.7 2-.7.5 0 .8.2 1 .4"/><path d="M11.5 11 12 9.5h-4l.5 1.5"/>',
+        'voiture-bateau': '<path d="M2 8h1.5L4.5 6h4l1 1.5"/><circle cx="4" cy="9" r="0.9"/><circle cx="6.5" cy="9" r="0.9"/><path d="M9 11.5c.3.2.5.3 1 .3 1 0 1-.7 2-.7.5 0 .8.2 1 .4"/><path d="M11.5 11 12 9.5h-4l.5 1.5"/>'
+      };
+
+      // Build SVG content
+      let html = '';
+
+      // ---------- Defs (gradients for the loupe) ----------
+      html += `
+    <defs>
+      <radialGradient id="goldRing" cx="0.3" cy="0.3" r="0.9">
+        <stop offset="0%" stop-color="#f5d488"/>
+        <stop offset="35%" stop-color="#c89b4f"/>
+        <stop offset="70%" stop-color="#8a6628"/>
+        <stop offset="100%" stop-color="#5a4318"/>
+      </radialGradient>
+      <radialGradient id="landGrad" cx="0.5" cy="0.4" r="0.8">
+        <stop offset="0%" stop-color="#1a5040"/>
+        <stop offset="60%" stop-color="#134031"/>
+        <stop offset="100%" stop-color="#0c2e25"/>
+      </radialGradient>
+    </defs>
+  `;
+
+      // ---------- Ocean background ----------
+      html += `<rect class="ocean" width="1200" height="700"/>`;
+
+      // ---------- Land mass (simplified eastern Brazil silhouette) ----------
+      // Hand-drawn approximation of Brazilian east coast from Maranhão to Rio
+      html += `
+    <path class="land" fill="url(#landGrad)" d="
+      M 1200 0 L 1200 700 L 850 700 L 720 660 L 580 615
+      L 530 545 L 595 480 L 705 460 L 750 410 L 770 360
+      L 805 320 L 845 285 L 870 235 L 855 195 L 825 165
+      L 770 145 L 700 125 L 615 115 L 510 110 L 415 110
+      L 305 110 L 225 100 L 150 95 L 110 80 L 90 60 L 90 0 Z
+    "/>
+  `;
+
+      // Subtle topo lines (curved horizontal contours)
+      for (let i = 0; i < 8; i++) {
+        const y = 130 + i * 65;
+        const wobble = (i % 2 === 0) ? 8 : -8;
+        html += `<path class="topo-line" d="M 100 ${y} Q 350 ${y + wobble}, 600 ${y} T 1100 ${y}"/>`;
+      }
+
+      // ---------- State labels ----------
+      const states = [
+        { name: "MARANHÃO", x: 280, y: 200 },
+        { name: "PIAUÍ", x: 460, y: 245 },
+        { name: "CEARÁ", x: 720, y: 195 },
+        { name: "BAHIA", x: 700, y: 425 },
+        { name: "RIO DE JANEIRO", x: 380, y: 605 }
+      ];
+      states.forEach(s => {
+        html += `<text class="state-label" x="${s.x}" y="${s.y}">${s.name}</text>`;
+      });
+
+      // ---------- Route line (dotted, chronological) ----------
+      const points = positions.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+      html += `<polyline class="route" points="${points}"/>`;
+
+      // ---------- Transport icons on each leg ----------
+      for (let i = 1; i < positions.length; i++) {
+        const a = positions[i - 1];
+        const b = positions[i];
+        const mx = (a.x + b.x) / 2;
+        const my = (a.y + b.y) / 2;
+        const mode = positions[i].legIn ? positions[i].legIn.mode : null;
+        const icon = (mode && ICONS[mode]) || ICONS.van;
+        html += `
+      <g transform="translate(${mx - 8}, ${my - 8})">
+        <circle class="leg-icon-bg" cx="8" cy="8" r="11"/>
+        <g class="leg-icon" transform="translate(0,0) scale(1)">${icon}</g>
+      </g>
+    `;
+      }
+
+      // ---------- Decorative loupe over the Nordeste cluster ----------
+      // Center on the centroid of the top-row stations (São Luís → Fortaleza)
+      const nordeste = positions.filter(p => ["sao-luis", "barreirinhas", "atins", "parnaiba", "jericoacoara", "fortaleza"].includes(p.id));
+      const cx = nordeste.reduce((s, p) => s + p.x, 0) / nordeste.length;
+      const cy = nordeste.reduce((s, p) => s + p.y, 0) / nordeste.length;
+      const r = 215;
+      // Handle angle: bottom-right
+      const handleAngle = 0.78;
+      const hx1 = cx + r * Math.cos(handleAngle);
+      const hy1 = cy + r * Math.sin(handleAngle);
+      const hx2 = cx + (r + 90) * Math.cos(handleAngle);
+      const hy2 = cy + (r + 90) * Math.sin(handleAngle);
+      html += `
+    <g class="loupe">
+      <line class="loupe-handle" x1="${hx1.toFixed(1)}" y1="${hy1.toFixed(1)}" x2="${hx2.toFixed(1)}" y2="${hy2.toFixed(1)}"/>
+      <circle class="loupe-glass" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r - 8}"/>
+      <circle class="loupe-frame-outer" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r}"/>
+      <circle class="loupe-frame-shadow" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r - 7}"/>
+      <circle class="loupe-frame-highlight" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r + 7}"/>
+    </g>
+  `;
+
+      // ---------- City markers + labels ----------
+      positions.forEach(p => {
+        const isStop = p.nuits > 0;
+        const big = p.nuits >= 3; // larger emphasis for long stays
+        // Decide label position: above the dot for the south, below for the north
+        const labelBelow = p.y < 200;
+        const dy0 = labelBelow ? 22 : -32;
+        const dy1 = labelBelow ? 38 : -16;
+        const dy2 = labelBelow ? 52 : 0;
+        html += `
+      <g>
+        <circle class="city-dot ${big ? 'big' : ''}" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${big ? 5 : 3.5}"/>
+        <text class="city-name ${big ? 'big' : ''}" x="${p.x.toFixed(1)}" y="${(p.y + dy0).toFixed(1)}" text-anchor="middle">${p.ville}</text>
+        <text class="city-meta" x="${p.x.toFixed(1)}" y="${(p.y + dy1).toFixed(1)}" text-anchor="middle">${formatDate(p.dateArrivee)}${p.nuits > 0 ? ' → ' + formatDate(p.dateDepart) : ''}</text>
+        ${isStop ? `<text class="city-nights" x="${p.x.toFixed(1)}" y="${(p.y + dy2).toFixed(1)}" text-anchor="middle">${p.nuits} ${p.nuits > 1 ? 'nuits' : 'nuit'}</text>` : ''}
+      </g>
+    `;
+      });
+
+      svg.innerHTML = html;
+    }
+  </script>
+</body>
+
+</html>

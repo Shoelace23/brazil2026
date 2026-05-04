@@ -1,0 +1,948 @@
+{
+  "voyage": {
+    "titre": "Brésil 2026 — Le grand circuit",
+    "sousTitre": "Rio · Bahia · Lençóis · Delta do Parnaíba · Jericoacoara · Boipeba",
+    "dateDepart": "2026-07-25",
+    "dateRetour": "2026-08-23",
+    "dureeNuits": 27,
+    "voyageurs": [
+      {
+        "famille": "Famille A (Bracq)",
+        "membres": [
+          {
+            "prenom": "François",
+            "role": "Adulte"
+          },
+          {
+            "prenom": "—",
+            "role": "Adulte"
+          },
+          {
+            "prenom": "—",
+            "role": "Fille (18 ans)"
+          },
+          {
+            "prenom": "—",
+            "role": "Fille (15 ans)"
+          }
+        ]
+      },
+      {
+        "famille": "Famille B",
+        "membres": [
+          {
+            "prenom": "—",
+            "role": "Adulte"
+          },
+          {
+            "prenom": "—",
+            "role": "Adulte"
+          },
+          {
+            "prenom": "—",
+            "role": "Fille (18 ans)"
+          },
+          {
+            "prenom": "—",
+            "role": "Fils (15 ans)"
+          }
+        ]
+      }
+    ],
+    "totalVoyageurs": 8,
+    "dureeJours": 30
+  },
+  "etapes": [
+    {
+      "id": "rio",
+      "ordre": 1,
+      "ville": "Rio de Janeiro",
+      "region": "Rio de Janeiro",
+      "coords": [
+        -22.9068,
+        -43.1729
+      ],
+      "dateArrivee": "2026-07-26",
+      "dateDepart": "2026-07-31",
+      "nuits": 5,
+      "description": "Cinq nuits pour entrer dans le Brésil par sa porte la plus emblématique : Copacabana, Pain de Sucre, Christ Rédempteur, Santa Teresa et l'expérience favela à Vidigal.",
+      "horairesCles": [
+        {
+          "label": "Arrivée vol Francfort → Rio (GIG)",
+          "heure": "matin 26/07"
+        }
+      ],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Atlantis Copacabana Hotel",
+        "type": "Hôtel",
+        "etoiles": 3,
+        "prixParNuit": 175.0,
+        "devise": "EUR",
+        "plateforme": "Booking",
+        "url": "https://www.booking.com/hotel/br/atlantis-copacabana.html",
+        "adresse": "Rua Bulhões de Carvalho, 61 — Copacabana, Rio de Janeiro",
+        "telephone": "+55 21 2521-1142",
+        "checkIn": "15h00",
+        "checkOut": "12h00",
+        "coords": [
+          -22.987,
+          -43.19
+        ],
+        "atouts": [
+          "Front de mer Copacabana",
+          "À 200 m de la plage",
+          "Petit-déjeuner inclus",
+          "Wi-Fi gratuit",
+          "Climatisation"
+        ],
+        "shortlist": []
+      },
+      "activites": [
+        "Marché du dimanche · Praça General Osório (Ipanema)",
+        "Promenade Copacabana",
+        "Pain de Sucre",
+        "Christ Rédempteur",
+        "Experience favela · Vidigal",
+        "Santa Teresa & escaliers Selarón",
+        "Parque das Ruínas (vue baie de Guanabara)",
+        "Survol en hélicoptère",
+        "Plage"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "vol",
+        "modeLabel": "Vol international",
+        "duree": "≈ 14h (1 escale)",
+        "distanceKm": 9200,
+        "details": "Paris (CDG) 25/07 → Francfort (FRA) → Rio (GIG) 26/07 matin · Lufthansa",
+        "prixTotalEUR": 2855
+      },
+      "incontournables": [
+        {
+          "nom": "Pain de Sucre (Pão de Açúcar)",
+          "type": "site",
+          "quartier": "Urca",
+          "duree": "demi-journée",
+          "description": "Téléphérique en deux tronçons (Praia Vermelha → Morro da Urca → Pão de Açúcar). Vue spectaculaire sur la baie de Guanabara, à 396 m au-dessus de la mer.",
+          "conseil": "Y aller en fin d'après-midi pour le coucher de soleil. Réserver les billets en ligne pour éviter la queue. Compter R$ 185 par adulte.",
+          "coords": [
+            -22.9486,
+            -43.1571
+          ],
+          "site": "https://www.bondinho.com.br"
+        },
+        {
+          "nom": "Christ Rédempteur (Cristo Redentor)",
+          "type": "site",
+          "quartier": "Corcovado",
+          "duree": "matinée",
+          "description": "Statue géante de 38 m au sommet du Corcovado (710 m). Patrimoine UNESCO. Accès via le train à crémaillère du Parque Lage.",
+          "conseil": "Tôt le matin pour éviter la foule et avoir le ciel dégagé. Réservation obligatoire en ligne. Compter R$ 110 par adulte.",
+          "coords": [
+            -22.9519,
+            -43.2105
+          ],
+          "site": "https://paineirascorcovado.com.br"
+        },
+        {
+          "nom": "Plage de Copacabana",
+          "type": "plage",
+          "quartier": "Copacabana",
+          "duree": "à volonté",
+          "description": "Plage iconique de 4 km, ambiance familiale et sportive. À deux pas de l'hôtel.",
+          "conseil": "Louer chaise + parasol auprès des kiosques (R$ 30-50). Goûter une água de coco fraîche. Attention aux vols : ne rien laisser sans surveillance.",
+          "coords": [
+            -22.9711,
+            -43.1822
+          ]
+        },
+        {
+          "nom": "Marché du dimanche · Feira Hippie de Ipanema",
+          "type": "marché",
+          "quartier": "Praça General Osório, Ipanema",
+          "duree": "matinée",
+          "description": "Marché artisanal historique du dimanche matin. Bijoux, peintures, vêtements, gastronomie locale. Une institution depuis les années 60.",
+          "conseil": "Y aller avant 11h pour éviter la foule. Marchander reste accepté. Combiner avec un brunch dans Ipanema.",
+          "coords": [
+            -22.9847,
+            -43.2052
+          ]
+        },
+        {
+          "nom": "Santa Teresa & Escaliers Selarón",
+          "type": "quartier",
+          "quartier": "Santa Teresa / Lapa",
+          "duree": "demi-journée",
+          "description": "Quartier bohème sur les hauteurs, accessible par tramway (bondinho de Santa Teresa) ou taxi. Les Escaliers Selarón (215 marches en céramiques colorées) relient Santa Teresa à Lapa.",
+          "conseil": "Combiner avec un déjeuner dans un boteco du quartier (Bar do Mineiro). Les Escaliers se visitent en 30 min, gratuit.",
+          "coords": [
+            -22.9151,
+            -43.1799
+          ]
+        },
+        {
+          "nom": "Parque das Ruínas",
+          "type": "site",
+          "quartier": "Santa Teresa",
+          "duree": "1h",
+          "description": "Ancienne demeure d'une mécène de la Belle Époque, transformée en centre culturel. Vue spectaculaire sur la baie de Guanabara depuis la passerelle métallique.",
+          "conseil": "Combiner avec la visite de Santa Teresa. Entrée gratuite. Ouvert du mardi au dimanche, 9h-18h.",
+          "coords": [
+            -22.9182,
+            -43.181
+          ]
+        },
+        {
+          "nom": "Experience favela · Vidigal",
+          "type": "experience",
+          "quartier": "Vidigal",
+          "duree": "demi-journée",
+          "description": "Visite encadrée de la favela la plus prisée de Rio, accrochée au flanc du Morro Dois Irmãos. Vue sublime sur la mer et la plage de Leblon.",
+          "conseil": "Choisir une agence locale recommandée (ex : Vidigal Tours). Ne pas y aller seul sans guide. Soutenir l'économie locale en consommant sur place.",
+          "coords": [
+            -22.9967,
+            -43.2356
+          ]
+        },
+        {
+          "nom": "Survol en hélicoptère",
+          "type": "experience",
+          "quartier": "Lagoa",
+          "duree": "20 min",
+          "description": "Vol panoramique de 15 à 20 minutes au-dessus de Rio : Christ, Pain de Sucre, plages de Copacabana et Ipanema, lagoa Rodrigo de Freitas.",
+          "conseil": "Réserver à l'avance. Reporter si ciel couvert. Compter ~ 250 à 400 €/personne selon la durée. Décollage depuis l'héliport de Lagoa.",
+          "coords": [
+            -22.9789,
+            -43.2071
+          ]
+        }
+      ],
+      "meteoLocale": {
+        "saison": "Saison sèche · hiver austral",
+        "temperatures": "20-26°C en journée, 18-21°C la nuit",
+        "pluie": "Pluies rares (~ 3 jours par mois)",
+        "mer": "Mer ~22°C, baignable mais fraîche"
+      },
+      "conseilsLocaux": [
+        "Sécurité : éviter les bijoux ostentatoires sur la plage et dans la rue. Privilégier Uber au taxi de rue.",
+        "Transport : Uber très bon marché (R$ 15-30 pour la plupart des trajets). Métro propre pour Centro / Lapa.",
+        "Argent : payer en carte partout. Distributeurs Banco do Brasil ou Bradesco pour les retraits.",
+        "Restos à tester : Aprazível (Santa Teresa), Garota de Ipanema, Confeitaria Colombo (Centro)."
+      ]
+    },
+    {
+      "id": "trancoso",
+      "ordre": 2,
+      "ville": "Trancoso",
+      "region": "Bahia",
+      "coords": [
+        -16.5878,
+        -39.0961
+      ],
+      "dateArrivee": "2026-07-31",
+      "dateDepart": "2026-08-03",
+      "nuits": 3,
+      "description": "Village balnéaire chic de la côte bahianaise, pousadas autour du Quadrado historique. Trois nuits pour décompresser, entre plages préservées et farniente.",
+      "horairesCles": [
+        {
+          "label": "Vol GOL (5KAQIYC)",
+          "heure": "GIG 12h40 → BPS 14h15"
+        }
+      ],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Pousada Quarto Crescente",
+        "type": "Pousada",
+        "prixParNuit": 249.33,
+        "devise": "EUR",
+        "plateforme": "Booking",
+        "shortlist": []
+      },
+      "activites": [
+        "Plages de Trancoso",
+        "Le Quadrado historique",
+        "Farniente"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "vol",
+        "modeLabel": "Vol intérieur + transfert",
+        "duree": "≈ 3h",
+        "distanceKm": 1450,
+        "details": "Rio (GIG) → Porto Seguro (BPS) GOL 12h40 → 14h15, puis taxi Porto Seguro → Trancoso (≈ 1h)",
+        "prixTotalEUR": 420
+      }
+    },
+    {
+      "id": "caraiva",
+      "ordre": 3,
+      "ville": "Caraíva",
+      "region": "Bahia",
+      "coords": [
+        -16.8042,
+        -39.1378
+      ],
+      "dateArrivee": "2026-08-03",
+      "dateDepart": "2026-08-07",
+      "nuits": 4,
+      "description": "Village isolé sans voitures, accessible en bateau via le rio Caraíva. Quatre nuits hors du temps, ambiance bout du monde sur la côte du Discovery.",
+      "horairesCles": [],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Chez Samuel",
+        "type": "Pousada",
+        "prixParNuit": null,
+        "devise": "EUR",
+        "plateforme": "en direct",
+        "note": "Prix à confirmer",
+        "shortlist": []
+      },
+      "activites": [
+        "Plages de Caraíva",
+        "Promenade jusqu'à Praia do Espelho",
+        "Farniente"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "voiture-bateau",
+        "modeLabel": "Route + bateau",
+        "duree": "≈ 1h30",
+        "distanceKm": 65,
+        "details": "Trancoso → Caraíva par la route puis traversée du rio Caraíva en bateau"
+      }
+    },
+    {
+      "id": "sao-luis",
+      "ordre": 4,
+      "ville": "São Luís",
+      "region": "Maranhão",
+      "coords": [
+        -2.5307,
+        -44.3068
+      ],
+      "dateArrivee": "2026-08-07",
+      "dateDepart": "2026-08-08",
+      "nuits": 1,
+      "description": "Capitale du Maranhão, centre historique colonial classé UNESCO. Première nuit avant la descente vers les Lençóis Maranhenses.",
+      "horairesCles": [
+        {
+          "label": "Vol GOL (5QLMCMN)",
+          "heure": "BPS 12h30 → SLZ 16h40 (escale SSA)"
+        }
+      ],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Praiabella Hotel",
+        "type": "Hôtel",
+        "prixParNuit": 162.0,
+        "devise": "EUR",
+        "plateforme": "Booking",
+        "shortlist": []
+      },
+      "activites": [
+        "Centre historique de São Luís",
+        "Dîner cuisine maranhense"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "vol",
+        "modeLabel": "Vol intérieur (1 escale)",
+        "duree": "≈ 4h10",
+        "distanceKm": 2400,
+        "details": "Caraíva → Porto Seguro (route) puis vol GOL BPS 12h30 → SSA → SLZ 16h40",
+        "prixTotalEUR": 548
+      }
+    },
+    {
+      "id": "barreirinhas",
+      "ordre": 5,
+      "ville": "Barreirinhas",
+      "region": "Maranhão",
+      "coords": [
+        -2.7536,
+        -42.8294
+      ],
+      "dateArrivee": "2026-08-08",
+      "dateDepart": "2026-08-09",
+      "nuits": 1,
+      "description": "Porte d'entrée du Parc National des Lençóis Maranhenses. Excursion à Lagoa Bonita l'après-midi pour le panorama sur les dunes et les lagunes.",
+      "horairesCles": [
+        {
+          "label": "Départ matinal en van",
+          "heure": "matin 08/08"
+        },
+        {
+          "label": "Excursion Lagoa Bonita",
+          "heure": "14h00"
+        }
+      ],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Pousada de Buruti",
+        "type": "Pousada",
+        "prixParNuit": 269.0,
+        "devise": "EUR",
+        "plateforme": "Booking",
+        "shortlist": []
+      },
+      "activites": [
+        "Excursion Lagoa Bonita (4x4 + montée de dune)",
+        "Lagunes profondes pour la baignade",
+        "Panorama immense sur les Lençóis"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "van",
+        "modeLabel": "Van privé 8 pax",
+        "duree": "≈ 4h30",
+        "distanceKm": 262,
+        "details": "São Luís → Barreirinhas, route asphaltée · Van privé ≈ R$ 1 200"
+      }
+    },
+    {
+      "id": "atins",
+      "ordre": 6,
+      "ville": "Atins",
+      "region": "Maranhão (Lençóis)",
+      "coords": [
+        -2.5836,
+        -42.7339
+      ],
+      "dateArrivee": "2026-08-09",
+      "dateDepart": "2026-08-11",
+      "nuits": 2,
+      "description": "Village de pêcheurs hors du temps au cœur des Lençóis. Accès au désert profond, lagunes secrètes (Capivara, Andorinha) et déjeuner incontournable chez Dona Luzia.",
+      "horairesCles": [],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Casa LuMar",
+        "type": "Pousada",
+        "prixParNuit": 352.5,
+        "devise": "EUR",
+        "plateforme": "Booking",
+        "shortlist": []
+      },
+      "activites": [
+        "Trajet par le rio Preguiças (voadeira)",
+        "Vassouras · Petits Lençóis & singes capucins",
+        "Mandacaru · phare et vue 360°",
+        "Caburé · pointe de sable entre fleuve et mer",
+        "Le désert profond · Canto do Atins",
+        "Lagoa da Capivara",
+        "Lagoa da Andorinha",
+        "Déjeuner chez Dona Luzia"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "bateau",
+        "modeLabel": "Voadeira (rio Preguiças)",
+        "duree": "≈ 3h",
+        "distanceKm": 50,
+        "details": "Barreirinhas → Atins en bateau rapide sur le rio Preguiças · arrêts possibles à Vassouras, Mandacaru, Caburé"
+      }
+    },
+    {
+      "id": "parnaiba",
+      "ordre": 7,
+      "ville": "Parnaíba",
+      "region": "Piauí",
+      "coords": [
+        -2.9039,
+        -41.7766
+      ],
+      "dateArrivee": "2026-08-11",
+      "dateDepart": "2026-08-12",
+      "nuits": 1,
+      "description": "Étape clé de la Rota das Emoções : traversée magique du Delta do Parnaíba avec l'envol des Guarás (Ibis rouges) au coucher du soleil.",
+      "horairesCles": [
+        {
+          "label": "Envol des Guarás",
+          "heure": "17h30"
+        }
+      ],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Oceane Norte Hotel",
+        "type": "Hôtel",
+        "prixParNuit": 88.47,
+        "devise": "EUR",
+        "plateforme": "Booking",
+        "note": "Alternative envisagée : Pousada Ilha dos Poldros",
+        "shortlist": []
+      },
+      "activites": [
+        "Bateau rapide privé dans le Delta das Américas",
+        "Observation des Guarás (Ibis rouges) à 17h30",
+        "Déjeuner libre à Tutóia ou en route"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "4x4-bateau",
+        "modeLabel": "4x4 + bateau",
+        "duree": "≈ 7-8h",
+        "distanceKm": 180,
+        "details": "Atins → Tutóia (4x4 sur la plage) → bateau rapide à travers le Delta das Américas → Parnaíba · ecoadventure.tur.br · 4x4 privé R$ 2 000 + bateau R$ 180/pax"
+      }
+    },
+    {
+      "id": "jericoacoara",
+      "ordre": 8,
+      "ville": "Jericoacoara",
+      "region": "Ceará",
+      "coords": [
+        -2.7975,
+        -40.5136
+      ],
+      "dateArrivee": "2026-08-12",
+      "dateDepart": "2026-08-16",
+      "nuits": 4,
+      "description": "Village mythique du Nordeste, sans routes goudronnées. Quatre nuits entre dunes, lagunes turquoises et coucher de soleil sur la Duna do Pôr do Sol.",
+      "horairesCles": [],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Mym Dunas",
+        "type": "Pousada",
+        "prixParNuit": 120.0,
+        "devise": "EUR",
+        "plateforme": "en direct",
+        "shortlist": []
+      },
+      "activites": [
+        "Pedra do Sal (en route)",
+        "Barra Grande · Rota do Cavalo-Marinho (hippocampes en pirogue)",
+        "Tatajuba · Ski-bunda et tyrolienne",
+        "Lagoinha do Paraíso · hamacs dans l'eau turquoise (R$ 500/buggy 4 pax)",
+        "Beach Club The Alchymist",
+        "Coucher de soleil · Duna do Pôr do Sol",
+        "Jour de farniente"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "4x4",
+        "modeLabel": "4x4 off-road",
+        "duree": "≈ 2 jours",
+        "distanceKm": 330,
+        "details": "Parnaíba → Pedra do Sal → Barra Grande → traversée des plages de Camocim → Tatajuba (descente de dunes Ski-bunda) → entrée triomphale à Jeri par les dunes · 177 km de Barra Grande à Jeri"
+      }
+    },
+    {
+      "id": "fortaleza",
+      "ordre": 9,
+      "ville": "Fortaleza",
+      "region": "Ceará",
+      "coords": [
+        -3.7172,
+        -38.5434
+      ],
+      "dateArrivee": "2026-08-16",
+      "dateDepart": "2026-08-17",
+      "nuits": 1,
+      "description": "Étape de transit avant le vol vers Salvador. Une nuit en bord de mer.",
+      "horairesCles": [],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Praiano Hotel",
+        "type": "Hôtel",
+        "prixParNuit": 164.0,
+        "devise": "EUR",
+        "plateforme": "en direct",
+        "shortlist": []
+      },
+      "activites": [
+        "Front de mer Praia do Futuro / Iracema"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "van",
+        "modeLabel": "Van privé 8 pax",
+        "duree": "≈ 5h",
+        "distanceKm": 300,
+        "details": "Jericoacoara → Fortaleza en van privée climatisée · ≈ 300 € total (37 €/pax) · alternatives : bus Guanabara R$ 1 000/pax 6h30, van partagée R$ 1 400/pax 6h"
+      }
+    },
+    {
+      "id": "salvador-1",
+      "ordre": 10,
+      "ville": "Salvador de Bahia",
+      "region": "Bahia",
+      "coords": [
+        -12.9714,
+        -38.5014
+      ],
+      "dateArrivee": "2026-08-17",
+      "dateDepart": "2026-08-18",
+      "nuits": 1,
+      "description": "Première nuit à Salvador, étape pivot avant Boipeba.",
+      "horairesCles": [
+        {
+          "label": "Vol GOL (EYYRHX)",
+          "heure": "FOR 11h55 → SSA 13h50"
+        }
+      ],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Onda Azul",
+        "type": "Hôtel",
+        "prixParNuit": 78.0,
+        "devise": "EUR",
+        "plateforme": "Booking",
+        "shortlist": []
+      },
+      "activites": [
+        "Soirée à Salvador"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "vol",
+        "modeLabel": "Vol intérieur",
+        "duree": "≈ 2h",
+        "distanceKm": 1200,
+        "details": "Fortaleza (FOR) 11h55 → Salvador (SSA) 13h50 · GOL EYYRHX",
+        "prixTotalEUR": 286
+      }
+    },
+    {
+      "id": "boipeba",
+      "ordre": 11,
+      "ville": "Ilha de Boipeba",
+      "region": "Bahia",
+      "coords": [
+        -13.6275,
+        -38.9097
+      ],
+      "dateArrivee": "2026-08-18",
+      "dateDepart": "2026-08-21",
+      "nuits": 3,
+      "description": "Île préservée au sud de Salvador, accessible uniquement par bateau. Plages désertes, piscines naturelles à Moreré, ambiance bout du monde.",
+      "horairesCles": [],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Pouso da Maré",
+        "type": "Pousada",
+        "prixParNuit": 142.67,
+        "devise": "EUR",
+        "plateforme": "en direct",
+        "shortlist": []
+      },
+      "activites": [
+        "Plage de Moreré · piscines naturelles",
+        "Tour des plages en barque",
+        "Snorkeling sur les récifs",
+        "Cuisine locale (poissons et fruits de mer)"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "voiture-bateau",
+        "modeLabel": "Voiture + bateau",
+        "duree": "≈ 4-5h",
+        "distanceKm": 250,
+        "details": "Salvador → Valença (route, ≈ 3h) → bateau jusqu'à Boipeba (≈ 1h30)"
+      }
+    },
+    {
+      "id": "salvador-2",
+      "ordre": 12,
+      "ville": "Salvador de Bahia",
+      "region": "Bahia",
+      "coords": [
+        -12.9714,
+        -38.5014
+      ],
+      "dateArrivee": "2026-08-21",
+      "dateDepart": "2026-08-22",
+      "nuits": 1,
+      "description": "Dernière nuit du voyage. Visite du Pelourinho et de la culture afro-brésilienne avant le vol retour.",
+      "horairesCles": [],
+      "hebergement": {
+        "statut": "réservé",
+        "nom": "Bahiacafe Hotel",
+        "type": "Hôtel",
+        "prixParNuit": 234.46,
+        "devise": "EUR",
+        "plateforme": "Booking",
+        "shortlist": []
+      },
+      "activites": [
+        "Pelourinho · centre historique UNESCO",
+        "Église São Francisco",
+        "Elevador Lacerda + Mercado Modelo",
+        "Dîner moqueca de peixe"
+      ],
+      "transferts": [],
+      "legIn": {
+        "mode": "voiture-bateau",
+        "modeLabel": "Bateau + voiture",
+        "duree": "≈ 4-5h",
+        "distanceKm": 250,
+        "details": "Boipeba → Valença (bateau) → Salvador (route, ≈ 3h)"
+      }
+    },
+    {
+      "id": "retour-paris",
+      "ordre": 13,
+      "ville": "Retour Paris",
+      "region": "Vol retour",
+      "coords": [
+        48.8566,
+        2.3522
+      ],
+      "dateArrivee": "2026-08-23",
+      "dateDepart": "2026-08-23",
+      "nuits": 0,
+      "description": "Vol retour Salvador → Madrid → Paris avec Air Europa.",
+      "horairesCles": [
+        {
+          "label": "Air Europa SSA → MAD",
+          "heure": "22/08 21h40 → 23/08 11h10"
+        },
+        {
+          "label": "Air Europa MAD → ORY",
+          "heure": "23/08 14h20 → 16h15"
+        }
+      ],
+      "hebergement": null,
+      "activites": [],
+      "transferts": [],
+      "legIn": {
+        "mode": "vol",
+        "modeLabel": "Vol retour international",
+        "duree": "≈ 16h (1 escale)",
+        "distanceKm": 7400,
+        "details": "Salvador (SSA) 22/08 21h40 → Madrid (MAD) 23/08 11h10 → Paris (ORY) 16h15 · Air Europa · bagage en soute +120 €",
+        "prixTotalEUR": 1885
+      }
+    }
+  ],
+  "agencesReceptives": [
+    {
+      "nom": "Lençóis Turismo",
+      "specialite": "Lençóis Maranhenses + Rota das Emoções",
+      "services": [
+        "Transferts",
+        "Excursions 4x4",
+        "Bateau",
+        "Hébergements"
+      ],
+      "notes": "Très bon service client selon leur site",
+      "url": null
+    },
+    {
+      "nom": "Nômade Lençóis Tour",
+      "specialite": "Lençóis - tours sur mesure",
+      "services": [
+        "Transferts São Luís/Barreirinhas/Atins",
+        "Tours aventure dunes"
+      ],
+      "notes": "Forte sur la durabilité et le respect de la nature",
+      "url": null
+    },
+    {
+      "nom": "Encantes do Nordeste",
+      "specialite": "Réceptif Barreirinhas - écotourisme Maranhão",
+      "services": [
+        "Transferts",
+        "Excursions",
+        "Hébergements",
+        "Itinéraires personnalisés"
+      ],
+      "notes": "Service concierge",
+      "url": null
+    },
+    {
+      "nom": "Lopes Rota das Emoções & Turismo",
+      "specialite": "Rota das Emoções complète",
+      "services": [
+        "Packages",
+        "Transferts 4x4",
+        "Bateau",
+        "Hébergements"
+      ],
+      "notes": "Spécialiste de la route entière",
+      "url": null
+    },
+    {
+      "nom": "Brasil Planet",
+      "specialite": "Lençóis + Atins (francophones)",
+      "services": [
+        "Transferts",
+        "Excursions 4x4",
+        "Bateaux"
+      ],
+      "notes": "Bien noté par voyageurs francophones",
+      "url": null
+    },
+    {
+      "nom": "RTUR Viagens Turismo",
+      "specialite": "Rota das Emoções (10+ ans d'expérience)",
+      "services": [
+        "Transferts partagés ou privés",
+        "Tours 4x4"
+      ],
+      "notes": "Avis clients positifs : ponctualité, sérieux",
+      "url": "https://rturviagensturismo.net.br",
+      "contacts": [
+        "WhatsApp +55 98 98885-5977",
+        "contato@rturviagensturismo.net.br"
+      ]
+    },
+    {
+      "nom": "HardTour Ecoturismo & Aventura",
+      "specialite": "Aventure 4x4, off-road, kitetrips",
+      "services": [
+        "Tours sur mesure",
+        "Routes off-road",
+        "Kitetrips"
+      ],
+      "notes": "Très expérimentée dans la Rota das Emoções",
+      "url": null
+    },
+    {
+      "nom": "Terra Brazil Experience",
+      "specialite": "Travel designer haut de gamme",
+      "services": [
+        "Expéditions 4x4",
+        "UTV",
+        "Hébergements sélectionnés"
+      ],
+      "notes": "Sensibilité durable, CO₂ compensé",
+      "url": null
+    },
+    {
+      "nom": "Eco Adventure Tour",
+      "specialite": "Expéditions Rota das Emoções",
+      "services": [
+        "Packages 7-13 jours",
+        "Transferts 4x4 et bateaux"
+      ],
+      "notes": "Plusieurs versions (essentiel, in-natura...)",
+      "url": null
+    },
+    {
+      "nom": "Marlei Turismo",
+      "specialite": "Package Rota das Emoções 9j/8n",
+      "services": [
+        "Lençóis",
+        "Delta",
+        "Jeri"
+      ],
+      "notes": "Plus traditionnelle, rassurant pour la logistique",
+      "url": null
+    },
+    {
+      "nom": "Cia Eco Viagens",
+      "specialite": "Rota das Emoções confort 12 jours",
+      "services": [
+        "Véhicules 4x4 privés",
+        "Guides",
+        "Hébergements"
+      ],
+      "notes": "Bon niveau de service / sécurité",
+      "url": null
+    },
+    {
+      "nom": "Mangue Brasil Turismo",
+      "specialite": "Maranhense, expert Lençóis",
+      "services": [
+        "Personnalisation des tours"
+      ],
+      "notes": "Vraie connaissance locale Lençóis",
+      "url": null
+    },
+    {
+      "nom": "Amaré Trip",
+      "specialite": "Voyages en groupe Rota das Emoções 8j",
+      "services": [
+        "Jeri",
+        "Delta",
+        "Lençóis"
+      ],
+      "notes": "Idéal pour partager l'expérience",
+      "url": null
+    },
+    {
+      "nom": "Aris do Mar Turismo",
+      "specialite": "Delta do Parnaíba (Piauí)",
+      "services": [
+        "Excursions nature",
+        "Bateau Delta"
+      ],
+      "notes": "Agence locale Parnaíba",
+      "url": "https://arisdomar.com.br",
+      "contacts": [
+        "WhatsApp +55 98 98918-1701",
+        "contato@arisdomar.com.br"
+      ]
+    },
+    {
+      "nom": "Atlas Ecoturismo",
+      "specialite": "Rota das Emoções (Parnaíba)",
+      "services": [
+        "Réservations Rota das Emoções"
+      ],
+      "notes": "Économique",
+      "url": null,
+      "contacts": [
+        "+55 86 99908-8704",
+        "+55 86 99408-6679",
+        "atlasecoturismo@gmail.com"
+      ]
+    },
+    {
+      "nom": "EcoDunas Turismo",
+      "specialite": "Rota das Emoções complète (Fortaleza)",
+      "services": [
+        "FOR ↔ SLZ complet"
+      ],
+      "notes": "Moyenne à premium",
+      "url": "https://ecodunas.tur.br",
+      "contacts": []
+    },
+    {
+      "nom": "Rota Combo",
+      "specialite": "Packages 4x4 + bateaux (Fortaleza/Parnaíba)",
+      "services": [
+        "Packages Rota das Emoções"
+      ],
+      "notes": null,
+      "url": "https://rotacombo.com.br",
+      "contacts": []
+    },
+    {
+      "nom": "Barratur",
+      "specialite": "Lençóis Maranhenses, Atins, bateaux",
+      "services": [
+        "Bateaux",
+        "Excursions Lençóis"
+      ],
+      "notes": null,
+      "url": "https://barratur.com.br",
+      "contacts": []
+    }
+  ],
+  "infosPratiques": {
+    "visa": "Pas de visa requis pour les Français pour un séjour touristique de moins de 90 jours.",
+    "monnaie": "Real brésilien (BRL). Cartes Visa/Mastercard acceptées en ville. Prévoir du cash pour Lençóis et Boipeba.",
+    "fuseau": "GMT-3 (Brésil ne pratique plus l'heure d'été depuis 2019). Décalage avec Paris : -5h en été français.",
+    "langue": "Portugais brésilien. L'anglais reste limité hors zones touristiques — quelques mots de portugais très utiles.",
+    "sante": [
+      "Vaccin fièvre jaune : recommandé/obligatoire selon les zones (à confirmer auprès d'un centre de vaccination internationale).",
+      "Antipaludéen : pas systématique mais à discuter pour le delta du Parnaíba.",
+      "Anti-moustiques (DEET ≥ 30%) indispensable.",
+      "Crème solaire indice 50, lunettes, casquette : impératif sur les dunes."
+    ],
+    "meteo": {
+      "saison": "Août = saison sèche dans tout le Nordeste. Période idéale pour les Lençóis (lagunes encore pleines après les pluies de mars-juin).",
+      "temperatures": "26-32°C en journée, 22-25°C la nuit. Vent constant à Jericoacoara (saison kitesurf)."
+    },
+    "valise": [
+      "Maillots de bain (×2 minimum)",
+      "Vêtements légers, secs vite",
+      "Une polaire fine pour les vols climatisés",
+      "Chaussures confortables + sandales aquatiques",
+      "Lampe frontale (Boipeba, Atins le soir)",
+      "Adaptateur prise (Brésil = type N, mais prises mixtes courantes)",
+      "Trousse pharmacie de base (anti-diarrhéique, désinfectant, pansements)"
+    ]
+  }
+}

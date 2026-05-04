@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Préparer le voyage — Brésil 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"></span>
+      <span>Brésil 2026</span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu">Menu</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="itineraire.html">Itinéraire</a></li>
+      <li><a href="carte.html">Carte</a></li>
+      <li><a href="hotels.html">Hébergements</a></li>
+      <li><a href="pratique.html">Préparer le voyage</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="container-narrow">
+  <section class="section">
+    <div class="section-header">
+      <span class="eyebrow">Préparer le voyage</span>
+      <h2>Tout ce qu'il faut savoir <em>avant de partir</em></h2>
+      <p class="lead">Visa, santé, monnaie, météo, valise — l'essentiel pour partir l'esprit tranquille.</p>
+    </div>
+    <div class="card-grid" id="practical-grid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="eyebrow">Pendant le voyage</span>
+      <h2>Le carnet <em>dans la poche</em></h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Sur ton téléphone</h3>
+        <p>Le travel book est responsive. Ouvre-le sur ton mobile et ajoute la page d'accueil à ton écran d'accueil pour y accéder en un seul appui.</p>
+        <p style="color:var(--color-text-muted);font-size:0.88rem;">Sur Safari ou Chrome mobile, appuie sur « Partager » puis « Sur l'écran d'accueil ».</p>
+      </div>
+      <div class="card">
+        <h3>Contacts d'urgence</h3>
+        <p style="color: var(--color-text-muted); font-style: italic;">À compléter : ambassade, agence locale, assurance voyage, contact familial.</p>
+      </div>
+      <div class="card">
+        <h3>Documents importants</h3>
+        <p style="color: var(--color-text-muted); font-style: italic;">À compléter : numéros de passeports, billets d'avion, attestation d'assurance, voucher hôtels.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="brand"><span class="brand-mark"></span> Brésil 2026</span>
+    <span><a href="index.html">Retour à l'accueil</a></span>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(async function() {
+  const data = await loadData();
+  if (!data) return;
+  const p = data.infosPratiques;
+
+  const grid = document.getElementById("practical-grid");
+  grid.innerHTML = `
+    <div class="card">
+      <h3>Visa</h3>
+      <p>${escapeHtml(p.visa)}</p>
+    </div>
+    <div class="card">
+      <h3>Monnaie</h3>
+      <p>${escapeHtml(p.monnaie)}</p>
+    </div>
+    <div class="card">
+      <h3>Fuseau horaire</h3>
+      <p>${escapeHtml(p.fuseau)}</p>
+    </div>
+    <div class="card">
+      <h3>Langue</h3>
+      <p>${escapeHtml(p.langue)}</p>
+    </div>
+    <div class="card">
+      <h3>Météo en août</h3>
+      <p><strong>Saison.</strong> ${escapeHtml(p.meteo.saison)}</p>
+      <p><strong>Températures.</strong> ${escapeHtml(p.meteo.temperatures)}</p>
+    </div>
+    <div class="card">
+      <h3>Santé</h3>
+      <ul style="padding-left:1.2rem;margin:0;">${p.sante.map(s => `<li style="margin-bottom:0.4rem;">${escapeHtml(s)}</li>`).join("")}</ul>
+    </div>
+    <div class="card" style="grid-column: 1 / -1;">
+      <h3>La valise idéale</h3>
+      <ul style="columns: 2; column-gap: 2.5rem; margin: 0.5rem 0; padding-left: 1.2rem;">
+        ${p.valise.map(v => `<li style="margin-bottom:0.3rem;">${escapeHtml(v)}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+})();
+</script>
+</body>
+</html>
