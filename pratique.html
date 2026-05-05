@@ -40,6 +40,15 @@
 
   <section class="section">
     <div class="section-header">
+      <span class="eyebrow">Checklist</span>
+      <h2>Préparation <em>en trois étapes</em></h2>
+      <p class="lead">Avancée enregistrée localement dans ton navigateur — tu retrouveras tes cases cochées à chaque visite.</p>
+    </div>
+    <div id="checklist-container"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
       <span class="eyebrow">Pendant le voyage</span>
       <h2>Le carnet <em>dans la poche</em></h2>
     </div>
@@ -110,7 +119,92 @@
       </ul>
     </div>
   `;
+
+  // ---------- Checklist préparation ----------
+  if (p.checklist) {
+    renderChecklist(p.checklist);
+  }
 })();
+
+const STORAGE_KEY = "travel-checklist-brazil-2026";
+
+function loadChecklistState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+  catch (_) { return {}; }
+}
+function saveChecklistState(state) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch (_) {}
+}
+
+function renderChecklist(checklist) {
+  const sections = [
+    { key: "trois_mois_avant", eyebrow: "J − 3 mois", title: "Trois mois avant" },
+    { key: "un_mois_avant",    eyebrow: "J − 1 mois", title: "Un mois avant" },
+    { key: "jour_du_depart",   eyebrow: "Jour J",     title: "Le jour du départ" }
+  ];
+
+  const container = document.getElementById("checklist-container");
+  if (!container) return;
+
+  container.innerHTML = `<div class="checklist-grid">
+    ${sections.map(s => {
+      const items = checklist[s.key] || [];
+      return `
+        <div class="checklist-card" data-section="${s.key}">
+          <div class="checklist-card-eyebrow">${escapeHtml(s.eyebrow)}</div>
+          <h3 class="checklist-card-title">${escapeHtml(s.title)}</h3>
+          <div class="checklist-progress">
+            <span class="checklist-progress-text">0 / ${items.length}</span>
+            <span class="checklist-progress-bar"><span class="checklist-progress-fill"></span></span>
+          </div>
+          <ul class="checklist-list">
+            ${items.map((item, i) => {
+              const id = `cl-${s.key}-${i}`;
+              return `
+                <li class="checklist-item">
+                  <input type="checkbox" id="${id}" data-key="${s.key}-${i}">
+                  <label for="${id}">${escapeHtml(item)}</label>
+                </li>
+              `;
+            }).join("")}
+          </ul>
+        </div>
+      `;
+    }).join("")}
+  </div>`;
+
+  // Restore state + listeners
+  const state = loadChecklistState();
+  container.querySelectorAll(".checklist-item input[type='checkbox']").forEach(cb => {
+    const key = cb.dataset.key;
+    if (state[key]) {
+      cb.checked = true;
+      cb.closest(".checklist-item").classList.add("done");
+    }
+    cb.addEventListener("change", () => {
+      const s = loadChecklistState();
+      s[key] = cb.checked;
+      saveChecklistState(s);
+      cb.closest(".checklist-item").classList.toggle("done", cb.checked);
+      updateChecklistProgress();
+    });
+  });
+  updateChecklistProgress();
+}
+
+function updateChecklistProgress() {
+  document.querySelectorAll(".checklist-card").forEach(card => {
+    const inputs = card.querySelectorAll("input[type='checkbox']");
+    const done = Array.from(inputs).filter(i => i.checked).length;
+    const total = inputs.length;
+    const pct = total ? (done / total) * 100 : 0;
+    const txt = card.querySelector(".checklist-progress-text");
+    const fill = card.querySelector(".checklist-progress-fill");
+    if (txt) txt.textContent = `${done} / ${total}`;
+    if (fill) fill.style.width = pct + "%";
+  });
+}
 </script>
 </body>
 </html>

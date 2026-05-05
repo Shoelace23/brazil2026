@@ -54,7 +54,7 @@
   <!-- Chemin de fer -->
   <section class="cdf-section cdf-section-tight">
     <div class="container">
-      <div class="section-header" style="margin-bottom: 1rem;">
+      <div class="section-header" style="margin-bottom: 0.5rem;">
         <span class="eyebrow">L'itinéraire</span>
       </div>
 
@@ -156,6 +156,7 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="assets/js/data.js"></script>
   <script src="assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     // SVG icons for transport modes (Lucide-style line icons)
     const TRANSPORT_ICONS = {
@@ -654,114 +655,181 @@
     }
 
     // ============================================================================
-    // To-Do Module Logic
+    // To-Do Module Logic (Supabase Integration)
     // ============================================================================
+    // Remplacer par vos propres identifiants Supabase
+    const SUPABASE_URL = 'https://foqtfrlowybtedgllxwi.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_7zEPygSrx4o2-RHmPVMBPw__5NQm9xC';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let todos = { 'todo-3m': [], 'todo-1m': [], 'todo-j0': [] };
+
     document.addEventListener("DOMContentLoaded", () => {
-      const defaultTodos = {
-        'todo-3m': [
-          { text: "Réserver les vols", done: false },
-          { text: "Vérifier la validité des passeports (6 mois après le retour)", done: false },
-          { text: "Mettre à jour les vaccins", done: false }
-        ],
-        'todo-1m': [
-          { text: "Souscrire une assurance voyage", done: false },
-          { text: "Préparer une trousse à pharmacie", done: false },
-          { text: "Acheter un adaptateur de prise", done: false }
-        ],
-        'todo-j0': [
-          { text: "S'enregistrer en ligne pour le vol", done: false },
-          { text: "Prendre les passeports et billets", done: false },
-          { text: "Couper l'eau et le gaz", done: false }
-        ]
-      };
+      loadTodos();
 
-      let todos = JSON.parse(localStorage.getItem('brazil2026_todos'));
-      if (!todos) {
-        todos = defaultTodos;
-        localStorage.setItem('brazil2026_todos', JSON.stringify(todos));
-      }
-
-      function renderTodos(paneId) {
-        const pane = document.getElementById(paneId);
-        if (!pane) return;
-        const ul = pane.querySelector('.todo-list');
-        ul.innerHTML = '';
-        
-        const undoneTasks = [];
-        const doneTasks = [];
-        todos[paneId].forEach((task, index) => {
-          if (task.done) doneTasks.push({ task, index });
-          else undoneTasks.push({ task, index });
-        });
-
-        const appendTask = ({ task, index }) => {
-          const li = document.createElement('li');
-          li.className = 'todo-item' + (task.done ? ' done' : '');
-          li.innerHTML = `
-            <label class="todo-label">
-              <input type="checkbox" ${task.done ? 'checked' : ''} data-pane="${paneId}" data-index="${index}">
-              <span class="todo-text">${escapeHtml(task.text)}</span>
-            </label>
-            <button class="todo-delete" data-pane="${paneId}" data-index="${index}" aria-label="Supprimer">×</button>
-          `;
-          ul.appendChild(li);
-        };
-
-        undoneTasks.forEach(appendTask);
-        doneTasks.forEach(appendTask);
-      }
-
-      document.querySelectorAll('.todo-pane').forEach(pane => {
-        renderTodos(pane.id);
-        
-        // Add task
-        const form = pane.querySelector('.todo-form');
-        if(form) {
-          form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const input = form.querySelector('input');
-            const text = input.value.trim();
-            if (text) {
-              todos[pane.id].push({ text, done: false });
-              localStorage.setItem('brazil2026_todos', JSON.stringify(todos));
-              renderTodos(pane.id);
-              input.value = '';
-            }
-          });
-        }
-      });
-
-      // Toggle & Delete
-      const todoModule = document.querySelector('.todo-module');
-      if (todoModule) {
-        todoModule.addEventListener('click', (e) => {
-          if (e.target.matches('input[type="checkbox"]')) {
-            const paneId = e.target.getAttribute('data-pane');
-            const index = e.target.getAttribute('data-index');
-            todos[paneId][index].done = e.target.checked;
-            localStorage.setItem('brazil2026_todos', JSON.stringify(todos));
-            renderTodos(paneId);
-          } else if (e.target.matches('.todo-delete')) {
-            const paneId = e.target.getAttribute('data-pane');
-            const index = e.target.getAttribute('data-index');
-            todos[paneId].splice(index, 1);
-            localStorage.setItem('brazil2026_todos', JSON.stringify(todos));
-            renderTodos(paneId);
-          }
-        });
-      }
-
-      // Tabs
+      // Tabs Logic
       const tabs = document.querySelectorAll('.todo-tab');
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
           tabs.forEach(t => t.classList.remove('active'));
           document.querySelectorAll('.todo-pane').forEach(p => p.classList.remove('active'));
           tab.classList.add('active');
-          document.getElementById(tab.getAttribute('data-target')).classList.add('active');
+          const target = tab.getAttribute('data-target');
+          document.getElementById(target).classList.add('active');
         });
       });
+
+      // Add Task logic (Event delegation for forms)
+      document.querySelectorAll('.todo-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const pane = form.closest('.todo-pane');
+          const input = form.querySelector('input');
+          const text = input.value.trim();
+          if (text && pane) {
+            const category = pane.id;
+            const { data, error } = await _supabase
+              .from('checklist')
+              .insert([{ text, category, done: false }])
+              .select();
+            
+            if (error) {
+              console.error('Error adding todo:', error);
+            } else {
+              todos[category].push({ id: data[0].id, text: data[0].text, done: data[0].done });
+              renderTodos(category);
+              input.value = '';
+            }
+          }
+        });
+      });
+
+      // Toggle & Delete logic (Event delegation)
+      const todoModule = document.querySelector('.todo-module');
+      if (todoModule) {
+        todoModule.addEventListener('click', async (e) => {
+          const btnDelete = e.target.closest('.todo-delete');
+          const checkbox = e.target.closest('input[type="checkbox"]');
+
+          if (checkbox) {
+            const category = checkbox.getAttribute('data-pane');
+            const id = checkbox.getAttribute('data-id');
+            const isDone = checkbox.checked;
+            
+            const { error } = await _supabase
+              .from('checklist')
+              .update({ done: isDone })
+              .eq('id', id);
+
+            if (error) {
+              console.error('Error updating todo:', error);
+              checkbox.checked = !isDone; // Revert on error
+            } else {
+              const task = todos[category].find(t => t.id === id);
+              if (task) task.done = isDone;
+              renderTodos(category);
+            }
+          } else if (btnDelete) {
+            const category = btnDelete.getAttribute('data-pane');
+            const id = btnDelete.getAttribute('data-id');
+            
+            const { error } = await _supabase
+              .from('checklist')
+              .delete()
+              .eq('id', id);
+
+            if (error) {
+              console.error('Error deleting todo:', error);
+            } else {
+              todos[category] = todos[category].filter(t => t.id !== id);
+              renderTodos(category);
+            }
+          }
+        });
+      }
     });
+
+    async function loadTodos() {
+      const { data, error } = await _supabase
+        .from('checklist')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      if (error) {
+        console.error('Error fetching todos:', error);
+        // Fallback to empty or show error
+        return;
+      }
+
+      // Initialisation des listes
+      todos = { 'todo-3m': [], 'todo-1m': [], 'todo-j0': [] };
+      
+      if (data && data.length > 0) {
+        data.forEach(item => {
+          if (todos[item.category]) {
+            todos[item.category].push({ id: item.id, text: item.text, done: item.done });
+          }
+        });
+      } else {
+        // Optionnel : Initialiser avec des données par défaut si vide
+        await seedDefaultTodos();
+      }
+      
+      ['todo-3m', 'todo-1m', 'todo-j0'].forEach(renderTodos);
+    }
+
+    async function seedDefaultTodos() {
+      const defaults = [
+        { category: 'todo-3m', text: "Réserver les vols", done: false },
+        { category: 'todo-3m', text: "Vérifier la validité des passeports (6 mois après le retour)", done: false },
+        { category: 'todo-3m', text: "Mettre à jour les vaccins", done: false },
+        { category: 'todo-1m', text: "Souscrire une assurance voyage", done: false },
+        { category: 'todo-1m', text: "Préparer une trousse à pharmacie", done: false },
+        { category: 'todo-1m', text: "Acheter un adaptateur de prise", done: false },
+        { category: 'todo-j0', text: "S'enregistrer en ligne pour le vol", done: false },
+        { category: 'todo-j0', text: "Prendre les passeports et billets", done: false },
+        { category: 'todo-j0', text: "Couper l'eau et le gaz", done: false }
+      ];
+      
+      const { data, error } = await _supabase.from('checklist').insert(defaults).select();
+      if (!error && data) {
+        data.forEach(item => {
+          todos[item.category].push({ id: item.id, text: item.text, done: item.done });
+        });
+      }
+    }
+
+    function renderTodos(category) {
+      const pane = document.getElementById(category);
+      if (!pane) return;
+      const ul = pane.querySelector('.todo-list');
+      if (!ul) return;
+      ul.innerHTML = '';
+      
+      const undoneTasks = [];
+      const doneTasks = [];
+      todos[category].forEach(task => {
+        if (task.done) doneTasks.push(task);
+        else undoneTasks.push(task);
+      });
+
+      const appendTask = (task) => {
+        const li = document.createElement('li');
+        li.className = 'todo-item' + (task.done ? ' done' : '');
+        li.innerHTML = `
+          <label class="todo-label">
+            <input type="checkbox" ${task.done ? 'checked' : ''} data-pane="${category}" data-id="${task.id}">
+            <span class="todo-text">${escapeHtml(task.text)}</span>
+          </label>
+          <button class="todo-delete" data-pane="${category}" data-id="${task.id}" aria-label="Supprimer">×</button>
+        `;
+        ul.appendChild(li);
+      };
+
+      undoneTasks.forEach(appendTask);
+      doneTasks.forEach(appendTask);
+    }
+
 
   </script>
 </body>

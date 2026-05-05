@@ -943,6 +943,29 @@
       "Lampe frontale (Boipeba, Atins le soir)",
       "Adaptateur prise (Brésil = type N, mais prises mixtes courantes)",
       "Trousse pharmacie de base (anti-diarrhéique, désinfectant, pansements)"
-    ]
+    ],
+    "checklist": {
+      "trois_mois_avant": [
+        "Vérifier la vaccination Fièvre Jaune (recommandée Nord-Est)",
+        "Vérifier validité passeports (> février 2027)",
+        "Confirmer transferts 4x4 / bateaux (Atins, Parnaíba, Jeri)",
+        "Vérifier options bagages vols GOL (Rio, São Luís)",
+        "Souscrire assurance voyage assistance / rapatriement"
+      ],
+      "un_mois_avant": [
+        "Informer la banque du voyage et augmenter les plafonds",
+        "Re-confirmer les réservations directes (Mym Dunas, Chez Samuel)",
+        "Acheter anti-moustique tropiques et crème solaire haute protection",
+        "Demander le permis de conduire international",
+        "Préparer la trousse à pharmacie de base"
+      ],
+      "jour_du_depart": [
+        "Télécharger billets et réservations en mode offline",
+        "Télécharger cartes Google Maps hors-connexion",
+        "Sauvegarder photos des passeports sur le Cloud",
+        "Charger les batteries externes (Powerbanks)",
+        "Prévoir du cash de secours (euros)"
+      ]
+    }
   }
 }
