@@ -1,135 +1,175 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hébergements — Brésil 2026</title>
+  <title>Hébergement et Transports — Brésil 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
 
-<header class="site-header">
-  <div class="nav-container">
-    <a href="index.html" class="brand">
-      <span class="brand-mark"></span>
-      <span>Brésil 2026</span>
-    </a>
-    <button class="nav-toggle" aria-label="Menu">Menu</button>
-    <ul class="nav-links">
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="hotels.html">Hébergements</a></li>
-      <li><a href="itineraire.html">Itinéraire</a></li>
-      <li><a href="carte.html">Carte</a></li>
-    </ul>
-  </div>
-</header>
-
-<main class="container-narrow">
-  <section class="section">
-    <div class="section-header">
-      <span class="eyebrow">Sélection</span>
-      <h2>Hôtels &amp; pousadas <em>par étape</em></h2>
-      <p class="lead">
-        Une présélection est constituée pour chaque étape via le connecteur <strong>Booking.com</strong>.
-        Pour rafraîchir une sélection, demande à Claude : « propose-moi trois hôtels pour [étape] ».
-      </p>
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="brand-mark"></span>
+        <span>Brésil 2026</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">Menu</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="hotels.html">Hébergement et Transports</a></li>
+        <li><a href="excursions.html">Activités et Excursions</a></li>
+        <li><a href="carte.html">Carte</a></li>
+      </ul>
     </div>
-    <div id="hotels-by-stage"></div>
-  </section>
+  </header>
 
-  <section class="section">
-    <div class="section-header">
-      <span class="eyebrow">Logistique</span>
-      <h2>Agences réceptives <em>présélectionnées</em></h2>
-      <p class="lead">Pour les transferts, excursions et certains hébergements groupés, ces agences locales connaissent particulièrement bien la Rota das Emoções.</p>
+  <main class="container-narrow">
+    <section class="section">
+      <div class="section-header">
+        <span class="eyebrow">Sélection</span>
+        <h2>Hébergements &amp; transports <em>par étape</em></h2>
+      </div>
+      <div id="hotels-by-stage"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <span class="eyebrow">Logistique</span>
+        <h2>Agences réceptives <em>présélectionnées</em></h2>
+        <p class="lead">Pour les transferts, activités et excursions et certains hébergements groupés, ces agences locales
+          connaissent particulièrement bien la Rota das Emoções.</p>
+      </div>
+      <div class="card-grid" id="agencies-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="brand"><span class="brand-mark"></span> Brésil 2026</span>
+      <span>Recherches hôtels propulsées par Booking.com</span>
     </div>
-    <div class="card-grid" id="agencies-grid"></div>
-  </section>
-</main>
+  </footer>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <span class="brand"><span class="brand-mark"></span> Brésil 2026</span>
-    <span>Recherches hôtels propulsées par Booking.com</span>
-  </div>
-</footer>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Initialisation Supabase
+    const SUPABASE_URL = 'https://foqtfrlowybtedgllxwi.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_7zEPygSrx4o2-RHmPVMBPw__5NQm9xC';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-<script src="assets/js/data.js"></script>
-<script src="assets/js/app.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  // Initialisation Supabase
-  const SUPABASE_URL = 'https://foqtfrlowybtedgllxwi.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_7zEPygSrx4o2-RHmPVMBPw__5NQm9xC';
-  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-(async function() {
-  const data = await loadData();
-  if (!data) return;
+    // Icônes SVG par mode de transport
+    const TR_ICONS = {
+      vol: '<svg viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>',
+      van: '<svg viewBox="0 0 24 24"><path d="M14 17H4V5h12v3l4 2v7h-2"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg>',
+      "4x4": '<svg viewBox="0 0 24 24"><path d="M5 17H3v-5l2-5h11l3 5h2v5h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>',
+      bateau: '<svg viewBox="0 0 24 24"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.4 17 22 12H2l3 5"/><path d="M12 12V3l5 5"/></svg>',
+      "4x4-bateau": '<svg viewBox="0 0 24 24"><path d="M2 12h2L5 9h7l2 3"/><circle cx="6" cy="14" r="1.5"/><circle cx="11" cy="14" r="1.5"/><path d="M14 19c.4.3.8.5 1.6.5 1.5 0 1.5-1.2 3-1.2.7 0 1.1.3 1.4.6"/><path d="M19 17l1-3h-7l1 3"/></svg>',
+      "voiture-bateau": '<svg viewBox="0 0 24 24"><path d="M2 12h2L5 9h7l2 3"/><circle cx="6" cy="14" r="1.5"/><circle cx="11" cy="14" r="1.5"/><path d="M14 19c.4.3.8.5 1.6.5 1.5 0 1.5-1.2 3-1.2.7 0 1.1.3 1.4.6"/><path d="M19 17l1-3h-7l1 3"/></svg>'
+    };
 
-  const container = document.getElementById("hotels-by-stage");
-  const stagesWithNights = data.etapes.filter(e => e.nuits > 0);
-
-  container.innerHTML = stagesWithNights.map(e => {
-    let list = (e.hebergement && e.hebergement.shortlist && e.hebergement.shortlist.length > 0) ? e.hebergement.shortlist : [];
-    if (list.length === 0 && e.hebergement && e.hebergement.nom) {
-      list = [e.hebergement];
-    }
-    
-    const cards = list.length
-      ? list.map(h => {
-        const prix = h.prixParNuit ? h.prixParNuit + (h.devise === 'EUR' ? ' €' : ' ' + (h.devise || '')) : (h.prix || 'Sur demande');
-        const personnes = h.personnes || h.capacite || 8;
-        const pdej = (h.atouts && h.atouts.includes("Petit-déjeuner inclus")) || h.petitDejeuner ? "Oui" : "Non précisé";
-        const note = h.score || h.noteBooking || (h.etoiles ? h.etoiles + ' étoiles' : 'N/A');
-        const loc = h.adresse || h.quartier || h.localisation || 'Non précisée';
+    function renderTransportBlock(from, to) {
+      const l = to.legIn;
+      if (!l) return "";
+      const icon = TR_ICONS[l.mode] || TR_ICONS.van;
+      return `
+      <div class="transport-card">
+        <div class="transport-card-junction-top"></div>
+        <div class="transport-card-junction-bottom"></div>
+        <div class="transport-icon">${icon}</div>
+        <div class="transport-info">
+          <div class="transport-mode">${escapeHtml(l.modeLabel || l.mode || "Transport")}</div>
+          <div class="transport-route">${escapeHtml(from.ville)} <span class="arrow">→</span> ${escapeHtml(to.ville)}</div>
+          <div class="transport-meta">
+            ${l.duree ? `<strong>${escapeHtml(l.duree)}</strong>` : ""}
+            ${l.distanceKm ? ` <span class="sep">·</span> ${l.distanceKm.toLocaleString("fr-FR")} km` : ""}
+            ${l.prixTotalEUR ? ` <span class="sep">·</span> ${l.prixTotalEUR.toLocaleString("fr-FR")} €` : ""}
+          </div>
+          ${l.details ? `<p class="transport-details">${escapeHtml(l.details)}</p>` : ""}
+        </div>
         
-        return `
-        <div class="hotel-card">
-          <img src="${escapeHtml(h.image || 'https://placehold.co/140x140/e8f1ef/11726b?text=H')}" alt="${escapeHtml(h.nom)}">
-          <div class="info">
-            <div class="name">${escapeHtml(h.nom)}</div>
-            <div class="meta">${escapeHtml(h.type || 'Hébergement')}</div>
-            <div style="font-size:0.9rem; margin-top:0.5rem; line-height: 1.5; color: var(--color-text-soft);">
-              <div><strong style="color:var(--color-text);">Prix par nuit :</strong> <span class="price" style="font-size:0.95rem;">${escapeHtml(String(prix))}</span></div>
-              <div><strong style="color:var(--color-text);">Personnes :</strong> ${escapeHtml(String(personnes))}</div>
-              <div><strong style="color:var(--color-text);">Petit-déjeuner inclus :</strong> ${escapeHtml(pdej)}</div>
-              <div><strong style="color:var(--color-text);">Note Booking :</strong> <span class="score" style="margin-left:0.3rem;">${escapeHtml(String(note))}${String(note).match(/^\\d+(\\.\\d+)?$/) ? '/10' : ''}</span></div>
-              <div><strong style="color:var(--color-text);">Localisation :</strong> ${escapeHtml(loc)}</div>
-            </div>
-            ${h.note ? `<div style="font-size:0.9rem;color:var(--color-text-soft); margin-top:0.5rem;"><em>${escapeHtml(h.note)}</em></div>` : ''}
-            
-            <div style="margin-top: 1.2rem;">
-              <button class="cta outline" style="width: 100%; text-align: left; padding: 0.6rem 1rem;" onclick="alert('Le connecteur Booking chercherait d\\'autres options pour ${escapeHtml(h.nom.replace(/'/g, "\\'"))}...\\n\\nCritères :\\n- Prix similaire (max +10%)\\n- Fort discount sur le prix initial ou meilleure note Booking');">
-                Chercher de meilleures options Booking
-                <span style="display:block; font-size:0.75rem; text-transform:none; letter-spacing:0; margin-top:0.3rem; opacity:0.8;">
-                  Meilleur choix : prix similaire (max +10%) avec fort discount et/ou meilleure note
-                </span>
-              </button>
-            </div>
-            
-            ${h.url ? `<div style="margin-top:0.8rem; text-align: right;"><a href="${escapeHtml(h.url)}" target="_blank" rel="noopener" class="arrow-link" style="font-size:0.78rem;">Voir sur Booking</a></div>` : ''}
+        <!-- Section Commentaires Transport -->
+        <div class="hotel-comments-section" data-hotel-id="transport-${escapeHtml(from.id)}-${escapeHtml(to.id)}">
+          <div class="comments-title">Commentaires Transport</div>
+          <div class="comments-list">Chargement...</div>
+          <form class="comment-form">
+            <textarea placeholder="Ajouter des informations utiles ou des commentaires..." class="comment-input" required></textarea>
+            <button type="submit" class="cta outline mini">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    `;
+    }
 
+    (async function () {
+      const data = await loadData();
+      if (!data) return;
+
+      const container = document.getElementById("hotels-by-stage");
+      const stagesWithNights = data.etapes.filter(e => e.nuits > 0);
+
+      container.innerHTML = stagesWithNights.map((e, idx) => {
+        let list = (e.hebergement && e.hebergement.shortlist && e.hebergement.shortlist.length > 0) ? e.hebergement.shortlist : [];
+        if (list.length === 0 && e.hebergement && e.hebergement.nom) {
+          list = [e.hebergement];
+        }
+
+        const cards = list.length
+          ? list.map(h => {
+            const prix = h.prixParNuit ? h.prixParNuit + (h.devise === 'EUR' ? ' €' : ' ' + (h.devise || '')) : (h.prix || 'Sur demande');
+            const personnes = h.personnes || h.capacite || 4;
+            const pdej = (h.atouts && h.atouts.includes("Petit-déjeuner inclus")) || h.petitDejeuner ? "Oui" : "Non précisé";
+            const note = h.score || h.noteBooking || (h.etoiles ? h.etoiles + ' étoiles' : 'N/A');
+            const loc = h.adresse || h.quartier || h.localisation || 'Non précisée';
+
+            return `
+        <div class="hotel-card">
+          <div class="hotel-image-header" style="background-image: url('${escapeHtml(h.image || 'https://placehold.co/600x200/e8f1ef/11726b?text=H')}');">
+            <h3 class="name">${escapeHtml(h.nom)}</h3>
+          </div>
+          <div class="info">
+            <div class="meta">${escapeHtml(h.type || 'Hébergement')}</div>
+            <div style="font-size:0.9rem; margin-top:0.5rem; line-height: 1.6; color: var(--color-text-soft);">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem;">
+                <div><strong style="color:var(--color-text);">Prix par nuit :</strong> <span class="price" style="font-size:0.95rem;">${escapeHtml(String(prix))}</span></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span><strong style="color:var(--color-text);">Personnes :</strong> ${escapeHtml(String(personnes))}</span>
+                  ${h.url ? `<a href="${escapeHtml(h.url)}" target="_blank" rel="noopener" class="cta outline mini" style="margin-left: 1rem; font-size: 0.7rem; padding: 0.3rem 0.6rem;">Voir sur Booking</a>` : ''}
+                </div>
+                <div><strong style="color:var(--color-text);">Petit-déjeuner :</strong> ${escapeHtml(pdej)}</div>
+                <div><strong style="color:var(--color-text);">Note :</strong> <span class="score" style="margin-left:0.3rem;">${escapeHtml(String(note))}${String(note).match(/^\d+(\.\d+)?$/) ? '/10' : ''}</span></div>
+              </div>
+              <div style="margin-top: 0.5rem;"><strong style="color:var(--color-text);">Localisation :</strong> ${escapeHtml(loc)}</div>
+            </div>
+            ${h.note ? `<div style="font-size:0.9rem;color:var(--color-text-soft); margin-top:0.5rem; padding: 0.8rem; background: var(--color-bg-alt); border-radius: 4px;"><em>${escapeHtml(h.note)}</em></div>` : ''}
+            
             <!-- Section Commentaires -->
             <div class="hotel-comments-section" data-hotel-id="${escapeHtml(h.nom)}">
               <div class="comments-title">Commentaires</div>
               <div class="comments-list">Chargement des commentaires...</div>
               <form class="comment-form">
-                <textarea placeholder="Ajouter des commentaires..." class="comment-input" required></textarea>
+                <textarea placeholder="Ajouter des informations utiles ou des commentaires..." class="comment-input" required></textarea>
                 <button type="submit" class="cta outline mini">Envoyer</button>
               </form>
             </div>
           </div>
         </div>
       `}).join("")
-      : `<div class="empty">
+          : `<div class="empty">
           Aucun hôtel ajouté pour cette étape.
           <em>Demande à Claude : « Propose-moi 3 hôtels pour ${escapeHtml(e.ville)} pour ${e.nuits} nuit${e.nuits > 1 ? 's' : ''}, du ${formatDate(e.dateArrivee)} au ${formatDate(e.dateDepart)}, pour 8 personnes ».</em>
         </div>`;
 
-    return `
+        const etapeBlock = `
       <div class="etape-block" id="${e.id}">
         <div class="etape-header">
           <h3>${escapeHtml(e.ville)}</h3>
@@ -139,10 +179,19 @@
         ${cards}
       </div>
     `;
-  }).join("");
 
-  const ag = document.getElementById("agencies-grid");
-  ag.innerHTML = data.agencesReceptives.map(a => `
+        // Insère une carte transport vers l'étape suivante (s'il y en a une)
+        let transportBlock = "";
+        if (idx < stagesWithNights.length - 1) {
+          const nextStage = stagesWithNights[idx + 1];
+          transportBlock = renderTransportBlock(e, nextStage);
+        }
+
+        return etapeBlock + transportBlock;
+      }).join("");
+
+      const ag = document.getElementById("agencies-grid");
+      ag.innerHTML = data.agencesReceptives.map(a => `
     <div class="card">
       <h3>${escapeHtml(a.nom)}</h3>
       <p class="meta" style="font-style:italic;">${escapeHtml(a.specialite)}</p>
@@ -154,75 +203,101 @@
     </div>
   `).join("");
 
-  if (window.location.hash) {
-    const target = document.querySelector(window.location.hash);
-    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+      if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
 
-  // Logic for comments
-  loadAllComments();
+      // Logic for comments
+      loadAllComments();
 
-  async function loadAllComments() {
-    const { data, error } = await _supabase
-      .from('hotel_comments')
-      .select('*')
-      .order('created_at', { ascending: true });
+      async function loadAllComments() {
+        const { data, error } = await _supabase
+          .from('hotel_comments')
+          .select('*')
+          .order('created_at', { ascending: true });
 
-    if (error) {
-      console.error('Error fetching comments:', error);
-      return;
-    }
+        if (error) {
+          console.error('Error fetching comments:', error);
+          return;
+        }
 
-    const sections = document.querySelectorAll('.hotel-comments-section');
-    sections.forEach(section => {
-      const hotelId = section.getAttribute('data-hotel-id');
-      const list = section.querySelector('.comments-list');
-      const hotelComments = data.filter(c => c.hotel_id === hotelId);
-      
-      if (hotelComments.length === 0) {
-        list.innerHTML = '<div class="no-comments">Pas encore de commentaires.</div>';
-      } else {
-        list.innerHTML = hotelComments.map(c => `
+        const sections = document.querySelectorAll('.hotel-comments-section');
+        sections.forEach(section => {
+          const hotelId = section.getAttribute('data-hotel-id');
+          const list = section.querySelector('.comments-list');
+          const hotelComments = data.filter(c => c.hotel_id === hotelId);
+
+          if (hotelComments.length === 0) {
+            list.innerHTML = '<div class="no-comments">Pas encore de commentaires.</div>';
+          } else {
+            list.innerHTML = hotelComments.map(c => `
           <div class="comment-item">
             <div class="comment-header">
               <span class="author">${escapeHtml(c.author)}</span>
-              <span class="date">${new Date(c.created_at).toLocaleDateString('fr-FR')}</span>
+              <div>
+                <span class="date" style="margin-right:0.6rem;">${new Date(c.created_at).toLocaleDateString('fr-FR')}</span>
+                <button class="comment-delete-btn" data-id="${c.id}" aria-label="Supprimer">×</button>
+              </div>
             </div>
             <div class="comment-text">${escapeHtml(c.comment)}</div>
           </div>
         `).join('');
+          }
+        });
+
+        // Delegated listener for delete buttons
+        document.querySelectorAll('.comments-list').forEach(list => {
+          list.onclick = async (e) => {
+            const btn = e.target.closest('.comment-delete-btn');
+            if (btn) {
+              const id = btn.getAttribute('data-id');
+              if (confirm('Supprimer ce commentaire ?')) {
+                const { error } = await _supabase
+                  .from('hotel_comments')
+                  .delete()
+                  .eq('id', id);
+
+                if (error) {
+                  alert('Erreur lors de la suppression.');
+                } else {
+                  loadAllComments();
+                }
+              }
+            }
+          };
+        });
       }
-    });
-  }
 
-  document.querySelectorAll('.comment-form').forEach(form => {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const section = form.closest('.hotel-comments-section');
-      const hotelId = section.getAttribute('data-hotel-id');
-      const textInput = form.querySelector('.comment-input');
-      const btn = form.querySelector('button');
+      document.querySelectorAll('.comment-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const section = form.closest('.hotel-comments-section');
+          const hotelId = section.getAttribute('data-hotel-id');
+          const textInput = form.querySelector('.comment-input');
+          const btn = form.querySelector('button');
 
-      const comment = textInput.value.trim();
+          const comment = textInput.value.trim();
 
-      if (comment) {
-        btn.disabled = true;
-        const { error } = await _supabase
-          .from('hotel_comments')
-          .insert([{ hotel_id: hotelId, comment }]);
+          if (comment) {
+            btn.disabled = true;
+            const { error } = await _supabase
+              .from('hotel_comments')
+              .insert([{ hotel_id: hotelId, comment }]);
 
-        if (error) {
-          alert('Erreur lors de l\'envoi du commentaire.');
-          console.error(error);
-        } else {
-          textInput.value = '';
-          loadAllComments();
-        }
-        btn.disabled = false;
-      }
-    });
-  });
-})();
-</script>
+            if (error) {
+              alert('Erreur lors de l\'envoi du commentaire.');
+              console.error(error);
+            } else {
+              textInput.value = '';
+              loadAllComments();
+            }
+            btn.disabled = false;
+          }
+        });
+      });
+    })();
+  </script>
 </body>
+
 </html>

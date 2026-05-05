@@ -27,30 +27,9 @@ window.TRAVEL_DATA =
             "role": "Fille (15 ans)"
           }
         ]
-      },
-      {
-        "famille": "Famille B",
-        "membres": [
-          {
-            "prenom": "—",
-            "role": "Adulte"
-          },
-          {
-            "prenom": "—",
-            "role": "Adulte"
-          },
-          {
-            "prenom": "—",
-            "role": "Fille (18 ans)"
-          },
-          {
-            "prenom": "—",
-            "role": "Fils (15 ans)"
-          }
-        ]
       }
     ],
-    "totalVoyageurs": 8,
+    "totalVoyageurs": 4,
     "dureeJours": 30
   },
   "etapes": [
@@ -78,6 +57,8 @@ window.TRAVEL_DATA =
         "nom": "Atlantis Copacabana Hotel",
         "type": "Hôtel",
         "etoiles": 3,
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/ee/7c/23/piscina.jpg?w=1200&h=700&s=1",
+        "score": 8.6,
         "prixParNuit": 175.0,
         "devise": "EUR",
         "plateforme": "Booking",
@@ -255,9 +236,13 @@ window.TRAVEL_DATA =
         "statut": "réservé",
         "nom": "Pousada Quarto Crescente",
         "type": "Pousada",
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/c3/ab/c8/area-da-piscina.jpg?w=900&h=500&s=1",
+        "score": 9.9,
         "prixParNuit": 249.33,
         "devise": "EUR",
         "plateforme": "Booking",
+        "url": "https://booking.com/hotel/br/pousada-quarto-crescente-trancoso.fr.html?label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=dd0b70d0ff6bbba1ff279d04f95e409e&aid=356931&ucfs=1&arphpl=1&checkin=2026-08-02&checkout=2026-08-03&dest_id=248686&dest_type=hotel&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=f930566726600444&srepoch=1777983443&all_sr_blocks=24868619_432641734_2_1_0&highlighted_blocks=24868619_432641734_2_1_0&matching_block_id=24868619_432641734_2_1_0&sr_pri_blocks=24868619_432641734_2_1_0__92990&from=searchresults",
+        "adresse": "Avenida Principal, 30, Trancoso, Porto Seguro - BA",
         "shortlist": []
       },
       "activites": [
@@ -336,9 +321,13 @@ window.TRAVEL_DATA =
         "statut": "réservé",
         "nom": "Praiabella Hotel",
         "type": "Hôtel",
+        "image": "https://images.trvl-media.com/lodging/42000000/41890000/41888900/41888812/d07dbab1.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill",
+        "score": 8.7,
         "prixParNuit": 162.0,
         "devise": "EUR",
         "plateforme": "Booking",
+        "url": "https://booking.com/hotel/br/solare-praiabella.fr.html?label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=dd0b70d0ff6bbba1ff279d04f95e409e&aid=356931&ucfs=1&arphpl=1&checkin=2026-08-02&checkout=2026-08-03&dest_id=241261&dest_type=hotel&group_adults=2&req_adults=2&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=6b5c567a49b30a50&srepoch=1777983481&all_sr_blocks=24126103_88964837_2_1_0_682219&highlighted_blocks=24126103_88964837_2_1_0_682219&matching_block_id=24126103_88964837_2_1_0_682219&sr_pri_blocks=24126103_88964837_2_1_0_682219_43191&from=searchresults",
+        "adresse": "Av. Litorânea, 46, São Luís - MA",
         "shortlist": []
       },
       "activites": [
@@ -382,9 +371,13 @@ window.TRAVEL_DATA =
         "statut": "réservé",
         "nom": "Pousada de Buruti",
         "type": "Pousada",
+        "image": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/532656407.jpg?k=ac5eba35d5696e244d876a94179bb2171bb3b15618cf24f30063948021649b29&o=",
+        "score": 9.1,
         "prixParNuit": 269.0,
         "devise": "EUR",
         "plateforme": "Booking",
+        "url": "https://www.booking.com/hotel/br/pousada-do-buriti.fr.html?aid=356931&label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=5cd0f3ce3498df55642240ca86da7a9b&checkin=2026-08-02&checkout=2026-08-03&dest_id=273738&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&hpos=1&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&soh=1&sr_order=popularity&srepoch=1777983501&srpvid=6b815685754b0722&type=total&ucfs=1&#no_availability_msg",
+        "adresse": "Rua Inácio Lins, 287, Barreirinhas - MA",
         "shortlist": []
       },
       "activites": [
@@ -395,7 +388,7 @@ window.TRAVEL_DATA =
       "transferts": [],
       "legIn": {
         "mode": "van",
-        "modeLabel": "Van privé 8 pax",
+        "modeLabel": "Van privé 4 pax",
         "duree": "≈ 4h30",
         "distanceKm": 262,
         "details": "São Luís → Barreirinhas, route asphaltée · Van privé ≈ R$ 1 200"
@@ -419,9 +412,13 @@ window.TRAVEL_DATA =
         "statut": "réservé",
         "nom": "Casa LuMar",
         "type": "Pousada",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRppXJSjN-FOL1WH6slBkdUZHtMH7W-v22NRA&s",
+        "score": 9.8,
         "prixParNuit": 352.5,
         "devise": "EUR",
         "plateforme": "Booking",
+        "url": "https://www.booking.com/hotel/br/casa-lumar-atins.fr.html?aid=356931&label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=5cd0f3ce3498df55642240ca86da7a9b&checkin=2026-08-02&checkout=2026-08-03&dest_id=14626992&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&hpos=1&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&soh=1&sr_order=popularity&srepoch=1777983524&srpvid=e89f5690c8a0062b&type=total&ucfs=1&#no_availability_msg",
+        "adresse": "Atins, Barreirinhas - MA",
         "shortlist": []
       },
       "activites": [
@@ -466,9 +463,13 @@ window.TRAVEL_DATA =
         "statut": "réservé",
         "nom": "Oceane Norte Hotel",
         "type": "Hôtel",
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/30/83/a7/c1/caption.jpg?w=1200&h=1200&s=1",
+        "score": 8.8,
         "prixParNuit": 88.47,
         "devise": "EUR",
         "plateforme": "Booking",
+        "url": "https://www.booking.com/hotel/br/oceane-norte.fr.html?aid=356931&label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=5cd0f3ce3498df55642240ca86da7a9b&all_sr_blocks=1438998701_415626919_2_1_0&checkin=2026-08-02&checkout=2026-08-03&dest_id=14389987&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=1438998701_415626919_2_1_0&hpos=1&matching_block_id=1438998701_415626919_2_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=1438998701_415626919_2_1_0__43800&srepoch=1777983561&srpvid=9ba856a0bcb40230&type=total&ucfs=1&",
+        "adresse": "Rua Osias Correia, 330, Reis Veloso, Parnaíba - PI",
         "note": "Alternative envisagée : Pousada Ilha dos Poldros",
         "shortlist": []
       },
@@ -504,9 +505,13 @@ window.TRAVEL_DATA =
         "statut": "réservé",
         "nom": "Mym Dunas",
         "type": "Pousada",
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/7c/aa/b3/pousada-mym-dunas.jpg?w=900&h=500&s=1",
+        "score": 9.3,
         "prixParNuit": 120.0,
         "devise": "EUR",
         "plateforme": "en direct",
+        "url": "https://www.booking.com/hotel/br/pousada-la-luna-jericoacoara.fr.html?aid=356931&label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=5cd0f3ce3498df55642240ca86da7a9b&checkin=2026-08-02&checkout=2026-08-03&dest_id=1639645&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&hpos=1&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&soh=1&sr_order=popularity&srepoch=1777983581&srpvid=1efc56acb51107d8&type=total&ucfs=1&#no_availability_msg",
+        "adresse": "Rua São Francisco, Jericoacoara - CE",
         "shortlist": []
       },
       "activites": [
@@ -545,9 +550,13 @@ window.TRAVEL_DATA =
         "statut": "réservé",
         "nom": "Praiano Hotel",
         "type": "Hôtel",
+        "image": "https://lh3.googleusercontent.com/proxy/3xPG259aGkwgOFp2KGvFtOoxNehq4JFmmmgOOAB3c_33RC2ra6uWBj4kS-x009NR8vENR5YTQbFO3UQvDVP4XHvsIPHvfr01MQO1Wzfj_Li-W7RdoDcxlHVUhtL8cD5gHY8Ne3vpPcbm-eBMOi59JxYmVcRzGg=s1360-w1360-h1020-rw",
+        "score": 9.0,
         "prixParNuit": 164.0,
         "devise": "EUR",
         "plateforme": "en direct",
+        "url": "https://www.booking.com/hotel/br/praiano-fortaleza.fr.html?aid=356931&label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=5cd0f3ce3498df55642240ca86da7a9b&all_sr_blocks=18951836_432647936_2_1_0_696794&checkin=2026-08-02&checkout=2026-08-03&dest_id=189518&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=18951836_432647936_2_1_0_696794&hpos=1&matching_block_id=18951836_432647936_2_1_0_696794&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=18951836_432647936_2_1_0_696794_57803&srepoch=1777983601&srpvid=98f956b6cec209d1&type=total&ucfs=1&",
+        "adresse": "Av. Beira Mar, 2800, Meireles, Fortaleza - CE",
         "shortlist": []
       },
       "activites": [
@@ -556,7 +565,7 @@ window.TRAVEL_DATA =
       "transferts": [],
       "legIn": {
         "mode": "van",
-        "modeLabel": "Van privé 8 pax",
+        "modeLabel": "Van privé 4 pax",
         "duree": "≈ 5h",
         "distanceKm": 300,
         "details": "Jericoacoara → Fortaleza en van privée climatisée · ≈ 300 € total (37 €/pax) · alternatives : bus Guanabara R$ 1 000/pax 6h30, van partagée R$ 1 400/pax 6h"
@@ -585,9 +594,13 @@ window.TRAVEL_DATA =
         "statut": "réservé",
         "nom": "Onda Azul",
         "type": "Hôtel",
+        "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/ee/7c/23/piscina.jpg?w=1200&h=700&s=1",
+        "score": 8.4,
         "prixParNuit": 78.0,
         "devise": "EUR",
         "plateforme": "Booking",
+        "url": "https://www.booking.com/hotel/br/onda-azul-valenca.fr.html?aid=356931&label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=5cd0f3ce3498df55642240ca86da7a9b&all_sr_blocks=684632601_279795547_2_1_0&checkin=2026-08-02&checkout=2026-08-03&dest_id=6846326&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=684632601_279795547_2_1_0&hpos=1&matching_block_id=684632601_279795547_2_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=684632601_279795547_2_1_0__29000&srepoch=1777983635&srpvid=be9556c87ff9030a&type=total&ucfs=1&",
+        "adresse": "Rua Conselheiro Ferraz, 05, Centro, Valença - BA",
         "shortlist": []
       },
       "activites": [
@@ -621,9 +634,13 @@ window.TRAVEL_DATA =
         "statut": "réservé",
         "nom": "Pouso da Maré",
         "type": "Pousada",
+        "image": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/410469145.jpg?k=023915417faf938ddc92b3cb9a9ba50827f123d9dba85a13c3b7ce5a313945b7&o=",
+        "score": 9.1,
         "prixParNuit": 142.67,
         "devise": "EUR",
         "plateforme": "en direct",
+        "url": "https://www.booking.com/hotel/br/pousada-pouso-da-mare.fr.html?aid=356931&label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=5cd0f3ce3498df55642240ca86da7a9b&checkin=2026-08-02&checkout=2026-08-03&dest_id=555771&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&hpos=1&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&soh=1&sr_order=popularity&srepoch=1777983656&srpvid=49e956d2bbcd0179&type=total&ucfs=1&#no_availability_msg",
+        "adresse": "Rua da Praia, 58, Praia Boca da Barra, Ilha de Boipeba - BA",
         "shortlist": []
       },
       "activites": [
@@ -659,9 +676,12 @@ window.TRAVEL_DATA =
         "statut": "réservé",
         "nom": "Bahiacafe Hotel",
         "type": "Hôtel",
+        "image": "https://media-cdn.tripadvisor.com/media/photo-s/08/ef/df/b2/bahiacafe-hotel.jpg",
+        "score": 9.0,
         "prixParNuit": 234.46,
         "devise": "EUR",
-        "plateforme": "Booking",
+        "url": "https://www.booking.com/hotel/br/bahiacafe.fr.html?aid=356931&label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=5cd0f3ce3498df55642240ca86da7a9b&all_sr_blocks=1773107_426576945_2_1_0&checkin=2026-08-02&checkout=2026-08-03&dest_id=17731&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=1773107_426576945_2_1_0&hpos=1&matching_block_id=1773107_426576945_2_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=1773107_426576945_2_1_0__160940&srepoch=1777983676&srpvid=030a56dc3c40012f&type=total&ucfs=1&",
+        "adresse": "Praça da Sé, 22, Pelourinho, Salvador - BA",
         "shortlist": []
       },
       "activites": [
@@ -678,41 +698,6 @@ window.TRAVEL_DATA =
         "distanceKm": 250,
         "details": "Boipeba → Valença (bateau) → Salvador (route, ≈ 3h)"
       }
-    },
-    {
-      "id": "retour-paris",
-      "ordre": 13,
-      "ville": "Retour Paris",
-      "region": "Vol retour",
-      "coords": [
-        48.8566,
-        2.3522
-      ],
-      "dateArrivee": "2026-08-23",
-      "dateDepart": "2026-08-23",
-      "nuits": 0,
-      "description": "Vol retour Salvador → Madrid → Paris avec Air Europa.",
-      "horairesCles": [
-        {
-          "label": "Air Europa SSA → MAD",
-          "heure": "22/08 21h40 → 23/08 11h10"
-        },
-        {
-          "label": "Air Europa MAD → ORY",
-          "heure": "23/08 14h20 → 16h15"
-        }
-      ],
-      "hebergement": null,
-      "activites": [],
-      "transferts": [],
-      "legIn": {
-        "mode": "vol",
-        "modeLabel": "Vol retour international",
-        "duree": "≈ 16h (1 escale)",
-        "distanceKm": 7400,
-        "details": "Salvador (SSA) 22/08 21h40 → Madrid (MAD) 23/08 11h10 → Paris (ORY) 16h15 · Air Europa · bagage en soute +120 €",
-        "prixTotalEUR": 1885
-      }
     }
   ],
   "agencesReceptives": [
@@ -723,7 +708,7 @@ window.TRAVEL_DATA =
         "Transferts",
         "Excursions 4x4",
         "Bateau",
-        "Hébergements"
+        "Hébergement et Transports"
       ],
       "notes": "Très bon service client selon leur site",
       "url": null
@@ -743,8 +728,8 @@ window.TRAVEL_DATA =
       "specialite": "Réceptif Barreirinhas - écotourisme Maranhão",
       "services": [
         "Transferts",
-        "Excursions",
-        "Hébergements",
+        "Activités et Excursions",
+        "Hébergement et Transports",
         "Itinéraires personnalisés"
       ],
       "notes": "Service concierge",
@@ -757,7 +742,7 @@ window.TRAVEL_DATA =
         "Packages",
         "Transferts 4x4",
         "Bateau",
-        "Hébergements"
+        "Hébergement et Transports"
       ],
       "notes": "Spécialiste de la route entière",
       "url": null
@@ -804,7 +789,7 @@ window.TRAVEL_DATA =
       "services": [
         "Expéditions 4x4",
         "UTV",
-        "Hébergements sélectionnés"
+        "Hébergement et Transports sélectionnés"
       ],
       "notes": "Sensibilité durable, CO₂ compensé",
       "url": null
@@ -836,7 +821,7 @@ window.TRAVEL_DATA =
       "services": [
         "Véhicules 4x4 privés",
         "Guides",
-        "Hébergements"
+        "Hébergement et Transports"
       ],
       "notes": "Bon niveau de service / sécurité",
       "url": null

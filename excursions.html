@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activités et Excursions — Brésil 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"></span>
+      <span>Brésil 2026</span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu">Menu</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="hotels.html">Hébergement et Transports</a></li>
+      <li><a href="excursions.html">Activités et Excursions</a></li>
+      <li><a href="carte.html">Carte</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="container-narrow">
+  <section class="section">
+    <div class="section-header">
+      <span class="eyebrow">Programme</span>
+      <h2>Les activités et excursions <em>jour par jour</em></h2>
+      <p class="lead" id="iti-lead">Sélectionne une étape pour voir les détails — activités, transferts, hébergement.</p>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="brand"><span class="brand-mark"></span> Brésil 2026</span>
+    <span><a href="index.html">Retour à l'accueil</a></span>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(async function() {
+  const data = await loadData();
+  if (!data) return;
+
+  // Lead dynamique
+  const lead = document.getElementById("iti-lead");
+  if (lead) {
+    const stages = data.etapes.filter(e => e.nuits > 0).length;
+    lead.textContent = `${stages} étapes du ${formatDateLong(data.voyage.dateDepart)} au ${formatDateLong(data.voyage.dateRetour)} 2026. Sélectionne une étape pour voir les détails — activités, transferts, hébergement.`;
+  }
+
+  const timeline = document.getElementById("timeline");
+  timeline.innerHTML = data.etapes.map(e => {
+    const horaires = (e.horairesCles || []).map(h =>
+      `<li><strong>${escapeHtml(h.label)}</strong> — ${escapeHtml(h.heure)}</li>`
+    ).join("");
+
+    const activites = (e.activites || []).length
+      ? `<div class="block-title">À faire sur place</div><ul>${e.activites.map(a => `<li>${escapeHtml(a)}</li>`).join("")}</ul>`
+      : "";
+
+    const transferts = (e.transferts || []).length
+      ? `<div class="block-title">Transferts</div>${e.transferts.map(t => `
+          <div class="transfert">
+            <strong>${escapeHtml(t.type)}</strong> — ${escapeHtml(t.depuis)} → ${escapeHtml(t.vers)}
+            ${t.duree ? ` · ${escapeHtml(t.duree)}` : ""}
+            ${t.heureDepart ? ` · départ ${escapeHtml(t.heureDepart)}` : ""}
+            ${t.heureArrivee ? ` · arrivée ${escapeHtml(t.heureArrivee)}` : ""}
+            ${t.statut ? ` <span class="tag accent" style="margin-left:0.4rem;">${escapeHtml(t.statut)}</span>` : ""}
+          </div>
+        `).join("")}`
+      : "";
+
+    const heb = e.hebergement
+      ? `<div class="block-title">Hébergement</div>
+         <p>Statut : <span class="tag ${e.hebergement.statut === 'réservé' ? '' : 'accent'}">${escapeHtml(e.hebergement.statut)}</span>
+         ${e.hebergement.shortlist && e.hebergement.shortlist.length ?
+           ` · ${e.hebergement.shortlist.length} option${e.hebergement.shortlist.length > 1 ? 's' : ''} sélectionnée${e.hebergement.shortlist.length > 1 ? 's' : ''} (voir <a href="hotels.html#${e.id}">page hébergement et transports</a>)` :
+           ` · <a href="hotels.html#${e.id}">comparer sur Booking</a>`}
+         </p>`
+      : "";
+
+    const horairesBlock = horaires
+      ? `<div class="block-title">Horaires clés</div><ul>${horaires}</ul>`
+      : "";
+
+    const nightsBadge = e.nuits === 0
+      ? `<span class="nights-tag muted">Escale</span>`
+      : `<span class="nights-tag">${e.nuits} nuit${e.nuits > 1 ? "s" : ""}</span>`;
+
+    return `
+      <div class="timeline-item" id="${e.id}">
+        <div class="num">Étape <strong>${String(e.ordre).padStart(2,"0")}</strong></div>
+        <div>
+          <h3>${escapeHtml(e.ville)} ${nightsBadge}</h3>
+          <div class="dates">${formatDate(e.dateArrivee)} → ${formatDate(e.dateDepart)} · ${escapeHtml(e.region)}</div>
+          <p class="desc">${escapeHtml(e.description)}</p>
+          ${horairesBlock}
+          ${transferts}
+          ${activites}
+          ${heb}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  if (window.location.hash) {
+    const target = document.querySelector(window.location.hash);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+})();
+</script>
+</body>
+</html>
