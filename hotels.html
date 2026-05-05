@@ -20,10 +20,9 @@
     <button class="nav-toggle" aria-label="Menu">Menu</button>
     <ul class="nav-links">
       <li><a href="index.html">Accueil</a></li>
+      <li><a href="hotels.html">Hébergements</a></li>
       <li><a href="itineraire.html">Itinéraire</a></li>
       <li><a href="carte.html">Carte</a></li>
-      <li><a href="hotels.html">Hébergements</a></li>
-      <li><a href="pratique.html">Préparer le voyage</a></li>
     </ul>
   </div>
 </header>
@@ -60,7 +59,12 @@
 
 <script src="assets/js/data.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  // Initialisation Supabase
+  const SUPABASE_URL = 'https://foqtfrlowybtedgllxwi.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_7zEPygSrx4o2-RHmPVMBPw__5NQm9xC';
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 (async function() {
   const data = await loadData();
   if (!data) return;
@@ -107,6 +111,16 @@
             </div>
             
             ${h.url ? `<div style="margin-top:0.8rem; text-align: right;"><a href="${escapeHtml(h.url)}" target="_blank" rel="noopener" class="arrow-link" style="font-size:0.78rem;">Voir sur Booking</a></div>` : ''}
+
+            <!-- Section Commentaires -->
+            <div class="hotel-comments-section" data-hotel-id="${escapeHtml(h.nom)}">
+              <div class="comments-title">Commentaires</div>
+              <div class="comments-list">Chargement des commentaires...</div>
+              <form class="comment-form">
+                <textarea placeholder="Ajouter des commentaires..." class="comment-input" required></textarea>
+                <button type="submit" class="cta outline mini">Envoyer</button>
+              </form>
+            </div>
           </div>
         </div>
       `}).join("")
@@ -144,6 +158,70 @@
     const target = document.querySelector(window.location.hash);
     if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+
+  // Logic for comments
+  loadAllComments();
+
+  async function loadAllComments() {
+    const { data, error } = await _supabase
+      .from('hotel_comments')
+      .select('*')
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      console.error('Error fetching comments:', error);
+      return;
+    }
+
+    const sections = document.querySelectorAll('.hotel-comments-section');
+    sections.forEach(section => {
+      const hotelId = section.getAttribute('data-hotel-id');
+      const list = section.querySelector('.comments-list');
+      const hotelComments = data.filter(c => c.hotel_id === hotelId);
+      
+      if (hotelComments.length === 0) {
+        list.innerHTML = '<div class="no-comments">Pas encore de commentaires.</div>';
+      } else {
+        list.innerHTML = hotelComments.map(c => `
+          <div class="comment-item">
+            <div class="comment-header">
+              <span class="author">${escapeHtml(c.author)}</span>
+              <span class="date">${new Date(c.created_at).toLocaleDateString('fr-FR')}</span>
+            </div>
+            <div class="comment-text">${escapeHtml(c.comment)}</div>
+          </div>
+        `).join('');
+      }
+    });
+  }
+
+  document.querySelectorAll('.comment-form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const section = form.closest('.hotel-comments-section');
+      const hotelId = section.getAttribute('data-hotel-id');
+      const textInput = form.querySelector('.comment-input');
+      const btn = form.querySelector('button');
+
+      const comment = textInput.value.trim();
+
+      if (comment) {
+        btn.disabled = true;
+        const { error } = await _supabase
+          .from('hotel_comments')
+          .insert([{ hotel_id: hotelId, comment }]);
+
+        if (error) {
+          alert('Erreur lors de l\'envoi du commentaire.');
+          console.error(error);
+        } else {
+          textInput.value = '';
+          loadAllComments();
+        }
+        btn.disabled = false;
+      }
+    });
+  });
 })();
 </script>
 </body>

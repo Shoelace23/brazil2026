@@ -27,10 +27,10 @@
       <button class="nav-toggle" aria-label="Menu">Menu</button>
       <ul class="nav-links">
         <li><a href="index.html">Accueil</a></li>
+        <li><a href="hotels.html">Hébergements</a></li>
         <li><a href="itineraire.html">Itinéraire</a></li>
         <li><a href="carte.html">Carte</a></li>
-        <li><a href="hotels.html">Hébergements</a></li>
-        <li><a href="pratique.html">Préparer le voyage</a></li>
+
       </ul>
     </div>
   </header>
@@ -64,8 +64,15 @@
         </div>
         <button class="cdf-nav cdf-nav-left" id="cdfPrev" aria-label="Étape précédente">‹</button>
         <button class="cdf-nav cdf-nav-right" id="cdfNext" aria-label="Étape suivante">›</button>
-        <div class="cdf-track" id="cheminDeFer" tabindex="0" role="region"
+        <div class="cdf-track is-collapsed" id="cheminDeFer" tabindex="0" role="region"
           aria-label="Itinéraire du voyage, faites défiler horizontalement"></div>
+        <button class="cdf-mobile-toggle" id="cdfMobileToggle" aria-expanded="false">
+          <span>Voir tout le parcours</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
       </div>
     </div>
   </section>
@@ -84,7 +91,7 @@
           <button class="todo-tab" data-target="todo-1m">1 mois avant</button>
           <button class="todo-tab" data-target="todo-j0">Le jour du départ</button>
         </div>
-        
+
         <div class="todo-content" id="todo-container">
           <div class="todo-pane active" id="todo-3m">
             <ul class="todo-list"></ul>
@@ -134,12 +141,7 @@
           <p>Sélection comparée par étape — alimentée par le connecteur Booking.</p>
           <a href="hotels.html" class="arrow-link">Comparer les hôtels</a>
         </div>
-        <div class="feature-item">
-          <span class="feature-num">04</span>
-          <h3>Préparer le voyage</h3>
-          <p>Visa, santé, monnaie, météo, valise — tout ce qu'il faut savoir avant de partir.</p>
-          <a href="pratique.html" class="arrow-link">Infos pratiques</a>
-        </div>
+
       </div>
     </section>
 
@@ -692,7 +694,7 @@
               .from('checklist')
               .insert([{ text, category, done: false }])
               .select();
-            
+
             if (error) {
               console.error('Error adding todo:', error);
             } else {
@@ -715,7 +717,7 @@
             const category = checkbox.getAttribute('data-pane');
             const id = checkbox.getAttribute('data-id');
             const isDone = checkbox.checked;
-            
+
             const { error } = await _supabase
               .from('checklist')
               .update({ done: isDone })
@@ -732,7 +734,7 @@
           } else if (btnDelete) {
             const category = btnDelete.getAttribute('data-pane');
             const id = btnDelete.getAttribute('data-id');
-            
+
             const { error } = await _supabase
               .from('checklist')
               .delete()
@@ -763,7 +765,7 @@
 
       // Initialisation des listes
       todos = { 'todo-3m': [], 'todo-1m': [], 'todo-j0': [] };
-      
+
       if (data && data.length > 0) {
         data.forEach(item => {
           if (todos[item.category]) {
@@ -774,7 +776,7 @@
         // Optionnel : Initialiser avec des données par défaut si vide
         await seedDefaultTodos();
       }
-      
+
       ['todo-3m', 'todo-1m', 'todo-j0'].forEach(renderTodos);
     }
 
@@ -790,7 +792,7 @@
         { category: 'todo-j0', text: "Prendre les passeports et billets", done: false },
         { category: 'todo-j0', text: "Couper l'eau et le gaz", done: false }
       ];
-      
+
       const { data, error } = await _supabase.from('checklist').insert(defaults).select();
       if (!error && data) {
         data.forEach(item => {
@@ -805,7 +807,7 @@
       const ul = pane.querySelector('.todo-list');
       if (!ul) return;
       ul.innerHTML = '';
-      
+
       const undoneTasks = [];
       const doneTasks = [];
       todos[category].forEach(task => {
@@ -829,6 +831,29 @@
       undoneTasks.forEach(appendTask);
       doneTasks.forEach(appendTask);
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Mobile toggle logic
+      const mobileToggle = document.getElementById('cdfMobileToggle');
+      const cdfTrack = document.getElementById('cheminDeFer');
+      if (mobileToggle && cdfTrack) {
+        mobileToggle.addEventListener('click', () => {
+          const isCollapsed = cdfTrack.classList.contains('is-collapsed');
+          if (isCollapsed) {
+            cdfTrack.classList.remove('is-collapsed');
+            mobileToggle.classList.add('is-active');
+            mobileToggle.querySelector('span').textContent = 'Replier';
+            mobileToggle.setAttribute('aria-expanded', 'true');
+          } else {
+            cdfTrack.classList.add('is-collapsed');
+            mobileToggle.classList.remove('is-active');
+            mobileToggle.querySelector('span').textContent = 'Voir tout le parcours';
+            mobileToggle.setAttribute('aria-expanded', 'false');
+            mobileToggle.closest('.cdf-section').scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
+    });
 
 
   </script>

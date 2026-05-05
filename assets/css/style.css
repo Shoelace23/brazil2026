@@ -2065,6 +2065,41 @@ p {
   text-align: right;
 }
 
+.cdf-mobile-toggle {
+  display: none;
+  background: var(--color-bg);
+  border: 1px solid var(--color-line);
+  color: var(--color-text-soft);
+  padding: 0.8rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  transition: all 0.2s ease;
+  z-index: 5;
+  position: relative;
+}
+
+.cdf-mobile-toggle:hover {
+  background: var(--color-bg-alt);
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+}
+
+.cdf-mobile-toggle svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s ease;
+}
+
 @media (max-width: 720px) {
   .etape-hotel-card {
     grid-template-columns: 1fr;
@@ -2493,6 +2528,21 @@ p {
     padding: 0;
   }
 
+  .cdf-track.is-collapsed {
+    max-height: 280px;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, black 60%, transparent 95%);
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 95%);
+  }
+
+  .cdf-mobile-toggle {
+    display: flex;
+  }
+
+  .cdf-mobile-toggle.is-active svg {
+    transform: rotate(180deg);
+  }
+
   .cdf-station {
     flex: 0 0 auto;
     width: 100%;
@@ -2822,4 +2872,90 @@ p {
   .nav-links a {
     padding: 0.9rem 1.5rem;
   }
+}
+
+/* ---------- Hotel Comments Section ---------- */
+.hotel-comments-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.comments-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.comments-list {
+  margin-bottom: 1.5rem;
+}
+
+.comment-item {
+  background: var(--color-bg-alt);
+  padding: 0.8rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 0.8rem;
+  border-left: 3px solid var(--color-primary);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+  color: var(--color-text-muted);
+}
+
+.comment-header .author {
+  font-weight: 600;
+  color: var(--color-text-soft);
+}
+
+.comment-text {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--color-text-soft);
+}
+
+.no-comments {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  border-radius: 4px;
+  transition: border-color 0.2s;
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.comment-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.cta.mini {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  align-self: flex-start;
 }
