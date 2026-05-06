@@ -62,7 +62,7 @@ window.TRAVEL_DATA =
         "prixParNuit": 175.0,
         "devise": "EUR",
         "plateforme": "Booking",
-        "url": "https://www.booking.com/hotel/br/atlantis-copacabana.html",
+        "url": "https://www.booking.com/hotel/br/atlantis-copacabana.fr.html?aid=356931&label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=5cd0f3ce3498df55642240ca86da7a9b&checkin=2026-08-02&checkout=2026-08-03&dest_id=16762&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&hpos=1&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&soh=1&sr_order=popularity&srepoch=1777983421&srpvid=c71f565c4d3d08af&type=total&ucfs=1&#no_availability_msg",
         "adresse": "Rua Bulhões de Carvalho, 61 — Copacabana, Rio de Janeiro",
         "telephone": "+55 21 2521-1142",
         "checkIn": "15h00",
@@ -211,6 +211,26 @@ window.TRAVEL_DATA =
         "Transport : Uber très bon marché (R$ 15-30 pour la plupart des trajets). Métro propre pour Centro / Lapa.",
         "Argent : payer en carte partout. Distributeurs Banco do Brasil ou Bradesco pour les retraits.",
         "Restos à tester : Aprazível (Santa Teresa), Garota de Ipanema, Confeitaria Colombo (Centro)."
+      ],
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Cours de surf sur la plage d'Arpoador",
+            "Parapente depuis Pedra Bonita",
+            "Vélo le long des plages jusqu'à Leblon"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "Parque das Ruínas à Santa Teresa",
+            "Mureta da Urca pour le coucher de soleil",
+            "Bar da Laje au sommet de Vidigal"
+          ]
+        }
       ]
     },
     {
@@ -258,7 +278,27 @@ window.TRAVEL_DATA =
         "distanceKm": 1450,
         "details": "Rio (GIG) → Porto Seguro (BPS) GOL 12h40 → 14h15, puis taxi Porto Seguro → Trancoso (≈ 1h)",
         "prixTotalEUR": 420
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Balade à cheval sur la plage",
+            "Excursion en quad vers Praia de Itaquena",
+            "Kayak sur le Rio Trancoso"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "Le Quadrado illuminé en soirée",
+            "Beach club Praia dos Nativos",
+            "UXUA Praia Bar pour l'ambiance chic"
+          ]
+        }
+      ]
     },
     {
       "id": "caraiva",
@@ -296,7 +336,27 @@ window.TRAVEL_DATA =
         "duree": "≈ 1h30",
         "distanceKm": 65,
         "details": "Trancoso → Caraíva par la route puis traversée du rio Caraíva en bateau"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Descente du Rio Caraíva en bouée (boia cross)",
+            "Stand-up paddle (SUP) à marée haute",
+            "Excursion buggy jusqu'à Ponta de Corumbau"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "Beco da Lua pour boire un verre le soir",
+            "Praia do Satu (plage déserte avec falaises)",
+            "Coucher de soleil sur la Barra (rencontre mer/fleuve)"
+          ]
+        }
+      ]
     },
     {
       "id": "sao-luis",
@@ -342,7 +402,27 @@ window.TRAVEL_DATA =
         "distanceKm": 2400,
         "details": "Caraíva → Porto Seguro (route) puis vol GOL BPS 12h30 → SSA → SLZ 16h40",
         "prixTotalEUR": 548
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Kitesurf sur la Praia do Calhau",
+            "Visite interactive du Museu do Reggae",
+            "Balade à vélo sur la péninsule de Ponta d'Areia"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "Coucher de soleil depuis le Palácio dos Leões",
+            "Ambiance reggae au Bar do Nelson (soir)",
+            "Rues en azulejos du centre historique illuminé"
+          ]
+        }
+      ]
     },
     {
       "id": "barreirinhas",
@@ -392,7 +472,27 @@ window.TRAVEL_DATA =
         "duree": "≈ 4h30",
         "distanceKm": 262,
         "details": "São Luís → Barreirinhas, route asphaltée · Van privé ≈ R$ 1 200"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Circuit quad dans les Petits Lençóis",
+            "Vol panoramique en petit avion",
+            "Sandboard sur les dunes de Lagoa Bonita"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "Flotter sur le Rio Preguiças",
+            "Bars sur l'Avenida Beira Rio le soir",
+            "Caburé (langue de sable entre mer et fleuve)"
+          ]
+        }
+      ]
     },
     {
       "id": "atins",
@@ -438,7 +538,27 @@ window.TRAVEL_DATA =
         "duree": "≈ 3h",
         "distanceKm": 50,
         "details": "Barreirinhas → Atins en bateau rapide sur le rio Preguiças · arrêts possibles à Vassouras, Mandacaru, Caburé"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Initiation au kitesurf (spot parfait pour débutants)",
+            "Balade à cheval dans les dunes",
+            "Nuit dans le désert profond"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "Restaurant Dona Luzia (crevettes mythiques)",
+            "Oasis de Baixa Grande",
+            "Pizzas au Bar.Co la nuit"
+          ]
+        }
+      ]
     },
     {
       "id": "parnaiba",
@@ -485,7 +605,27 @@ window.TRAVEL_DATA =
         "duree": "≈ 7-8h",
         "distanceKm": 180,
         "details": "Atins → Tutóia (4x4 sur la plage) → bateau rapide à travers le Delta das Américas → Parnaíba · ecoadventure.tur.br · 4x4 privé R$ 2 000 + bateau R$ 180/pax"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Safari nocturne pour observer les caïmans",
+            "Kitesurf à Pedra do Sal",
+            "Canoë-kayak dans le labyrinthe du delta"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "Porto das Barcas au coucher du soleil",
+            "Observation spectaculaire de l'envol des Guarás",
+            "Île des Poldros"
+          ]
+        }
+      ]
     },
     {
       "id": "jericoacoara",
@@ -530,7 +670,27 @@ window.TRAVEL_DATA =
         "duree": "≈ 2 jours",
         "distanceKm": 330,
         "details": "Parnaíba → Pedra do Sal → Barra Grande → traversée des plages de Camocim → Tatajuba (descente de dunes Ski-bunda) → entrée triomphale à Jeri par les dunes · 177 km de Barra Grande à Jeri"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Ski-bunda sur les dunes de Tatajuba",
+            "Sandboard à la Duna do Pôr do Sol",
+            "Excursion buggy à la Lagoa do Paraíso"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "The Alchymist Beach Club",
+            "Cafe Jeri pour la fête au coucher du soleil",
+            "Mangue Seco et ses arbres aux racines nues"
+          ]
+        }
+      ]
     },
     {
       "id": "fortaleza",
@@ -569,7 +729,27 @@ window.TRAVEL_DATA =
         "duree": "≈ 5h",
         "distanceKm": 300,
         "details": "Jericoacoara → Fortaleza en van privée climatisée · ≈ 300 € total (37 €/pax) · alternatives : bus Guanabara R$ 1 000/pax 6h30, van partagée R$ 1 400/pax 6h"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Beach Park (immense parc aquatique)",
+            "Surf à la Praia do Futuro",
+            "Patinage ou skate sur la Beira Mar"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "Centre culturel Dragão do Mar",
+            "Mercado dos Pinhões (ambiance nocturne)",
+            "Moleskine Gastrobar"
+          ]
+        }
+      ]
     },
     {
       "id": "salvador-1",
@@ -614,7 +794,27 @@ window.TRAVEL_DATA =
         "distanceKm": 1200,
         "details": "Fortaleza (FOR) 11h55 → Salvador (SSA) 13h50 · GOL EYYRHX",
         "prixTotalEUR": 286
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Atelier de percussions (projet Olodum)",
+            "Cours de capoeira au Pelourinho",
+            "Visite de l'Elevador Lacerda"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "Bars et musique live à Rio Vermelho",
+            "Coucher de soleil au Museu de Arte Moderna (MAM)",
+            "Quartier bohème de Santo Antônio Além do Carmo"
+          ]
+        }
+      ]
     },
     {
       "id": "boipeba",
@@ -656,7 +856,27 @@ window.TRAVEL_DATA =
         "duree": "≈ 4-5h",
         "distanceKm": 250,
         "details": "Salvador → Valença (route, ≈ 3h) → bateau jusqu'à Boipeba (≈ 1h30)"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Snorkeling dans les piscines de Moreré",
+            "Kayak dans la mangrove",
+            "Tour de l'île en bateau rapide"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "O Céu de Boipeba (bar coucher de soleil)",
+            "Plage de Tassimirim",
+            "Restaurant Guido's (langouste sur la plage)"
+          ]
+        }
+      ]
     },
     {
       "id": "salvador-2",
@@ -680,6 +900,7 @@ window.TRAVEL_DATA =
         "score": 9.0,
         "prixParNuit": 234.46,
         "devise": "EUR",
+        "plateforme": "Booking",
         "url": "https://www.booking.com/hotel/br/bahiacafe.fr.html?aid=356931&label=metagha-link-LUFR-hotel-543005_dev-desktop_los-3_bw-5_dow-Tuesday_defdate-1_room-0_gstadt-3_rateid-public_aud-0_gacid-21411112526_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260324_ppt-_lp-2250_r-9994800358661904557&sid=5cd0f3ce3498df55642240ca86da7a9b&all_sr_blocks=1773107_426576945_2_1_0&checkin=2026-08-02&checkout=2026-08-03&dest_id=17731&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=1773107_426576945_2_1_0&hpos=1&matching_block_id=1773107_426576945_2_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=1773107_426576945_2_1_0__160940&srepoch=1777983676&srpvid=030a56dc3c40012f&type=total&ucfs=1&",
         "adresse": "Praça da Sé, 22, Pelourinho, Salvador - BA",
         "shortlist": []
@@ -697,7 +918,27 @@ window.TRAVEL_DATA =
         "duree": "≈ 4-5h",
         "distanceKm": 250,
         "details": "Boipeba → Valença (bateau) → Salvador (route, ≈ 3h)"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "À faire avec des ados",
+          "emoji": "🤸",
+          "items": [
+            "Derniers achats au Mercado Modelo",
+            "Plage de Porto da Barra",
+            "Dégustation de street food (Acarajé)"
+          ]
+        },
+        {
+          "categorie": "Les cool spots",
+          "emoji": "✨",
+          "items": [
+            "Café sur la Praça da Sé",
+            "Farol da Barra au coucher du soleil",
+            "Glacier cubain La Cubana"
+          ]
+        }
+      ]
     }
   ],
   "agencesReceptives": [

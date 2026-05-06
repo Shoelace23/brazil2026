@@ -32,9 +32,9 @@
     <div class="section-header">
       <span class="eyebrow">Programme</span>
       <h2>Les activités et excursions <em>jour par jour</em></h2>
-      <p class="lead" id="iti-lead">Sélectionne une étape pour voir les détails — activités, transferts, hébergement.</p>
+      <p class="lead" id="iti-lead">Chargement de l'itinéraire…</p>
     </div>
-    <div class="timeline" id="timeline"></div>
+    <div id="timeline"></div>
   </section>
 </main>
 
@@ -45,78 +45,293 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/app.js"></script>
 <script>
-(async function() {
+(async function () {
+  /* ── Supabase ─────────────────────────────────────── */
+  const SUPABASE_URL = 'https://foqtfrlowybtedgllxwi.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_7zEPygSrx4o2-RHmPVMBPw__5NQm9xC';
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  /* ── Helpers ──────────────────────────────────────── */
+  function esc(str) {
+    return String(str ?? '')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  /* ── Load JSON data ───────────────────────────────── */
   const data = await loadData();
   if (!data) return;
 
-  // Lead dynamique
-  const lead = document.getElementById("iti-lead");
+  const lead = document.getElementById('iti-lead');
+  const stages = data.etapes.filter(e => e.nuits > 0);
   if (lead) {
-    const stages = data.etapes.filter(e => e.nuits > 0).length;
-    lead.textContent = `${stages} étapes du ${formatDateLong(data.voyage.dateDepart)} au ${formatDateLong(data.voyage.dateRetour)} 2026. Sélectionne une étape pour voir les détails — activités, transferts, hébergement.`;
+    lead.textContent = `${stages.length} étapes du ${formatDateLong(data.voyage.dateDepart)} au ${formatDateLong(data.voyage.dateRetour)} 2026.`;
   }
 
-  const timeline = document.getElementById("timeline");
-  timeline.innerHTML = data.etapes.map(e => {
-    const horaires = (e.horairesCles || []).map(h =>
-      `<li><strong>${escapeHtml(h.label)}</strong> — ${escapeHtml(h.heure)}</li>`
-    ).join("");
+  /* ── Fetch activities from Supabase ───────────────── */
+  async function fetchActivities(stepId) {
+    const { data: rows, error } = await db
+      .from('activities')
+      .select('*')
+      .eq('step_id', stepId);
+    if (error) { console.error(error); return null; }
+    return rows;
+  }
 
-    const activites = (e.activites || []).length
-      ? `<div class="block-title">À faire sur place</div><ul>${e.activites.map(a => `<li>${escapeHtml(a)}</li>`).join("")}</ul>`
-      : "";
+  /* ── Sync step data with DB ─────────────────────── */
+  async function syncStepData(stepId, jsonActivites, jsonRecommandees) {
+    let rows = await fetchActivities(stepId);
+    if (rows === null) return [];
+    
+    const existingNames = new Set(rows.map(r => r.name));
+    const toInsert = [];
+    
+    (jsonActivites || []).forEach(name => {
+      if (!existingNames.has(name)) {
+        toInsert.push({ step_id: stepId, name, status: 'prevue' });
+      }
+    });
+    
+    (jsonRecommandees || []).forEach(name => {
+      if (!existingNames.has(name)) {
+        toInsert.push({ step_id: stepId, name, status: 'recommandee' });
+      }
+    });
+    
+    if (toInsert.length > 0) {
+      const { data: inserted, error } = await db.from('activities').insert(toInsert).select();
+      if (error) { console.error('Sync error:', error); }
+      else { rows = rows.concat(inserted); }
+    }
+    
+    return rows;
+  }
 
-    const transferts = (e.transferts || []).length
-      ? `<div class="block-title">Transferts</div>${e.transferts.map(t => `
-          <div class="transfert">
-            <strong>${escapeHtml(t.type)}</strong> — ${escapeHtml(t.depuis)} → ${escapeHtml(t.vers)}
-            ${t.duree ? ` · ${escapeHtml(t.duree)}` : ""}
-            ${t.heureDepart ? ` · départ ${escapeHtml(t.heureDepart)}` : ""}
-            ${t.heureArrivee ? ` · arrivée ${escapeHtml(t.heureArrivee)}` : ""}
-            ${t.statut ? ` <span class="tag accent" style="margin-left:0.4rem;">${escapeHtml(t.statut)}</span>` : ""}
-          </div>
-        `).join("")}`
-      : "";
+  /* ── Render a single activity item ───────────────── */
+  function renderItem(act, side) {
+    const li = document.createElement('li');
+    li.className = 'act-item';
+    li.dataset.id = act.id;
 
-    const heb = e.hebergement
-      ? `<div class="block-title">Hébergement</div>
-         <p>Statut : <span class="tag ${e.hebergement.statut === 'réservé' ? '' : 'accent'}">${escapeHtml(e.hebergement.statut)}</span>
-         ${e.hebergement.shortlist && e.hebergement.shortlist.length ?
-           ` · ${e.hebergement.shortlist.length} option${e.hebergement.shortlist.length > 1 ? 's' : ''} sélectionnée${e.hebergement.shortlist.length > 1 ? 's' : ''} (voir <a href="hotels.html#${e.id}">page hébergement et transports</a>)` :
-           ` · <a href="hotels.html#${e.id}">comparer sur Booking</a>`}
-         </p>`
-      : "";
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'act-name';
+    nameSpan.textContent = act.name;
 
-    const horairesBlock = horaires
-      ? `<div class="block-title">Horaires clés</div><ul>${horaires}</ul>`
-      : "";
+    const btn = document.createElement('button');
+    btn.className = side === 'prevue' ? 'act-btn act-btn--remove' : 'act-btn act-btn--add';
+    btn.title = side === 'prevue' ? 'Retirer des prévues' : 'Ajouter aux prévues';
+    btn.textContent = side === 'prevue' ? '−' : '+';
 
-    const nightsBadge = e.nuits === 0
-      ? `<span class="nights-tag muted">Escale</span>`
-      : `<span class="nights-tag">${e.nuits} nuit${e.nuits > 1 ? "s" : ""}</span>`;
+    btn.addEventListener('click', () => moveActivity(act.id, side, li.closest('.acts-panels')));
 
-    return `
-      <div class="timeline-item" id="${e.id}">
-        <div class="num">Étape <strong>${String(e.ordre).padStart(2,"0")}</strong></div>
-        <div>
-          <h3>${escapeHtml(e.ville)} ${nightsBadge}</h3>
-          <div class="dates">${formatDate(e.dateArrivee)} → ${formatDate(e.dateDepart)} · ${escapeHtml(e.region)}</div>
-          <p class="desc">${escapeHtml(e.description)}</p>
-          ${horairesBlock}
-          ${transferts}
-          ${activites}
-          ${heb}
-        </div>
+    li.appendChild(nameSpan);
+    li.appendChild(btn);
+    return li;
+  }
+
+  /* ── Move activity between columns ───────────────── */
+  async function moveActivity(id, currentSide, panelsEl) {
+    const newStatus = currentSide === 'prevue' ? 'recommandee' : 'prevue';
+    const { data: updated, error } = await db
+      .from('activities')
+      .update({ status: newStatus })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) { console.error('Move error:', error); return; }
+
+    // Move DOM element
+    const oldList = panelsEl.querySelector(`.acts-list[data-side="${currentSide}"]`);
+    const newList = panelsEl.querySelector(`.acts-list[data-side="${newStatus}"]`);
+    const li = oldList.querySelector(`[data-id="${id}"]`);
+    if (li) oldList.removeChild(li);
+
+    const newItem = renderItem(updated, newStatus);
+    newList.appendChild(newItem);
+
+    // Refresh empty states
+    refreshEmpty(panelsEl);
+  }
+
+  /* ── Add a new activity ───────────────────────────── */
+  async function addActivity(stepId, name, panelsEl) {
+    name = name.trim();
+    if (!name) return;
+
+    const { data: inserted, error } = await db
+      .from('activities')
+      .insert([{ step_id: stepId, name, status: 'prevue' }])
+      .select()
+      .single();
+
+    if (error) { console.error('Insert error:', error); return; }
+
+    const list = panelsEl.querySelector('.acts-list[data-side="prevue"]');
+    list.appendChild(renderItem(inserted, 'prevue'));
+    refreshEmpty(panelsEl);
+  }
+
+  /* ── Refresh empty-state messages ───────────────── */
+  function refreshEmpty(panelsEl) {
+    panelsEl.querySelectorAll('.acts-panel').forEach(panel => {
+      const list = panel.querySelector('.acts-list');
+      const empty = panel.querySelector('.acts-empty');
+      if (!list || !empty) return;
+      empty.style.display = list.children.length === 0 ? 'block' : 'none';
+    });
+  }
+
+  /* ── Build a complete etape block ────────────────── */
+  async function buildEtapeBlock(e) {
+    let recs = [];
+    if (e.categoriesRecommandees) {
+      e.categoriesRecommandees.forEach(cat => {
+        cat.items.forEach(item => recs.push(`${cat.emoji} ${item}`));
+      });
+    }
+
+    const activities = await syncStepData(e.id, e.activites, recs);
+
+    const prevues      = activities.filter(a => a.status === 'prevue');
+    const recommandees = activities.filter(a => a.status === 'recommandee');
+
+    /* Header */
+    const block = document.createElement('div');
+    block.className = 'etape-block';
+    block.id = e.id;
+
+    const header = document.createElement('div');
+    header.className = 'etape-header';
+    header.innerHTML = `
+      <h3>${esc(e.ville)}</h3>
+      <span class="tag">${e.nuits} nuit${e.nuits > 1 ? 's' : ''}</span>
+      <span class="tag outline">${formatDate(e.dateArrivee)} &rarr; ${formatDate(e.dateDepart)}</span>
+    `;
+
+    /* Panels container */
+    const panels = document.createElement('div');
+    panels.className = 'acts-panels';
+
+    /* ── Left panel : Prévues ── */
+    const leftPanel = document.createElement('div');
+    leftPanel.className = 'acts-panel';
+    leftPanel.innerHTML = `
+      <div class="acts-panel-head">
+        <h4 class="acts-panel-title">Activités prévues</h4>
       </div>
     `;
-  }).join("");
+
+    const leftList = document.createElement('ul');
+    leftList.className = 'acts-list';
+    leftList.dataset.side = 'prevue';
+    prevues.forEach(a => leftList.appendChild(renderItem(a, 'prevue')));
+
+    const leftEmpty = document.createElement('p');
+    leftEmpty.className = 'acts-empty';
+    leftEmpty.textContent = 'Aucune activité prévue.';
+    leftEmpty.style.display = prevues.length === 0 ? 'block' : 'none';
+
+    /* Add form */
+    const addForm = document.createElement('div');
+    addForm.className = 'acts-add-form';
+    addForm.innerHTML = `
+      <label class="acts-add-label">Ajouter une activité</label>
+      <div class="acts-add-row">
+        <input type="text" class="acts-add-input" placeholder="Ex : Visite du musée…" />
+        <button class="act-btn act-btn--add acts-add-submit" title="Ajouter">+</button>
+      </div>
+    `;
+
+    addForm.querySelector('.acts-add-submit').addEventListener('click', () => {
+      const input = addForm.querySelector('.acts-add-input');
+      addActivity(e.id, input.value, panels);
+      input.value = '';
+    });
+    addForm.querySelector('.acts-add-input').addEventListener('keydown', ev => {
+      if (ev.key === 'Enter') {
+        addActivity(e.id, ev.target.value, panels);
+        ev.target.value = '';
+      }
+    });
+
+    leftPanel.appendChild(leftList);
+    leftPanel.appendChild(leftEmpty);
+    leftPanel.appendChild(addForm);
+
+    /* ── Right panel : Recommandées ── */
+    const rightPanel = document.createElement('div');
+    rightPanel.className = 'acts-panel acts-panel--recommandees';
+    rightPanel.innerHTML = `
+      <div class="acts-panel-head">
+        <h4 class="acts-panel-title">Autres activités recommandées</h4>
+      </div>
+    `;
+
+    const rightList = document.createElement('div');
+    rightList.className = 'acts-list-container';
+    rightList.dataset.side = 'recommandee';
+
+    // Group the 'recommandee' activities from Supabase back into their categories for display
+    let hasRecommandees = false;
+
+    if (e.categoriesRecommandees) {
+      e.categoriesRecommandees.forEach(cat => {
+        // Find which items from this category are still in 'recommandee' status
+        const catItemsInSupabase = recommandees.filter(a => a.name.includes(cat.emoji));
+        if (catItemsInSupabase.length > 0) {
+          hasRecommandees = true;
+          const groupDiv = document.createElement('div');
+          groupDiv.className = 'acts-category-group';
+          groupDiv.innerHTML = `<h5 class="acts-category-title">${cat.emoji} ${cat.categorie}</h5>`;
+          
+          const ul = document.createElement('ul');
+          ul.className = 'acts-list acts-list--grouped';
+          ul.dataset.side = 'recommandee';
+          catItemsInSupabase.forEach(a => ul.appendChild(renderItem(a, 'recommandee')));
+          
+          groupDiv.appendChild(ul);
+          rightList.appendChild(groupDiv);
+        }
+      });
+    }
+    
+
+
+    const rightEmpty = document.createElement('p');
+    rightEmpty.className = 'acts-empty';
+    rightEmpty.textContent = 'Aucune recommandation — toutes les activités sont prévues !';
+    rightEmpty.style.display = hasRecommandees ? 'none' : 'block';
+
+    rightPanel.appendChild(rightList);
+    rightPanel.appendChild(rightEmpty);
+
+    panels.appendChild(leftPanel);
+    panels.appendChild(rightPanel);
+
+    block.appendChild(header);
+    block.appendChild(panels);
+    return block;
+  }
+
+  /* ── Render all stages ───────────────────────────── */
+  const timeline = document.getElementById('timeline');
+  timeline.innerHTML = '<p class="acts-loading">Chargement des activités…</p>';
+
+  const blocks = await Promise.all(
+    stages.filter(e => e.nuits > 0).map(e => buildEtapeBlock(e))
+  );
+
+  timeline.innerHTML = '';
+  blocks.forEach(b => timeline.appendChild(b));
 
   if (window.location.hash) {
     const target = document.querySelector(window.location.hash);
-    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 })();
 </script>

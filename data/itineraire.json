@@ -210,6 +210,59 @@
         "Transport : Uber très bon marché (R$ 15-30 pour la plupart des trajets). Métro propre pour Centro / Lapa.",
         "Argent : payer en carte partout. Distributeurs Banco do Brasil ou Bradesco pour les retraits.",
         "Restos à tester : Aprazível (Santa Teresa), Garota de Ipanema, Confeitaria Colombo (Centro)."
+      ],
+      "categoriesRecommandees": [
+        {
+          "categorie": "Plages & front de mer",
+          "emoji": "🏖️",
+          "items": [
+            "Coucher de soleil sur Arpoador (rocher d'Ipanema)",
+            "Plage de Leblon en fin d'après-midi",
+            "Plage de Leme (extrémité paisible de Copacabana)",
+            "Praia Vermelha (au pied du Pain de Sucre)"
+          ]
+        },
+        {
+          "categorie": "Culture & musées",
+          "emoji": "🎨",
+          "items": [
+            "Musée de l'Art Moderne (MAM) — collection brésilienne",
+            "Museu do Amanhã (architecture Calatrava, Praça Mauá)",
+            "Theatro Municipal — façade et visite guidée",
+            "Galeria Selarón — au-delà des escaliers"
+          ]
+        },
+        {
+          "categorie": "Nature & vues",
+          "emoji": "🌳",
+          "items": [
+            "Jardim Botânico (250 ans, palmiers impériaux)",
+            "Parque Lage (manoir + sentier vers le Christ)",
+            "Mirante Dona Marta (vue panoramique)",
+            "Pedra do Sal (lieu de samba historique)"
+          ]
+        },
+        {
+          "categorie": "Gastronomie & bonnes adresses",
+          "emoji": "🍽️",
+          "items": [
+            "Aprazível (Santa Teresa, vue baie de Guanabara)",
+            "Confeitaria Colombo (Centro, Belle Époque)",
+            "Garota de Ipanema (caïpirinha + feijoada)",
+            "Bar do Mineiro (boteco Santa Teresa)",
+            "Açai bowl chez Polis Sucos (Ipanema)"
+          ]
+        },
+        {
+          "categorie": "Soirées & ambiance carioca",
+          "emoji": "🌃",
+          "items": [
+            "Roda de samba à Lapa (Rio Scenarium, Carioca da Gema)",
+            "Bar à plage à Leblon (Bar do David, Bar Astor)",
+            "Concerts au Circo Voador (Lapa)",
+            "Pôr do sol au bar du Forte de Copacabana"
+          ]
+        }
       ]
     },
     {
@@ -257,7 +310,47 @@
         "distanceKm": 1450,
         "details": "Rio (GIG) → Porto Seguro (BPS) GOL 12h40 → 14h15, puis taxi Porto Seguro → Trancoso (≈ 1h)",
         "prixTotalEUR": 420
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "Plages & criques",
+          "emoji": "🏖️",
+          "items": [
+            "Praia dos Coqueiros (au pied du village)",
+            "Praia do Espelho (l'une des plus belles du Brésil)",
+            "Praia dos Nativos (longue, tranquille)",
+            "Praia do Rio da Barra (sauvage, pour marche)"
+          ]
+        },
+        {
+          "categorie": "Le Quadrado & artisanat",
+          "emoji": "🛍️",
+          "items": [
+            "Boutiques de mode Bahia chic (UXUA, Patuá)",
+            "Galeries d'art autour de la place",
+            "Église São João Batista (1586) au coucher du soleil"
+          ]
+        },
+        {
+          "categorie": "Bien-être & détente",
+          "emoji": "🧘",
+          "items": [
+            "Massage shiatsu sur la plage",
+            "Cours de yoga matinal au Quadrado",
+            "Spa de l'UXUA Casa Hotel"
+          ]
+        },
+        {
+          "categorie": "Gastronomie locale",
+          "emoji": "🍽️",
+          "items": [
+            "Maria Mata Mouro (cuisine bahianaise raffinée)",
+            "Capim Santo (chef Marina Saldanha)",
+            "Silvina (poisson grillé sur la plage)",
+            "Cabana El Gordo (moqueca face à la mer)"
+          ]
+        }
+      ]
     },
     {
       "id": "caraiva",
@@ -295,7 +388,47 @@
         "duree": "≈ 1h30",
         "distanceKm": 65,
         "details": "Trancoso → Caraíva par la route puis traversée du rio Caraíva en bateau"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "Plages & criques sauvages",
+          "emoji": "🏖️",
+          "items": [
+            "Praia do Satu (longue marche de 1h)",
+            "Praia do Espelho (en bateau ou 4x4)",
+            "Praia de Pitinga (falaises rouges)",
+            "Praia do Bigode"
+          ]
+        },
+        {
+          "categorie": "Aventure & bateau",
+          "emoji": "🛶",
+          "items": [
+            "Descente du rio Caraíva en kayak",
+            "Cours de stand-up paddle",
+            "Bateau jusqu'à Praia do Espelho",
+            "Visite de la communauté Pataxó"
+          ]
+        },
+        {
+          "categorie": "Nature & balades",
+          "emoji": "🌳",
+          "items": [
+            "Cheval sur la plage au coucher du soleil",
+            "Marche jusqu'à la cascade de Santo Antônio",
+            "Observation des baleines à bosse (juillet-novembre)"
+          ]
+        },
+        {
+          "categorie": "Vie de village",
+          "emoji": "🌃",
+          "items": [
+            "Forró improvisé sur la plage",
+            "Caïpirinha au coucher du soleil chez Boteco do Pará",
+            "Repas chez Pousada Lagoa (cuisine pataxó)"
+          ]
+        }
+      ]
     },
     {
       "id": "sao-luis",
@@ -341,7 +474,38 @@
         "distanceKm": 2400,
         "details": "Caraíva → Porto Seguro (route) puis vol GOL BPS 12h30 → SSA → SLZ 16h40",
         "prixTotalEUR": 548
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "Patrimoine UNESCO",
+          "emoji": "🏛️",
+          "items": [
+            "Centro Histórico (Praia Grande)",
+            "Palácio dos Leões — 17e siècle",
+            "Casa do Maranhão — culture régionale",
+            "Cafua das Mercês — ancien marché aux esclaves"
+          ]
+        },
+        {
+          "categorie": "Musique & culture",
+          "emoji": "🎵",
+          "items": [
+            "Reggae à Bar do Léo (São Luís = capitale brésilienne du reggae)",
+            "Tambor de Crioula (danse afro-brésilienne)",
+            "Bumba-meu-boi (folklore local, juillet-août)"
+          ]
+        },
+        {
+          "categorie": "Cuisine Maranhense",
+          "emoji": "🍽️",
+          "items": [
+            "Arroz de Cuxá (riz local emblématique)",
+            "Caranguejo (crabe au lait de coco)",
+            "Restaurant Cabana do Sol (cuisine traditionnelle)",
+            "Açai très épais comme on n'en trouve qu'ici"
+          ]
+        }
+      ]
     },
     {
       "id": "barreirinhas",
@@ -391,7 +555,36 @@
         "duree": "≈ 4h30",
         "distanceKm": 262,
         "details": "São Luís → Barreirinhas, route asphaltée · Van privé ≈ R$ 1 200"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "Excursions dans les Lençóis",
+          "emoji": "🌵",
+          "items": [
+            "Lagoa Bonita au coucher du soleil",
+            "Lagoa Azul (en 4x4 le matin)",
+            "Circuit Pequenos Lençóis"
+          ]
+        },
+        {
+          "categorie": "Rio Preguiças",
+          "emoji": "🛶",
+          "items": [
+            "Vassouras (singes capucins)",
+            "Mandacaru — phare panoramique",
+            "Caburé — pointe de sable mer/fleuve"
+          ]
+        },
+        {
+          "categorie": "Gastronomie Maranhão",
+          "emoji": "🍽️",
+          "items": [
+            "Restaurant Carlinhos (poisson du fleuve)",
+            "Açai à la mangue",
+            "Tapioca au queijo coalho local"
+          ]
+        }
+      ]
     },
     {
       "id": "atins",
@@ -437,7 +630,38 @@
         "duree": "≈ 3h",
         "distanceKm": 50,
         "details": "Barreirinhas → Atins en bateau rapide sur le rio Preguiças · arrêts possibles à Vassouras, Mandacaru, Caburé"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "Désert profond & lagunes",
+          "emoji": "🌵",
+          "items": [
+            "Lagoa da Esmeralda (peu fréquentée)",
+            "Lagoa do Boi (au cœur des dunes)",
+            "Trek de plusieurs heures dans les dunes au lever",
+            "Ski-bunda (planche sur le sable)"
+          ]
+        },
+        {
+          "categorie": "Sports nautiques & vent",
+          "emoji": "🪁",
+          "items": [
+            "Cours de kitesurf sur le delta",
+            "Stand-up paddle sur le rio Preguiças",
+            "Pirogue de pêcheur au coucher du soleil"
+          ]
+        },
+        {
+          "categorie": "Cuisine de pêcheurs",
+          "emoji": "🍽️",
+          "items": [
+            "Déjeuner chez Dona Luzia (incontournable)",
+            "Rancho do Buna (poisson grillé)",
+            "Caipirinha de fruits locaux",
+            "Crab cake maison du Canto do Atins"
+          ]
+        }
+      ]
     },
     {
       "id": "parnaiba",
@@ -484,7 +708,36 @@
         "duree": "≈ 7-8h",
         "distanceKm": 180,
         "details": "Atins → Tutóia (4x4 sur la plage) → bateau rapide à travers le Delta das Américas → Parnaíba · ecoadventure.tur.br · 4x4 privé R$ 2 000 + bateau R$ 180/pax"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "Delta & faune",
+          "emoji": "🦩",
+          "items": [
+            "Envol des Guarás à 17h30 (ibis rouges)",
+            "Singes capucins dans les mangroves",
+            "Observation d'oiseaux endémiques"
+          ]
+        },
+        {
+          "categorie": "Bateaux & îles",
+          "emoji": "🛶",
+          "items": [
+            "Île dos Poldros (ferme de chevaux)",
+            "Île do Caju (réserve naturelle)",
+            "Pôr do sol depuis Pedra do Sal"
+          ]
+        },
+        {
+          "categorie": "Patrimoine local",
+          "emoji": "🏛️",
+          "items": [
+            "Porto das Barcas (centre historique de Parnaíba)",
+            "Marché aux poissons matinal",
+            "Cocoteraies de Luís Correia"
+          ]
+        }
+      ]
     },
     {
       "id": "jericoacoara",
@@ -529,7 +782,58 @@
         "duree": "≈ 2 jours",
         "distanceKm": 330,
         "details": "Parnaíba → Pedra do Sal → Barra Grande → traversée des plages de Camocim → Tatajuba (descente de dunes Ski-bunda) → entrée triomphale à Jeri par les dunes · 177 km de Barra Grande à Jeri"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "Sports vent & eau",
+          "emoji": "🪁",
+          "items": [
+            "Cours de kitesurf à Preá (école française possible)",
+            "Initiation windsurf",
+            "Surf à Praia do Mangue Seco",
+            "SUP sur la Lagoa Azul au lever du soleil"
+          ]
+        },
+        {
+          "categorie": "Lagunes & buggy",
+          "emoji": "🚙",
+          "items": [
+            "Lagoa Azul + Lagoa do Paraíso (la journée)",
+            "Tatajuba & lac d'eau douce",
+            "Ski-bunda à la Duna do Funil",
+            "Mangue Seco (île de mangrove en buggy)"
+          ]
+        },
+        {
+          "categorie": "Couchers de soleil iconiques",
+          "emoji": "🌅",
+          "items": [
+            "Duna do Pôr do Sol (le rendez-vous quotidien)",
+            "Pedra Furada au lever du soleil",
+            "Mirante de l'Alto do Serrote"
+          ]
+        },
+        {
+          "categorie": "Soirées & ambiance",
+          "emoji": "🌃",
+          "items": [
+            "Capoeira sur la plage à 18h",
+            "Forró au Forró do Zé (jeudi/samedi)",
+            "Caipi gastronomique chez Mr Patrick",
+            "DJ sets au bar Tempero da Bahia"
+          ]
+        },
+        {
+          "categorie": "Gastronomie & marchés",
+          "emoji": "🍽️",
+          "items": [
+            "Cabana The Alchymist (déjeuner Lagoa do Paraíso)",
+            "Restaurant Tamarindo (chef portugais)",
+            "Tapioca créative au Parque Eolico",
+            "Marché d'artisanat (Rua Principal en soirée)"
+          ]
+        }
+      ]
     },
     {
       "id": "fortaleza",
@@ -568,7 +872,36 @@
         "duree": "≈ 5h",
         "distanceKm": 300,
         "details": "Jericoacoara → Fortaleza en van privée climatisée · ≈ 300 € total (37 €/pax) · alternatives : bus Guanabara R$ 1 000/pax 6h30, van partagée R$ 1 400/pax 6h"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "Plages urbaines",
+          "emoji": "🏖️",
+          "items": [
+            "Praia do Futuro (barracas de fruits de mer)",
+            "Praia de Iracema (pôr do sol)",
+            "Praia de Mucuripe (port de pêcheurs traditionnels)"
+          ]
+        },
+        {
+          "categorie": "Cuisine Cearense",
+          "emoji": "🍽️",
+          "items": [
+            "Caranguejada à Praia do Futuro (jeudi soir)",
+            "Restaurant Coco Bambu (poisson Atlantique)",
+            "Tapioca de queijo coalho au Mercado dos Pinhões"
+          ]
+        },
+        {
+          "categorie": "Forró & musique",
+          "emoji": "🎵",
+          "items": [
+            "Forró traditionnel au Pirata Bar (lundi)",
+            "Centre Dragão do Mar (cinéma + concerts)",
+            "Mariscada en bord de mer"
+          ]
+        }
+      ]
     },
     {
       "id": "salvador-1",
@@ -613,7 +946,37 @@
         "distanceKm": 1200,
         "details": "Fortaleza (FOR) 11h55 → Salvador (SSA) 13h50 · GOL EYYRHX",
         "prixTotalEUR": 286
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "Pelourinho UNESCO",
+          "emoji": "🏛️",
+          "items": [
+            "Église São Francisco (intérieur or)",
+            "Largo do Pelourinho",
+            "Casa de Jorge Amado",
+            "Catedral Basílica"
+          ]
+        },
+        {
+          "categorie": "Musique & capoeira",
+          "emoji": "🎵",
+          "items": [
+            "Roda de capoeira (Forte do Santo Antônio)",
+            "Concert d'Olodum (mardi soir au Pelourinho)",
+            "Bar do Reggae au Pelourinho"
+          ]
+        },
+        {
+          "categorie": "Cuisine Bahianaise",
+          "emoji": "🍽️",
+          "items": [
+            "Acarajé chez Dinha (Praça do Cruzeiro)",
+            "Moqueca de peixe (Restaurant Maria Mata Mouro)",
+            "Cocada chez les baianas"
+          ]
+        }
+      ]
     },
     {
       "id": "boipeba",
@@ -655,7 +1018,48 @@
         "duree": "≈ 4-5h",
         "distanceKm": 250,
         "details": "Salvador → Valença (route, ≈ 3h) → bateau jusqu'à Boipeba (≈ 1h30)"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "Plages paradisiaques",
+          "emoji": "🏖️",
+          "items": [
+            "Moreré et ses piscines naturelles",
+            "Cueira (palmiers au-dessus de l'eau)",
+            "Bainema (plage sauvage à l'extrémité sud)",
+            "Ponta dos Castelhanos"
+          ]
+        },
+        {
+          "categorie": "Snorkeling & vie marine",
+          "emoji": "🐠",
+          "items": [
+            "Récifs de corail à Moreré (marée basse)",
+            "Tortues marines à Bainema",
+            "Plongée libre aux Castelhanos"
+          ]
+        },
+        {
+          "categorie": "Excursions en bateau",
+          "emoji": "🛶",
+          "items": [
+            "Tour des plages en barque traditionnelle",
+            "Velha Boipeba en kayak",
+            "Mangroves du rio do Inferno",
+            "Île de Tinharé (Morro de São Paulo)"
+          ]
+        },
+        {
+          "categorie": "Gastronomie & poisson",
+          "emoji": "🍽️",
+          "items": [
+            "Mar e Coco (poisson grillé sur la plage)",
+            "Restaurant Santa Clara (chef italien)",
+            "Cocada artisanale au village",
+            "Caranguejo à Velha Boipeba"
+          ]
+        }
+      ]
     },
     {
       "id": "salvador-2",
@@ -697,7 +1101,36 @@
         "duree": "≈ 4-5h",
         "distanceKm": 250,
         "details": "Boipeba → Valença (bateau) → Salvador (route, ≈ 3h)"
-      }
+      },
+      "categoriesRecommandees": [
+        {
+          "categorie": "Visites approfondies",
+          "emoji": "🏛️",
+          "items": [
+            "Mercado Modelo (artisanat bahianais)",
+            "Forte de Santo Antônio (vue océan)",
+            "Quartier do Rio Vermelho (vraie vie locale)"
+          ]
+        },
+        {
+          "categorie": "Marchés & shopping",
+          "emoji": "🛍️",
+          "items": [
+            "Mercado de São Joaquim (marché populaire)",
+            "Boutiques de bijoux ethniques au Pelourinho",
+            "Magasins de tambours et instruments"
+          ]
+        },
+        {
+          "categorie": "Restos signature",
+          "emoji": "🍽️",
+          "items": [
+            "Casa de Tereza (chef étoilée du Bahia)",
+            "Lá Em Casa (Mocoto + caipi)",
+            "Soltinho (cuisine fusion afro-brésilienne)"
+          ]
+        }
+      ]
     }
   ],
   "agencesReceptives": [
