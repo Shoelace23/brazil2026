@@ -26,15 +26,14 @@ document.addEventListener("DOMContentLoaded", () => {
 // --- Data loader ---
 // Tries fetch first (always fresh), falls back to embedded data.js (works in file://)
 async function loadData() {
+  if (window.TRAVEL_DATA) {
+    return window.TRAVEL_DATA;
+  }
   try {
     const res = await fetch(DATA_URL, { cache: "no-store" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch (e) {
-    if (window.TRAVEL_DATA) {
-      console.info("Using embedded data (file:// mode)");
-      return window.TRAVEL_DATA;
-    }
     console.error("Erreur chargement des données :", e);
     return null;
   }
