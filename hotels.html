@@ -187,7 +187,22 @@
           transportBlock = renderTransportBlock(e, nextStage);
         }
 
-        return etapeBlock + transportBlock;
+        let initialFlightBlock = "";
+        if (idx === 0) {
+          initialFlightBlock = `
+      <div class="transport-card">
+        <div class="transport-icon">${TR_ICONS.vol}</div>
+        <div class="transport-info">
+          <div class="transport-mode">VOL INTERNATIONAL</div>
+          <h4>Paris (départ) &rarr; Rio de Janeiro</h4>
+          <div class="meta">&approx; 14h (1 escale) &middot; 9 200 km &middot; 2 855 &euro;</div>
+          <div class="desc" style="margin-top: 0.4rem;">Paris (CDG) 25/07 &rarr; Francfort (FRA) &rarr; Rio (GIG) 26/07 matin &middot; Lufthansa</div>
+        </div>
+      </div>
+          `;
+        }
+
+        return initialFlightBlock + etapeBlock + transportBlock;
       }).join("");
 
       const ag = document.getElementById("agencies-grid");
